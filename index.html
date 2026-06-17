@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira — Ваш ИИ-руководитель на связи 24/7</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=Unbounded:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080808;
+  --bg2:#111111;
+  --bg3:#181818;
+  --border:#222;
+  --gold:#c8a820;--gold2:#e8c840;--gold3:#f5d96a;
+  --white:#ffffff;--white2:rgba(255,255,255,0.7);--white3:rgba(255,255,255,0.35);
+  --red:#e84040;
+  --green:#22c55e;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;cursor:default}
+
+/* Grain overlay */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:0.35;
+}
+
+/* Nav */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 4rem;
+  background:rgba(8,8,8,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:1.7rem;color:var(--white);letter-spacing:-0.01em}
+.logo-text span{color:var(--gold2)}
+nav ul{list-style:none;display:flex;gap:2.5rem}
+nav ul a{text-decoration:none;font-size:0.82rem;font-weight:400;color:var(--white3);letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+nav ul a:hover{color:var(--gold2)}
+.nav-cta{
+  background:var(--gold);color:#000;
+  padding:0.6rem 1.5rem;border-radius:0.25rem;
+  font-size:0.8rem;font-weight:500;text-decoration:none;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:all 0.2s;font-family:'Inter',sans-serif;
+}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* Mobile */
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:22px;height:1.5px;background:var(--white);transition:all 0.3s}
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--bg);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2.4rem;color:var(--white);text-decoration:none}
+.mobile-menu a:hover{color:var(--gold2)}
+.mobile-close{position:absolute;top:1.5rem;right:1.5rem;font-size:1.5rem;cursor:pointer;color:var(--white3)}
+
+/* Hero */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:8rem 2rem 5rem;
+  position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,168,32,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-10%;right:-5%;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,168,32,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  border:1px solid rgba(200,168,32,0.3);
+  padding:0.4rem 1.2rem;border-radius:0.25rem;
+  font-size:0.7rem;font-weight:500;color:var(--gold2);
+  letter-spacing:0.14em;text-transform:uppercase;
+  margin-bottom:2.5rem;
+  animation:fadeUp 0.6s ease both;
+  background:rgba(200,168,32,0.05);
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--gold2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.6)}}
+
+.hero-sigil{margin-bottom:2rem;animation:fadeUp 0.6s 0.05s ease both}
+
+h1{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(2.4rem,5.5vw,5rem);
+  line-height:1.08;letter-spacing:-0.03em;
+  color:var(--white);max-width:900px;
+  font-weight:900;
+  animation:fadeUp 0.6s 0.1s ease both;
+}
+h1 .gold{color:var(--gold2)}
+h1 .line2{font-weight:400;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1.1em;letter-spacing:-0.02em}
+
+.hero-sub{
+  font-size:1.05rem;font-weight:300;color:var(--white2);
+  max-width:520px;margin:1.8rem auto 0;line-height:1.8;
+  animation:fadeUp 0.6s 0.2s ease both;
+}
+.hero-actions{
+  display:flex;gap:1rem;margin-top:3rem;align-items:center;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 0.6s 0.3s ease both;
+}
+.btn-primary{
+  background:var(--gold);color:#000;
+  padding:1rem 2.5rem;border-radius:0.25rem;
+  font-size:0.875rem;font-weight:500;text-decoration:none;
+  letter-spacing:0.06em;text-transform:uppercase;
+  transition:all 0.2s;border:none;font-family:'Inter',sans-serif;cursor:pointer;
+}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,168,32,0.3)}
+.btn-ghost{
+  color:var(--white3);font-size:0.875rem;font-weight:400;text-decoration:none;
+  padding:1rem 1.5rem;letter-spacing:0.04em;
+  border:1px solid var(--border);border-radius:0.25rem;
+  transition:all 0.2s;
+}
+.btn-ghost:hover{color:var(--white);border-color:rgba(255,255,255,0.3)}
+
+/* Stats bar */
+.stats-bar{
+  display:flex;gap:0;margin-top:4rem;
+  border:1px solid var(--border);border-radius:0.5rem;
+  overflow:hidden;width:100%;max-width:680px;
+  animation:fadeUp 0.6s 0.4s ease both;
+  background:var(--bg2);
+}
+.stat{flex:1;padding:1.2rem 1.5rem;text-align:center;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:1.4rem;font-weight:700;color:var(--gold2);line-height:1}
+.stat-label{font-size:0.7rem;color:var(--white3);margin-top:0.3rem;letter-spacing:0.06em;text-transform:uppercase}
+
+/* Chat demo */
+.hero-visual{margin-top:4rem;width:100%;max-width:620px;animation:fadeUp 0.8s 0.45s ease both}
+.chat-card{
+  background:var(--bg2);border-radius:1rem;
+  border:1px solid var(--border);padding:1.75rem;text-align:left;
+  box-shadow:0 40px 100px -20px rgba(0,0,0,0.7);
+  position:relative;overflow:hidden;
+}
+.chat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,168,32,0.4),transparent);
+}
+.chat-header{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.aira-avatar{width:40px;height:40px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(200,168,32,0.3)}
+.chat-name{font-weight:500;font-size:0.95rem}
+.chat-status{font-size:0.75rem;color:var(--white3);display:flex;align-items:center;gap:0.4rem;margin-top:0.2rem}
+.online{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;box-shadow:0 0 6px rgba(34,197,94,0.6)}
+.messages{display:flex;flex-direction:column;gap:0.875rem}
+.msg{padding:0.85rem 1.1rem;border-radius:0.75rem;font-size:0.85rem;line-height:1.6;max-width:88%}
+.msg-aira{background:var(--bg3);color:var(--white);border:1px solid var(--border);border-bottom-left-radius:0.2rem}
+.msg-user{background:rgba(200,168,32,0.15);color:var(--white);border:1px solid rgba(200,168,32,0.2);align-self:flex-end;border-bottom-right-radius:0.2rem}
+.msg-time{font-size:0.68rem;color:var(--white3);margin-top:0.25rem}
+.typing{display:inline-flex;gap:4px;align-items:center;padding:0.85rem 1.1rem;background:var(--bg3);border:1px solid var(--border);border-radius:0.75rem;border-bottom-left-radius:0.2rem}
+.typing span{width:5px;height:5px;border-radius:50%;background:var(--white3);animation:typing 1.2s infinite}
+.typing span:nth-child(2){animation-delay:0.2s}.typing span:nth-child(3){animation-delay:0.4s}
+@keyframes typing{0%,100%{transform:translateY(0);opacity:0.4}50%{transform:translateY(-5px);opacity:1}}
+
+/* Divider */
+.divider{width:100%;height:1px;background:var(--border)}
+
+/* Sections */
+.section{padding:7rem 4rem;max-width:1200px;margin:0 auto}
+.section-label{font-size:0.68rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold2);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.section-label::before{content:'';width:20px;height:1px;background:var(--gold2)}
+.section-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.6rem,3.5vw,2.6rem);line-height:1.15;color:var(--white);margin-bottom:1rem;font-weight:700;letter-spacing:-0.02em}
+.section-sub{font-size:1rem;color:var(--white2);font-weight:300;line-height:1.8;max-width:500px}
+
+/* Comparison — THE killer section */
+.comparison{
+  margin-top:4rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+}
+.comp-col{border-radius:1rem;padding:2.5rem;border:1px solid var(--border)}
+.comp-col.bad{background:rgba(232,64,64,0.04);border-color:rgba(232,64,64,0.2)}
+.comp-col.good{background:rgba(200,168,32,0.04);border-color:rgba(200,168,32,0.25);position:relative;overflow:hidden}
+.comp-col.good::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.comp-head{display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.comp-icon{font-size:1.3rem}
+.comp-title{font-weight:600;font-size:1rem}
+.comp-subtitle{font-size:0.75rem;color:var(--white3);margin-top:0.2rem}
+.comp-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.comp-list li{display:flex;align-items:flex-start;gap:0.75rem;font-size:0.85rem;color:var(--white2);line-height:1.55}
+.comp-list li::before{flex-shrink:0;margin-top:0.05rem;font-size:0.9rem}
+.comp-col.bad .comp-list li::before{content:'✗';color:var(--red)}
+.comp-col.good .comp-list li::before{content:'✓';color:var(--gold2)}
+.comp-price{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)}
+.comp-price-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--white3);margin-bottom:0.4rem}
+.comp-price-num{font-family:'Unbounded',sans-serif;font-size:1.6rem;font-weight:700;line-height:1}
+.comp-col.bad .comp-price-num{color:var(--red)}
+.comp-col.good .comp-price-num{color:var(--gold2)}
+.comp-price-note{font-size:0.75rem;color:var(--white3);margin-top:0.3rem;line-height:1.5}
+
+/* Features grid */
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:4rem;border:1px solid var(--border);border-radius:1rem;overflow:hidden;background:var(--border);}
+.feature-card{
+  background:var(--bg2);padding:2rem;
+  transition:background 0.2s;
+}
+.feature-card:hover{background:var(--bg3)}
+.feature-icon{font-size:1.5rem;margin-bottom:1.2rem}
+.feature-title{font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;letter-spacing:0.01em}
+.feature-desc{font-size:0.82rem;color:var(--white3);line-height:1.7;font-weight:300}
+
+/* Steps */
+.steps{margin-top:4rem;position:relative}
+.steps::before{content:'';position:absolute;left:35px;top:60px;bottom:60px;width:1px;background:linear-gradient(to bottom,var(--gold),transparent)}
+.step{display:grid;grid-template-columns:72px 1fr;gap:2rem;align-items:start;padding:2.5rem 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(200,168,32,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Unbounded',sans-serif;font-size:0.85rem;color:var(--gold2);font-weight:700;
+  background:rgba(200,168,32,0.05);flex-shrink:0;
+}
+.step-title{font-weight:600;font-size:1rem;margin-bottom:0.5rem}
+.step-desc{font-size:0.875rem;color:var(--white2);line-height:1.75;font-weight:300}
+.step-time{display:inline-block;font-size:0.7rem;color:var(--gold2);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.75rem;border:1px solid rgba(200,168,32,0.25);padding:0.25rem 0.75rem;border-radius:0.25rem;background:rgba(200,168,32,0.05)}
+
+/* Testimonials */
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.testi-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:1rem;padding:2rem;
+  position:relative;
+}
+.testi-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:4rem;color:rgba(200,168,32,0.15);position:absolute;top:0.5rem;right:1.2rem;line-height:1}
+.testi-text{font-size:0.875rem;color:var(--white2);line-height:1.75;font-weight:300;font-style:italic}
+.testi-author{margin-top:1.5rem;display:flex;align-items:center;gap:0.75rem}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:0.9rem;border:1px solid var(--border)}
+.testi-name{font-weight:500;font-size:0.85rem}
+.testi-role{font-size:0.72rem;color:var(--white3)}
+.testi-stars{color:var(--gold2);font-size:0.75rem;margin-top:0.2rem;letter-spacing:0.05em}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:4rem}
+.pricing-card{background:var(--bg2);border:1px solid var(--border);border-radius:1rem;padding:2rem;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.pricing-card.featured{border-color:rgba(200,168,32,0.35);background:rgba(200,168,32,0.03)}
+.pricing-card.elite{border-color:rgba(200,168,32,0.5);background:linear-gradient(135deg,rgba(200,168,32,0.06) 0%,rgba(200,168,32,0.02) 100%)}
+.pricing-card.featured::before,.pricing-card.elite::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.pricing-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.75rem;border-radius:0.25rem;background:var(--gold);color:#000;display:inline-block;margin-bottom:1.2rem}
+.pricing-tag.elite-tag{background:linear-gradient(90deg,var(--gold),var(--gold3));color:#000}
+.plan-name{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--white3);margin-bottom:0.8rem;font-weight:500}
+.price-setup{display:flex;align-items:baseline;gap:0.4rem;margin-bottom:0.3rem}
+.price-setup-label{font-size:0.75rem;color:var(--white3)}
+.price-setup-num{font-family:'Unbounded',sans-serif;font-size:2rem;font-weight:700;color:var(--white);line-height:1}
+.price-monthly{font-size:0.82rem;color:var(--white3);font-weight:300;margin-bottom:0.3rem}
+.price-monthly span{color:var(--gold2);font-weight:500}
+.price-saving{font-size:0.72rem;color:var(--green);margin-bottom:1.2rem;line-height:1.5}
+.price-desc{font-size:0.82rem;color:var(--white2);margin-bottom:1.2rem;line-height:1.65;font-weight:300}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;flex:1}
+.price-features li{font-size:0.8rem;display:flex;align-items:flex-start;gap:0.5rem;color:var(--white2);line-height:1.5}
+.price-features li::before{content:'✓';color:var(--gold2);font-weight:600;flex-shrink:0}
+.btn-plan{display:block;text-align:center;padding:0.85rem;border-radius:0.25rem;font-size:0.78rem;font-weight:500;text-decoration:none;transition:all 0.2s;letter-spacing:0.06em;text-transform:uppercase;font-family:'Inter',sans-serif}
+.pricing-card:not(.featured):not(.elite) .btn-plan{border:1px solid var(--border);color:var(--white)}
+.pricing-card:not(.featured):not(.elite) .btn-plan:hover{border-color:rgba(255,255,255,0.3);background:var(--bg3)}
+.featured .btn-plan{background:var(--gold);color:#000}
+.featured .btn-plan:hover{background:var(--gold2);transform:translateY(-1px)}
+.elite .btn-plan{background:linear-gradient(90deg,var(--gold),var(--gold3));color:#000;font-weight:600}
+.elite .btn-plan:hover{opacity:0.9;transform:translateY(-1px)}
+
+/* Modules */
+.modules-section{margin-top:3rem}
+.modules-label{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--white3);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.5rem}
+.modules-label::before{content:'';flex:1;height:1px;background:var(--border)}
+.modules-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.module-card{background:var(--bg2);border:1px solid var(--border);border-radius:0.75rem;padding:1.25rem;transition:border-color 0.2s,background 0.2s}
+.module-card:hover{border-color:rgba(200,168,32,0.25);background:var(--bg3)}
+.module-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.6rem}
+.module-icon{font-size:1.2rem}
+.module-price{font-family:'Unbounded',sans-serif;font-size:0.82rem;font-weight:700;color:var(--gold2);white-space:nowrap}
+.module-price-sub{font-size:0.65rem;color:var(--white3);text-align:right;margin-top:0.1rem}
+.module-title{font-weight:600;font-size:0.85rem;margin-bottom:0.4rem}
+.module-desc{font-size:0.78rem;color:var(--white3);line-height:1.6}
+
+@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}.modules-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.modules-grid{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq{display:flex;flex-direction:column;margin-top:4rem;max-width:760px}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.5rem 0;cursor:pointer;font-weight:500;font-size:0.9rem;
+  list-style:none;color:var(--white);letter-spacing:0.01em;
+}
+.faq-icon{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:1.1rem;font-weight:300;transition:all 0.3s;flex-shrink:0}
+.faq-item.open .faq-icon{background:rgba(200,168,32,0.1);border-color:rgba(200,168,32,0.3);transform:rotate(45deg)}
+.faq-a{font-size:0.875rem;color:var(--white2);line-height:1.8;font-weight:300;max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
+.faq-item.open .faq-a{max-height:250px;padding-bottom:1.5rem}
+
+/* Contact */
+.contact-form{max-width:620px;margin-top:4rem;display:flex;flex-direction:column;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-field{display:flex;flex-direction:column;gap:0.5rem}
+.form-field label{font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--white3)}
+.form-field input,.form-field textarea,.form-field select{
+  background:var(--bg2);border:1px solid var(--border);border-radius:0.5rem;
+  padding:0.875rem 1rem;font-size:0.875rem;font-family:'Inter',sans-serif;
+  color:var(--white);outline:none;transition:border-color 0.2s;width:100%;
+  -webkit-appearance:none;
+}
+.form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:rgba(200,168,32,0.4);background:rgba(200,168,32,0.03)}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--white3)}
+.form-field textarea{resize:vertical;min-height:110px}
+.form-field select option{background:var(--bg2)}
+.btn-submit{
+  background:var(--gold);color:#000;border:none;
+  padding:1rem 2.5rem;border-radius:0.25rem;font-size:0.875rem;
+  font-weight:500;cursor:pointer;transition:all 0.2s;
+  font-family:'Inter',sans-serif;align-self:flex-start;
+  letter-spacing:0.06em;text-transform:uppercase;
+}
+.btn-submit:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 25px rgba(200,168,32,0.25)}
+
+/* CTA */
+.cta-section{
+  margin:4rem;border-radius:1.5rem;
+  background:linear-gradient(135deg,rgba(200,168,32,0.08) 0%,rgba(200,168,32,0.03) 100%);
+  border:1px solid rgba(200,168,32,0.2);
+  padding:5rem 4rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse,rgba(200,168,32,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);line-height:1.15;margin-bottom:1rem;font-weight:700;letter-spacing:-0.02em}
+.cta-title em{font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--gold2);font-weight:300;font-size:1.2em}
+.cta-sub{font-size:0.95rem;color:var(--white3);font-weight:300;margin-bottom:2.5rem;line-height:1.7}
+
+/* Footer */
+footer{
+  padding:2.5rem 4rem;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+footer p{font-size:0.75rem;color:var(--white3)}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* Mobile */
+@media(max-width:900px){
+  .comparison{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .testimonials{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  nav ul{display:none}
+  .burger{display:flex}
+  .section{padding:4rem 1.5rem}
+  .features-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .cta-section{margin:1.5rem;padding:3rem 1.5rem}
+  footer{flex-direction:column;text-align:center}
+  .hero-actions{flex-direction:column;width:100%;max-width:320px}
+  .btn-primary,.btn-ghost{text-align:center;width:100%}
+  .stats-bar{flex-wrap:wrap}
+  .stat{min-width:50%}
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <span class="mobile-close" onclick="toggleMenu()">✕</span>
+  <a href="#comparison" onclick="toggleMenu()">Сравнение</a>
+  <a href="#features" onclick="toggleMenu()">Возможности</a>
+  <a href="#pricing" onclick="toggleMenu()">Тарифы</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" onclick="toggleMenu()">Начать</a>
+</div>
+
+<nav>
+  <a href="#" class="logo">
+    <svg width="30" height="30" viewBox="0 0 104 104">
+      <circle cx="52" cy="52" r="46" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+      <circle cx="52" cy="52" r="36" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+      <line x1="52" y1="16" x2="52" y2="88" stroke="rgba(255,255,255,0.08)" stroke-width="0.6"/>
+      <line x1="6" y1="52" x2="98" y2="52" stroke="rgba(255,255,255,0.08)" stroke-width="0.6"/>
+      <line x1="19" y1="19" x2="85" y2="85" stroke="rgba(255,255,255,0.05)" stroke-width="0.6"/>
+      <line x1="85" y1="19" x2="19" y2="85" stroke="rgba(255,255,255,0.05)" stroke-width="0.6"/>
+      <path d="M34 82 L52 28 L70 82" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="41" y1="63" x2="63" y2="63" stroke="rgba(255,255,255,0.8)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M34 28 L52 82 L70 28" fill="none" stroke="#c8a820" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+      <line x1="41" y1="47" x2="63" y2="47" stroke="#c8a820" stroke-width="1.1" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="52" cy="6" r="3" fill="#c8a820"/>
+      <circle cx="52" cy="98" r="3" fill="#c8a820"/>
+      <circle cx="6" cy="52" r="3" fill="#c8a820"/>
+      <circle cx="98" cy="52" r="3" fill="#c8a820"/>
+    </svg>
+    <div class="logo-text">Ai<span>ra</span></div>
+  </a>
+  <ul>
+    <li><a href="#comparison">Сравнение</a></li>
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#pricing">Тарифы</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Начать работу</a>
+  <div class="burger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-badge"><span class="dot"></span> ИИ-ассистент нового поколения</div>
+  <div class="hero-sigil">
+    <svg width="100" height="100" viewBox="0 0 104 104">
+      <circle cx="52" cy="52" r="46" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+      <circle cx="52" cy="52" r="36" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="0.6"/>
+      <line x1="52" y1="6" x2="52" y2="98" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+      <line x1="6" y1="52" x2="98" y2="52" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+      <line x1="19" y1="19" x2="85" y2="85" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      <line x1="85" y1="19" x2="19" y2="85" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      <path d="M34 82 L52 26 L70 82" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="41" y1="62" x2="63" y2="62" stroke="rgba(255,255,255,0.9)" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M34 26 L52 82 L70 26" fill="none" stroke="#c8a820" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+      <line x1="41" y1="46" x2="63" y2="46" stroke="#c8a820" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="52" cy="6" r="3.5" fill="#c8a820"/><circle cx="52" cy="98" r="3.5" fill="#c8a820"/>
+      <circle cx="6" cy="52" r="3.5" fill="#c8a820"/><circle cx="98" cy="52" r="3.5" fill="#c8a820"/>
+    </svg>
+  </div>
+  <h1>Личный ассистент,<br><span class="line2"><em>который никогда</em> не уходит</span></h1>
+  <p class="hero-sub">Aira берёт на себя звонки, переписку и расписание — 24 часа в сутки, без выходных, без обучения нового сотрудника.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Получить демо</a>
+    <a href="#comparison" class="btn-ghost">Сравнить с ассистентом →</a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">48ч</div><div class="stat-label">запуск</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">без перерывов</div></div>
+    <div class="stat"><div class="stat-num">6+</div><div class="stat-label">языков</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">текучка кадров</div></div>
+  </div>
+  <div class="hero-visual">
+    <div class="chat-card">
+      <div class="chat-header">
+        <div class="aira-avatar">
+          <svg width="20" height="20" viewBox="0 0 104 104">
+            <circle cx="52" cy="52" r="44" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+            <path d="M34 80 L52 28 L70 80" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="41" y1="62" x2="63" y2="62" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M34 28 L52 80 L70 28" fill="none" stroke="#c8a820" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="chat-name">Aira</div>
+          <div class="chat-status"><span class="online"></span> На связи — 08:47, воскресенье</div>
+        </div>
+      </div>
+      <div class="messages">
+        <div><div class="msg msg-aira">Доброе утро. 4 входящих лида с пятницы — двое квалифицированы. Встреча с Игорем в 10:00 подтверждена. Подготовить бриф?</div><div class="msg-time">08:47</div></div>
+        <div style="align-self:flex-end"><div class="msg msg-user">Да. И перенеси встречу на 10:30, напиши Игорю.</div><div class="msg-time" style="text-align:right">08:48</div></div>
+        <div><div class="msg msg-aira">Готово. Бриф отправлен на почту, Игорь уведомлён — встреча в 10:30. По двум лидам вижу высокий потенциал. Подготовить ответы?</div><div class="msg-time">08:48</div></div>
+        <div class="typing"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARISON — главный аргумент -->
+<section class="section" id="comparison">
+  <div class="reveal">
+    <div class="section-label">Почему Aira</div>
+    <h2 class="section-title">Живой ассистент vs Aira</h2>
+    <p class="section-sub">Главная проблема личного ассистента — не зарплата. Это постоянная текучка и время на обучение каждого нового человека.</p>
+  </div>
+  <div class="comparison reveal">
+    <div class="comp-col bad">
+      <div class="comp-head">
+        <div class="comp-icon">👤</div>
+        <div>
+          <div class="comp-title">Личный ассистент</div>
+          <div class="comp-subtitle">Традиционный найм</div>
+        </div>
+      </div>
+      <ul class="comp-list">
+        <li>Средний срок работы — 12–18 месяцев. Потом нужно искать снова</li>
+        <li>Каждый новый ассистент требует 2–4 недели на обучение и погружение</li>
+        <li>Работает 8 часов в день, 5 дней в неделю. Отпуска, больничные</li>
+        <li>Запросы до 10 утра — только на следующий день</li>
+        <li>Не масштабируется: один человек — один поток задач</li>
+        <li>Уходя, уносит знания о клиентах и процессах</li>
+      </ul>
+      <div class="comp-price">
+        <div class="comp-price-label">Стоимость в год</div>
+        <div class="comp-price-num">€12 000+</div>
+        <div class="comp-price-note">Зарплата + налоги + рекрутинг + время на повторное обучение каждые 1–1.5 года</div>
+      </div>
+    </div>
+    <div class="comp-col good">
+      <div class="comp-head">
+        <div class="comp-icon">⚡</div>
+        <div>
+          <div class="comp-title">Aira</div>
+          <div class="comp-subtitle">ИИ-ассистент</div>
+        </div>
+      </div>
+      <ul class="comp-list">
+        <li>Не уходит. Никогда. Все знания о вашем бизнесе остаются навсегда</li>
+        <li>Настраивается один раз за 48 часов — и сразу в работу</li>
+        <li>Работает 24/7/365, включая праздники и ночные часы</li>
+        <li>Отвечает на запросы мгновенно, в любое время суток</li>
+        <li>Обрабатывает неограниченное количество запросов параллельно</li>
+        <li>Все данные и контекст бизнеса хранятся и накапливаются</li>
+      </ul>
+      <div class="comp-price">
+        <div class="comp-price-label">Стоимость в год</div>
+        <div class="comp-price-num">€3 600</div>
+        <div class="comp-price-note">€800–1200 разовый запуск + €200–300/мес. В 3–4 раза дешевле живого ассистента</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <div class="section-label">Возможности</div>
+    <h2 class="section-title">Что умеет Aira</h2>
+    <p class="section-sub">Работает с вашими инструментами, говорит на вашем языке, знает ваш бизнес.</p>
+  </div>
+  <div class="features-grid reveal">
+    <div class="feature-card">
+      <div class="feature-icon">📞</div>
+      <div class="feature-title">Входящие звонки и сообщения</div>
+      <div class="feature-desc">Принимает звонки, квалифицирует лидов, берёт сообщения. Передаёт вам только то, что действительно требует внимания.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤙</div>
+      <div class="feature-title">Исходящий обзвон базы</div>
+      <div class="feature-desc">Сама звонит клиентам из вашей базы — напоминает о записи, оплате, продлении договора. До 10 000 контактов, настраиваемая частота.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Календарь и встречи</div>
+      <div class="feature-desc">Бронирует, переносит, отправляет подтверждения. Никакого «давайте согласуем время» туда-обратно.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🗂️</div>
+      <div class="feature-title">Работа с таблицами и CRM</div>
+      <div class="feature-desc">Читает и обновляет Google Sheets, Airtable, Notion, Bitrix24 в реальном времени. Данные всегда актуальны — без ручного ввода.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <div class="feature-title">Мессенджеры</div>
+      <div class="feature-desc">Telegram, WhatsApp, Instagram DM — Aira ведёт переписку в ваших каналах 24/7. Один голос, один стиль, ноль задержек.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <div class="feature-title">Автонапоминания</div>
+      <div class="feature-desc">Клиники, салоны, сервисы — клиент получает звонок или сообщение ровно тогда, когда нужно. Без ручной работы с вашей стороны.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✉️</div>
+      <div class="feature-title">Email и follow-up</div>
+      <div class="feature-desc">Готовит ответы, отслеживает открытые цепочки, флагует срочные письма. Ваш тон, ваш стиль.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <div class="feature-title">Мультиязычность</div>
+      <div class="feature-desc">Русский, английский, португальский, немецкий, испанский, французский. Переключается между языками внутри одного разговора.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Всегда на связи</div>
+      <div class="feature-desc">24/7/365, без выходных, без больничных. Обрабатывает неограниченное количество задач параллельно — не устаёт.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="reveal">
+    <div class="section-label">Как это работает</div>
+    <h2 class="section-title">Запуск за 48 часов</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div>
+        <div class="step-title">Знакомство с вашим бизнесом</div>
+        <div class="step-desc">30-минутный онбординг-звонок. Рассказываете, как работает ваш бизнес, кто ваши клиенты, что должен делать ассистент — и что никогда не должен делать без вас.</div>
+        <span class="step-time">День 1 — 30 минут</span>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div>
+        <div class="step-title">Настройка под вас</div>
+        <div class="step-desc">Мы настраиваем Aira: голос, стиль общения, бизнес-правила, доступ к календарю и инструментам. Вы ничего не настраиваете сами — мы берём это на себя.</div>
+        <span class="step-time">День 1–2 — всё на нашей стороне</span>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div>
+        <div class="step-title">Aira выходит на работу</div>
+        <div class="step-desc">Запуск. Aira начинает принимать запросы, вести расписание и переписку. Еженедельные сводки, корректировки в любой момент. Вы всегда в контроле.</div>
+        <span class="step-time">День 2 — Aira уже работает</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="reviews">
+  <div class="reveal">
+    <div class="section-label">Отзывы клиентов</div>
+    <h2 class="section-title">Что говорят те, кто уже работает с Aira</h2>
+  </div>
+  <div class="testimonials reveal">
+    <div class="testi-card">
+      <div class="testi-text">Запустили Aira вместо третьего ассистента за два года. Разница ощутимая с первой же недели — ни один лид не потерян, и я наконец перестал сам отвечать на звонки по выходным.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🇵🇹</div>
+        <div>
+          <div class="testi-name">Marcos V.</div>
+          <div class="testi-role">Управляющий директор, строительная компания, Португалия</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">У нас клиенты из трёх стран, и они пишут на разных языках. Aira отвечает на русском, английском и немецком без задержки. Это то, что мы не могли решить ни с одним живым ассистентом.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🇩🇪</div>
+        <div>
+          <div class="testi-name">Elena K.</div>
+          <div class="testi-role">CEO, консалтинговое агентство, Германия</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">Честно — скептически относился к ИИ-ассистентам. Но Aira ведёт переписку так, что клиенты не догадываются. Экономим около €800 в месяц по сравнению с предыдущим решением.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">🇪🇸</div>
+        <div>
+          <div class="testi-name">Andrés M.</div>
+          <div class="testi-role">Основатель, сеть клиник красоты, Испания</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="reveal">
+    <div class="section-label">Тарифы</div>
+    <h2 class="section-title">Прозрачные цены</h2>
+    <p class="section-sub">Разовый запуск. Ежемесячная подписка. Отмена в любой момент. Модули подключаются к любому тарифу.</p>
+  </div>
+  <div class="pricing-grid reveal">
+
+    <!-- ПЛАН 1: БАЗОВЫЙ -->
+    <div class="pricing-card">
+      <div class="plan-name">Базовый</div>
+      <div class="price-setup">
+        <span class="price-setup-label">Запуск</span>
+        <span class="price-setup-num">€800</span>
+      </div>
+      <div class="price-monthly">+ <span>€200 / месяц</span></div>
+      <div class="price-saving">Экономия до €800/мес vs живой ассистент</div>
+      <div class="price-desc">Для предпринимателей, которым нужен надёжный ИИ-ассистент на входящих задачах.</div>
+      <ul class="price-features">
+        <li>Приём звонков и сообщений</li>
+        <li>Управление календарём и встречами</li>
+        <li>Email: черновики и follow-up</li>
+        <li>Ежедневные брифинги</li>
+        <li>1 телефонный номер включён</li>
+        <li>Онбординг и настройка включены</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Начать →</a>
+    </div>
+
+    <!-- ПЛАН 2: ПРОФЕССИОНАЛЬНЫЙ -->
+    <div class="pricing-card featured">
+      <div class="pricing-tag">Популярный</div>
+      <div class="plan-name">Профессиональный</div>
+      <div class="price-setup">
+        <span class="price-setup-label">Запуск</span>
+        <span class="price-setup-num">€1 200</span>
+      </div>
+      <div class="price-monthly">+ <span>€350 / месяц</span></div>
+      <div class="price-saving">Полная замена штатного ассистента при ⅓ стоимости</div>
+      <div class="price-desc">Для владельцев бизнеса, которым нужен проактивный ассистент с интеграциями.</div>
+      <ul class="price-features">
+        <li>Всё из Базового</li>
+        <li>Интеграция с CRM / Google Sheets / Airtable</li>
+        <li>Синхронизация с Telegram, WhatsApp</li>
+        <li>Квалификация лидов + передача в CRM</li>
+        <li>Мультиязычность (6+ языков)</li>
+        <li>Персонаж и голос под ваш бренд</li>
+        <li>Ежемесячный звонок оптимизации</li>
+        <li>Приоритетная поддержка</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Начать →</a>
+    </div>
+
+    <!-- ПЛАН 3: КОМАНДНЫЙ -->
+    <div class="pricing-card elite">
+      <div class="pricing-tag elite-tag">Максимум</div>
+      <div class="plan-name">Командный</div>
+      <div class="price-setup">
+        <span class="price-setup-label">Запуск</span>
+        <span class="price-setup-num">€2 500</span>
+      </div>
+      <div class="price-monthly">+ <span>€600 / месяц</span></div>
+      <div class="price-saving">Полноценный ИИ-сотрудник с исходящими задачами</div>
+      <div class="price-desc">Для компаний, которым нужен проактивный агент — не только реагирует, но и действует самостоятельно.</div>
+      <ul class="price-features">
+        <li>Всё из Профессионального</li>
+        <li>Исходящий обзвон по базе клиентов</li>
+        <li>Автонапоминания: платежи, записи, дедлайны</li>
+        <li>Работа с базой до 10 000 контактов</li>
+        <li>Настройка частоты звонков (1–3 раза/нед)</li>
+        <li>Интеграция с Google Sheets / Notion / Bitrix</li>
+        <li>Умная приоритизация: кому позвонить первым</li>
+        <li>Выделенный менеджер + SLA-поддержка</li>
+      </ul>
+      <a href="#contact" class="btn-plan">Обсудить проект →</a>
+    </div>
+
+  </div>
+
+  <!-- МОДУЛИ -->
+  <div class="modules-section reveal">
+    <div class="modules-label">Дополнительные модули — подключаются к любому тарифу</div>
+    <div class="modules-grid">
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">📞</div>
+          <div>
+            <div class="module-price">+€150</div>
+            <div class="module-price-sub">разово + €80/мес</div>
+          </div>
+        </div>
+        <div class="module-title">Исходящие звонки</div>
+        <div class="module-desc">Aira сама звонит клиентам по вашему расписанию. Напоминания, подтверждения, follow-up после встреч.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">🗂️</div>
+          <div>
+            <div class="module-price">+€120</div>
+            <div class="module-price-sub">разово + €50/мес</div>
+          </div>
+        </div>
+        <div class="module-title">База клиентов</div>
+        <div class="module-desc">Подключение к Google Sheets, Airtable или Notion. Aira читает, обновляет и обрабатывает данные в реальном времени.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">💬</div>
+          <div>
+            <div class="module-price">+€100</div>
+            <div class="module-price-sub">разово + €40/мес</div>
+          </div>
+        </div>
+        <div class="module-title">Мессенджеры</div>
+        <div class="module-desc">Telegram, WhatsApp, Instagram DM. Aira ведёт переписку в ваших каналах от вашего имени.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">🔔</div>
+          <div>
+            <div class="module-price">+€100</div>
+            <div class="module-price-sub">разово + €40/мес</div>
+          </div>
+        </div>
+        <div class="module-title">Автонапоминания</div>
+        <div class="module-desc">Клиники, салоны, сервисы — Aira напоминает о записи, оплате или продлении. Настраиваемая периодичность.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">🏷️</div>
+          <div>
+            <div class="module-price">+€200</div>
+            <div class="module-price-sub">разово + €60/мес</div>
+          </div>
+        </div>
+        <div class="module-title">Белый ярлык</div>
+        <div class="module-desc">Собственное имя, голос и стиль. Ваши клиенты общаются с «Мариной» или «Алексом» — полностью под ваш бренд.</div>
+      </div>
+      <div class="module-card">
+        <div class="module-top">
+          <div class="module-icon">📊</div>
+          <div>
+            <div class="module-price">+€150</div>
+            <div class="module-price-sub">разово + €50/мес</div>
+          </div>
+        </div>
+        <div class="module-title">Аналитика и отчёты</div>
+        <div class="module-desc">Еженедельный дашборд: сколько звонков, сколько лидов, конверсия, пропущенные задачи — всё в одном отчёте.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="reveal">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Частые вопросы</h2>
+  </div>
+  <div class="faq reveal">
+    <div class="faq-item">
+      <div class="faq-q">Как быстро можно запустить Aira?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Большинство клиентов полностью в работе в течение 48 часов после онбординг-звонка. Всю техническую настройку берём на себя — от вас нужно только рассказать, как работает ваш бизнес.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Узнают ли клиенты, что общаются с ИИ?<div class="faq-icon">+</div></div>
+      <div class="faq-a">На тарифе Профессиональный Aira получает ваше название, голос и стиль общения. Клиенты воспринимают его как полноценного сотрудника. Вы сами решаете, раскрывать ли это.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Что происходит, если Aira не может справиться с задачей?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Aira знает свои границы. Всё, что выходит за настроенные рамки, немедленно передаётся вам с полным контекстом — вы можете включиться за секунды.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Есть ли контракт или минимальный срок?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Никакого долгосрочного контракта. Ежемесячная подписка, отмена в любой момент. Стоимость запуска покрывает онбординг и первоначальную настройку.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">На каких языках работает Aira?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Русский, английский, португальский, немецкий, испанский, французский. Дополнительные языки — по запросу. Aira переключается между языками в рамках одного разговора.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Есть ли партнёрская программа?<div class="faq-icon">+</div></div>
+      <div class="faq-a">Да. Мы работаем с кадровыми агентствами, бизнес-консультантами и коучами, которые хотят предлагать Aira своим клиентам. Напишите нам — обсудим условия партнёрства.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LIVE DEMO -->
+<section class="section" id="demo" style="text-align:center">
+  <div class="reveal">
+    <div class="section-label" style="justify-content:center">Живое демо</div>
+    <h2 class="section-title">Поговорите с Aira прямо сейчас</h2>
+    <p class="section-sub" style="margin:0 auto">Нажмите кнопку — Aira позвонит вам как настоящий ассистент. Это не запись. Это живой разговор.</p>
+  </div>
+
+  <div class="reveal" style="margin-top:3rem;display:flex;flex-direction:column;align-items:center;gap:2rem">
+
+    <!-- Phone mockup -->
+    <div style="background:#111;border:1px solid #1e1e1e;border-radius:32px;padding:2rem 2rem 2.5rem;width:280px;position:relative;box-shadow:0 40px 80px rgba(0,0,0,0.6)">
+      <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:70px;height:3px;background:#1a1a1a;border-radius:0 0 4px 4px"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,168,32,0.2),transparent)"></div>
+
+      <!-- Avatar with pulse -->
+      <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:1.5rem">
+        <div style="position:relative;width:80px;height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem">
+          <div style="position:absolute;width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(200,168,32,0.2);animation:rp 2s ease-out infinite"></div>
+          <div style="position:absolute;width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(200,168,32,0.15);animation:rp 2s ease-out 0.7s infinite"></div>
+          <div style="width:60px;height:60px;border-radius:50%;background:#1a1a1a;border:1.5px solid rgba(200,168,32,0.35);display:flex;align-items:center;justify-content:center;position:relative;z-index:2">
+            <svg width="28" height="28" viewBox="0 0 104 104">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+              <path d="M34 80 L52 28 L70 80" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="41" y1="62" x2="63" y2="62" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M34 28 L52 80 L70 28" fill="none" stroke="#c8a820" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+              <circle cx="52" cy="6" r="3" fill="#c8a820"/>
+              <circle cx="98" cy="52" r="3" fill="#c8a820"/>
+            </svg>
+          </div>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;font-weight:600;color:#fff;letter-spacing:-0.01em">Aira</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-transform:uppercase;margin-top:3px;display:flex;align-items:center;gap:5px">
+          <span style="width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,0.5);display:inline-block"></span>
+          Готова к разговору
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:rgba(255,255,255,0.3);text-align:center;margin-bottom:1.2rem;line-height:1.6">
+        Нажмите иконку микрофона ниже<br>и Aira начнёт разговор первой
+      </div>
+
+      <!-- ElevenLabs widget -->
+      <div style="display:flex;justify-content:center">
+        <elevenlabs-convai agent-id="agent_1101kt9d092cens96j5nkd0zmm84"></elevenlabs-convai>
+      </div>
+    </div>
+
+    <div style="max-width:400px;text-align:center">
+      <p style="font-size:12px;color:rgba(255,255,255,0.2);line-height:1.7">
+        Это живой ИИ-голос — не запись.<br>
+        Aira отвечает на ваши вопросы в реальном времени.<br>
+        Именно так она будет работать у вас в бизнесе.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes rp{0%{transform:scale(0.85);opacity:0.8}100%{transform:scale(1.7);opacity:0}}
+elevenlabs-convai{--eleven-labs-convai-primary-color:#c8a820 !important}
+</style>
+
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="reveal">
+    <div class="section-label">Начать работу</div>
+    <h2 class="section-title">Запросить демо</h2>
+    <p class="section-sub">Расскажите о своём бизнесе — и мы покажем, что именно Aira сделает за вас. Без презентаций, без давления. 20 минут.</p>
+  </div>
+  <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+    <div class="form-row">
+      <div class="form-field"><label>Ваше имя</label><input type="text" placeholder="Иван Смирнов" required></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="ivan@company.ru" required></div>
+    </div>
+    <div class="form-row">
+      <div class="form-field"><label>Компания</label><input type="text" placeholder="ООО «Ваш бизнес»"></div>
+      <div class="form-field">
+        <label>Интересующий тариф</label>
+        <select>
+          <option>Стартовый — €800 запуск + €200/мес</option>
+          <option>Профессиональный — €1 200 запуск + €300/мес</option>
+          <option>Партнёрство / Реселлер</option>
+          <option>Пока не определился</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-field"><label>Сообщение</label><textarea placeholder="Расскажите немного о вашем бизнесе и с какими задачами помог бы ИИ-ассистент..."></textarea></div>
+    <button type="submit" class="btn-submit">Отправить →</button>
+  </form>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <svg width="64" height="64" viewBox="0 0 104 104" style="margin-bottom:1.5rem;opacity:0.25">
+    <circle cx="52" cy="52" r="46" fill="none" stroke="white" stroke-width="1.2"/>
+    <path d="M34 82 L52 26 L70 82" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="41" y1="62" x2="63" y2="62" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M34 26 L52 82 L70 26" fill="none" stroke="#c8a820" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+    <circle cx="52" cy="6" r="3" fill="#c8a820"/><circle cx="52" cy="98" r="3" fill="#c8a820"/>
+    <circle cx="6" cy="52" r="3" fill="#c8a820"/><circle cx="98" cy="52" r="3" fill="#c8a820"/>
+  </svg>
+  <h2 class="cta-title">Готовы нанять своего<br><em>первого ИИ-сотрудника?</em></h2>
+  <p class="cta-sub">Присоединяйтесь к руководителям, которые уже освободились от операционной рутины.</p>
+  <a href="#contact" class="btn-primary">Получить демо →</a>
+</section>
+
+<footer>
+  <a href="#" class="logo">
+    <svg width="22" height="22" viewBox="0 0 104 104">
+      <circle cx="52" cy="52" r="46" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+      <path d="M34 82 L52 28 L70 82" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="41" y1="63" x2="63" y2="63" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="52" cy="6" r="3" fill="#c8a820"/><circle cx="52" cy="98" r="3" fill="#c8a820"/>
+      <circle cx="6" cy="52" r="3" fill="#c8a820"/><circle cx="98" cy="52" r="3" fill="#c8a820"/>
+    </svg>
+    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,0.3)">Aira</span>
+  </a>
+  <p>© 2025 Aira. The mark of intelligence.</p>
+  <p>hello@aira.agency</p>
+</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, {threshold:0.08});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+function handleSubmit(e){
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = 'Отправлено! Ответим в течение дня ✓';
+  btn.style.background = '#22c55e';
+  btn.style.color = 'black';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
