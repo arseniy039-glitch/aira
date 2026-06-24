@@ -88,9 +88,8 @@ nav {
 .hero-bg {
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(196,98,45,0.22) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 35% at 85% 85%, rgba(212,168,83,0.07) 0%, transparent 50%),
-    var(--dark);
+    linear-gradient(to bottom, rgba(28,16,8,0.55) 0%, rgba(28,16,8,0.75) 60%, rgba(28,16,8,0.95) 100%),
+    url('img/terrace.jpg') center center / cover no-repeat;
   z-index: 0;
 }
 .spark {
@@ -210,7 +209,20 @@ section { padding: 96px 24px; }
 }
 
 /* ── HOW IT WORKS — TAB SECTION ── */
-#how { background: var(--dark2); border-top: 1px solid var(--smoke2); border-bottom: 1px solid var(--smoke2); }
+#how {
+  position: relative;
+  border-top: 1px solid var(--smoke2);
+  border-bottom: 1px solid var(--smoke2);
+}
+#how::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(28,16,8,0.97) 0%, rgba(28,16,8,0.85) 60%, rgba(28,16,8,0.6) 100%),
+    url('img/bar.jpg') center center / cover no-repeat;
+  z-index: 0;
+}
+#how .container { position: relative; z-index: 1; }
 
 .steps-tabs {
   display: flex;
@@ -325,7 +337,18 @@ section { padding: 96px 24px; }
 .step-counter { font-size: 12px; color: var(--cream); opacity: .35; margin: 0 8px; }
 
 /* ── FEATURES / ACCORDION ── */
-#features { background: var(--dark); }
+#features {
+  position: relative;
+}
+#features::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(28,16,8,0.92) 0%, rgba(28,16,8,0.80) 50%, rgba(28,16,8,0.92) 100%),
+    url('img/hall.jpg') center center / cover no-repeat;
+  z-index: 0;
+}
+#features .container { position: relative; z-index: 1; }
 
 .features-accordion { margin-top: 48px; }
 .acc-item {
@@ -448,7 +471,19 @@ section { padding: 96px 24px; }
 .acc-full p:last-child { margin-bottom: 0; }
 
 /* ── BOOKING RESULT ── */
-#booking { background: var(--dark2); border-top: 1px solid var(--smoke2); }
+#booking {
+  position: relative;
+  border-top: 1px solid var(--smoke2);
+}
+#booking::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, rgba(28,16,8,0.95) 0%, rgba(28,16,8,0.85) 50%, rgba(28,16,8,0.65) 100%),
+    url('img/interior.jpg') center center / cover no-repeat;
+  z-index: 0;
+}
+#booking .container { position: relative; z-index: 1; }
 .booking-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -536,7 +571,18 @@ section { padding: 96px 24px; }
 }
 
 /* ── PRICING ── */
-#pricing { background: var(--dark); }
+#pricing {
+  position: relative;
+}
+#pricing::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(28,16,8,0.88) 0%, rgba(28,16,8,0.82) 100%),
+    url('img/food.jpg') center top / cover no-repeat;
+  z-index: 0;
+}
+#pricing .container { position: relative; z-index: 1; }
 .pricing-wrap {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
