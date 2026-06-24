@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TerraCotta · AI Консьерж · Ferragudo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --dark:   #1C1008;
+  --dark2:  #261508;
+  --dark3:  #120C05;
+  --terra:  #C4622D;
+  --terra2: #A04E22;
+  --gold:   #D4A853;
+  --cream:  #F5ECD7;
+  --cream2: #E8D9BC;
+  --smoke:  rgba(245,236,215,0.07);
+  --smoke2: rgba(245,236,215,0.13);
+  --smoke3: rgba(245,236,215,0.04);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--cream);
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  padding: 18px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(28,16,8,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(245,236,215,0.06);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: var(--cream);
+}
+.nav-logo span { color: var(--terra); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: .55;
+  text-decoration: none;
+  transition: opacity .2s, color .2s;
+}
+.nav-links a:hover { opacity: 1; color: var(--gold); }
+@media (max-width: 600px) {
+  .nav-links { display: none; }
+  nav { padding: 16px 20px; }
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 24px 80px;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(196,98,45,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 85% 85%, rgba(212,168,83,0.07) 0%, transparent 50%),
+    var(--dark);
+  z-index: 0;
+}
+.spark {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: flicker 3s ease-in-out infinite;
+}
+.spark-1 { width:3px; height:3px; background:var(--gold); opacity:.55; top:17%; left:14%; animation-delay:0s; }
+.spark-2 { width:2px; height:2px; background:var(--gold); opacity:.35; top:24%; right:19%; animation-delay:.9s; }
+.spark-3 { width:3px; height:3px; background:var(--terra); opacity:.45; top:68%; left:7%; animation-delay:1.5s; }
+.spark-4 { width:2px; height:2px; background:var(--gold); opacity:.45; top:63%; right:11%; animation-delay:.5s; }
+.spark-5 { width:4px; height:4px; background:var(--terra); opacity:.25; top:43%; left:4%; animation-delay:2.1s; }
+@keyframes flicker {
+  0%,100% { transform: scale(1); opacity: .45; }
+  50% { transform: scale(1.9); opacity: .85; }
+}
+.hero-content { position: relative; z-index: 1; max-width: 680px; }
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 4.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .8;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 11vw, 90px);
+  font-weight: 300;
+  line-height: .95;
+  letter-spacing: -1px;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.hero h1 em { font-style: italic; color: var(--terra); }
+.hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream2);
+  opacity: .65;
+  margin-bottom: 40px;
+}
+.divider { width: 36px; height: 1px; background: var(--terra); margin: 0 auto 44px; opacity: .5; }
+.hero-desc {
+  font-size: 15px;
+  color: var(--cream);
+  opacity: .58;
+  max-width: 440px;
+  margin: 0 auto 52px;
+  line-height: 1.85;
+}
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--terra);
+  color: var(--cream);
+  padding: 15px 38px;
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid var(--terra);
+  transition: background .25s, transform .2s;
+}
+.btn-primary:hover { background: var(--terra2); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent;
+  color: var(--cream);
+  padding: 14px 30px;
+  border: 1px solid rgba(245,236,215,0.22);
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color .25s, background .25s;
+}
+.btn-ghost:hover { border-color: var(--gold); background: var(--smoke); }
+
+/* ── SECTION BASE ── */
+section { padding: 96px 24px; }
+.container { max-width: 980px; margin: 0 auto; }
+.section-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .7;
+  margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 6vw, 54px);
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 20px;
+  line-height: 1.08;
+}
+.section-title em { font-style: italic; color: var(--terra); }
+.section-body {
+  font-size: 15px;
+  color: var(--cream);
+  opacity: .6;
+  max-width: 540px;
+  line-height: 1.9;
+  margin-bottom: 56px;
+}
+
+/* ── HOW IT WORKS — TAB SECTION ── */
+#how { background: var(--dark2); border-top: 1px solid var(--smoke2); border-bottom: 1px solid var(--smoke2); }
+
+.steps-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--smoke2);
+  margin-bottom: 0;
+  overflow-x: auto;
+}
+.step-tab {
+  flex-shrink: 0;
+  padding: 16px 28px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: .4;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid transparent;
+  transition: opacity .2s, border-color .2s, color .2s;
+  font-family: 'Lato', sans-serif;
+  position: relative;
+  bottom: -1px;
+}
+.step-tab:hover { opacity: .75; }
+.step-tab.active { opacity: 1; color: var(--gold); border-bottom-color: var(--terra); }
+
+.steps-content { margin-top: 0; }
+.step-panel {
+  display: none;
+  padding: 48px 0 16px;
+  animation: fadeIn .35s ease;
+}
+.step-panel.active { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 680px) { .step-panel.active { grid-template-columns: 1fr; gap: 32px; } }
+
+.step-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 96px;
+  font-weight: 300;
+  color: var(--terra);
+  opacity: .18;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.step-meta h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 14px;
+  line-height: 1.1;
+}
+.step-meta p {
+  font-size: 14px;
+  color: var(--cream);
+  opacity: .6;
+  line-height: 1.9;
+  margin-bottom: 14px;
+}
+.step-meta p:last-child { margin-bottom: 0; }
+.step-detail {
+  background: var(--smoke3);
+  border: 1px solid var(--smoke2);
+  border-left: 2px solid var(--terra);
+  padding: 28px 32px;
+}
+.step-detail h4 {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  opacity: .8;
+}
+.step-detail ul { list-style: none; }
+.step-detail li {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .65;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--smoke2);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.6;
+}
+.step-detail li:last-child { border-bottom: none; }
+.step-detail li::before { content: '·'; color: var(--terra); font-size: 18px; flex-shrink: 0; margin-top: -1px; }
+.steps-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 40px;
+  align-items: center;
+}
+.step-nav-btn {
+  padding: 10px 24px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
+  border: 1px solid var(--smoke2);
+  background: transparent;
+  color: var(--cream);
+  opacity: .6;
+  transition: opacity .2s, border-color .2s;
+}
+.step-nav-btn:hover { opacity: 1; border-color: var(--terra); }
+.step-counter { font-size: 12px; color: var(--cream); opacity: .35; margin: 0 8px; }
+
+/* ── FEATURES / ACCORDION ── */
+#features { background: var(--dark); }
+
+.features-accordion { margin-top: 48px; }
+.acc-item {
+  border-bottom: 1px solid var(--smoke2);
+}
+.acc-item:first-child { border-top: 1px solid var(--smoke2); }
+.acc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  cursor: pointer;
+  gap: 20px;
+  transition: color .2s;
+}
+.acc-header:hover .acc-title { color: var(--gold); }
+.acc-icon-wrap {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid var(--smoke2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: border-color .2s, background .2s;
+}
+.acc-item.open .acc-icon-wrap { border-color: var(--terra); background: rgba(196,98,45,0.1); }
+.acc-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 400;
+  color: var(--cream);
+  flex: 1;
+  line-height: 1.2;
+  transition: color .2s;
+}
+.acc-item.open .acc-title { color: var(--gold); }
+.acc-arrow {
+  font-size: 18px;
+  color: var(--terra);
+  opacity: .7;
+  transition: transform .3s;
+  flex-shrink: 0;
+}
+.acc-item.open .acc-arrow { transform: rotate(180deg); }
+.acc-body {
+  display: none;
+  padding: 0 0 40px 64px;
+}
+.acc-item.open .acc-body { display: block; animation: fadeIn .3s ease; }
+@media (max-width: 600px) { .acc-body { padding-left: 0; } }
+
+.acc-lead {
+  font-size: 15px;
+  color: var(--cream);
+  opacity: .65;
+  line-height: 1.9;
+  max-width: 600px;
+  margin-bottom: 28px;
+}
+.acc-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+@media (max-width: 600px) { .acc-cols { grid-template-columns: 1fr; } }
+.acc-col {
+  background: var(--smoke3);
+  border: 1px solid var(--smoke2);
+  padding: 24px 24px 20px;
+}
+.acc-col-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.acc-col-label.plus { color: #7BC67E; }
+.acc-col-label.minus { color: #E07B7B; }
+.acc-col-label.info { color: var(--gold); }
+.acc-col ul { list-style: none; }
+.acc-col li {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .6;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--smoke2);
+  display: flex;
+  gap: 8px;
+  line-height: 1.6;
+}
+.acc-col li:last-child { border-bottom: none; }
+.acc-col li .li-icon { flex-shrink: 0; margin-top: 1px; }
+.acc-full {
+  background: var(--smoke3);
+  border: 1px solid var(--smoke2);
+  padding: 24px 28px;
+  margin-top: 0;
+}
+.acc-full-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .7;
+  margin-bottom: 14px;
+}
+.acc-full p {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .6;
+  line-height: 1.85;
+  margin-bottom: 10px;
+}
+.acc-full p:last-child { margin-bottom: 0; }
+
+/* ── BOOKING RESULT ── */
+#booking { background: var(--dark2); border-top: 1px solid var(--smoke2); }
+.booking-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+  margin-top: 48px;
+}
+@media (max-width: 680px) { .booking-wrap { grid-template-columns: 1fr; gap: 32px; } }
+.booking-card {
+  background: var(--dark3);
+  border: 1px solid rgba(245,236,215,0.09);
+  border-top: 2px solid var(--terra);
+  padding: 36px 32px;
+}
+.booking-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.booking-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--smoke2);
+  font-size: 13px;
+}
+.booking-row:last-of-type { border-bottom: none; }
+.booking-row .label { color: var(--cream); opacity: .45; }
+.booking-row .value { color: var(--cream); font-weight: 400; text-align: right; }
+.booking-row .value.gold { color: var(--gold); }
+.booking-confirmed {
+  margin-top: 20px;
+  background: rgba(76,175,80,0.09);
+  border: 1px solid rgba(76,175,80,0.22);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: #a5d6a7;
+}
+.booking-text h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+.booking-text p {
+  font-size: 14px;
+  color: var(--cream);
+  opacity: .55;
+  line-height: 1.85;
+  margin-bottom: 14px;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+.stat-item {
+  border: 1px solid var(--smoke2);
+  padding: 18px 16px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--terra);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-desc {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--cream);
+  opacity: .45;
+  text-transform: uppercase;
+}
+
+/* ── PRICING ── */
+#pricing { background: var(--dark); }
+.pricing-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+@media (max-width: 700px) { .pricing-wrap { grid-template-columns: 1fr; } }
+.pricing-card {
+  background: var(--dark2);
+  border: 1px solid rgba(245,236,215,0.1);
+  padding: 40px 36px;
+  position: relative;
+}
+.pricing-badge {
+  position: absolute;
+  top: -1px; right: 28px;
+  background: var(--terra);
+  color: var(--cream);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+}
+.pricing-intro {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: .7;
+  margin-bottom: 20px;
+}
+.price-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-period {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .38;
+  margin-bottom: 32px;
+}
+.price-features { list-style: none; margin-bottom: 32px; }
+.price-features li {
+  padding: 11px 0;
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .65;
+  border-bottom: 1px solid var(--smoke2);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.55;
+}
+.price-features li:last-child { border-bottom: none; }
+.price-features li::before { content: '·'; color: var(--terra); font-size: 18px; flex-shrink: 0; }
+.pricing-note {
+  background: var(--dark3);
+  border: 1px solid var(--smoke2);
+  padding: 28px 28px;
+}
+.pricing-note h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 14px;
+}
+.pricing-note p {
+  font-size: 13px;
+  color: var(--cream);
+  opacity: .55;
+  line-height: 1.85;
+  margin-bottom: 12px;
+}
+.pricing-note p:last-child { margin-bottom: 0; }
+.pricing-note strong { color: var(--gold); font-weight: 400; }
+.pilot-note {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--cream);
+  opacity: .38;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 52px 24px;
+  text-align: center;
+  border-top: 1px solid var(--smoke2);
+  background: var(--dark3);
+}
+footer .logo-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--cream);
+  opacity: .35;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+footer p {
+  font-size: 11px;
+  color: var(--cream);
+  opacity: .25;
+  letter-spacing: 1px;
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Terra<span>Cotta</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">Как работает</a></li>
+    <li><a href="#features">Возможности</a></li>
+    <li><a href="#booking">Результат</a></li>
+    <li><a href="#pricing">Условия</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="spark spark-1"></div>
+  <div class="spark spark-2"></div>
+  <div class="spark spark-3"></div>
+  <div class="spark spark-4"></div>
+  <div class="spark spark-5"></div>
+  <div class="hero-content">
+    <div class="eyebrow">TerraCotta · Ferragudo · AI Консьерж</div>
+    <h1>Каждый звонок —<br><em>принят</em></h1>
+    <div class="hero-sub">даже когда ресторан полон</div>
+    <div class="divider"></div>
+    <p class="hero-desc">
+      Голосовой AI-агент принимает бронирования столиков 24/7 на португальском, английском, русском и немецком языках — пока ваша команда сосредоточена на гостях в зале.
+    </p>
+    <div class="hero-cta">
+      <a href="#how" class="btn-primary">Как это работает</a>
+      <a href="#pricing" class="btn-ghost">Условия пилота</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="section-label reveal">Процесс запуска</div>
+    <h2 class="section-title reveal">От разговора до <em>первого звонка</em><br>— за три дня</h2>
+    <p class="section-body reveal">Никакого IT-отдела, долгих интеграций или специального оборудования. Только четыре чётких шага.</p>
+
+    <div class="steps-tabs reveal">
+      <button class="step-tab active" data-step="0">01 · Погружение</button>
+      <button class="step-tab" data-step="1">02 · Голос и номер</button>
+      <button class="step-tab" data-step="2">03 · WhatsApp</button>
+      <button class="step-tab" data-step="3">04 · Запуск</button>
+    </div>
+
+    <div class="steps-content">
+
+      <div class="step-panel active" data-panel="0">
+        <div class="step-meta">
+          <div class="step-number">01</div>
+          <h3>Знакомство с TerraCotta</h3>
+          <p>Я изучаю ваш ресторан как будущий сотрудник: меню, часы работы, атмосфера, типичные гости и вопросы, которые чаще всего задают по телефону.</p>
+          <p>AI-агент обучается именно на вашем контенте — он знает, что у вас есть терраса с видом на реку, что шеф Кирил делает лучшую домашнюю пасту в Алгарве, что место нужно бронировать заранее в выходные.</p>
+        </div>
+        <div class="step-detail">
+          <h4>Что я собираю</h4>
+          <ul>
+            <li>Полное меню с описаниями и ценами</li>
+            <li>Расписание работы, праздничные часы</li>
+            <li>Количество столиков и зоны (зал, терраса, патио)</li>
+            <li>Особые предложения и сезонные блюда</li>
+            <li>Аллергены и вегетарианские опции</li>
+            <li>Стиль общения — как хотите, чтобы агент звучал</li>
+            <li>Частые вопросы, которые вас раздражают по телефону</li>
+          </ul>
+        </div>
+        <div class="steps-nav">
+          <button class="step-nav-btn" onclick="goStep(1)">Следующий шаг →</button>
+          <span class="step-counter">1 / 4</span>
+        </div>
+      </div>
+
+      <div class="step-panel" data-panel="1">
+        <div class="step-meta">
+          <div class="step-number">02</div>
+          <h3>Голос агента и португальский номер</h3>
+          <p>Подключаем португальский номер телефона (+351). Звонки из Лиссабона, Лондона, Москвы, Берлина — все попадают на один номер, агент отвечает на языке гостя автоматически.</p>
+          <p>Выбираем голос: тёплый женский, профессиональный, с правильным произношением португальских слов. Никакого роботизированного «Пожалуйста, нажмите один для резервации».</p>
+        </div>
+        <div class="step-detail">
+          <h4>Технические детали</h4>
+          <ul>
+            <li>Португальский номер +351 — или переадресация с вашего текущего</li>
+            <li>Автоопределение языка: PT · EN · RU · DE</li>
+            <li>Задержка ответа &lt;1 секунды — гость не слышит паузы</li>
+            <li>Параллельные звонки — в пятницу вечером никто не услышит «занято»</li>
+            <li>Переключение на живого сотрудника одним нажатием клавиши</li>
+            <li>Тест-звонки перед запуском — вы сами убеждаетесь в качестве</li>
+          </ul>
+        </div>
+        <div class="steps-nav">
+          <button class="step-nav-btn" onclick="goStep(0)">← Назад</button>
+          <button class="step-nav-btn" onclick="goStep(2)">Следующий шаг →</button>
+          <span class="step-counter">2 / 4</span>
+        </div>
+      </div>
+
+      <div class="step-panel" data-panel="2">
+        <div class="step-meta">
+          <div class="step-number">03</div>
+          <h3>Интеграция с WhatsApp</h3>
+          <p>Каждое бронирование — мгновенное уведомление управляющему в WhatsApp. Имя гостя, количество персон, дата, время, особые пожелания — всё в одном сообщении.</p>
+          <p>Гость тоже получает подтверждение автоматически: «Ваш столик на 4 персоны 28 июня в 20:30 на террасе TerraCotta подтверждён. Ждём вас!»</p>
+        </div>
+        <div class="step-detail">
+          <h4>Что приходит в WhatsApp</h4>
+          <ul>
+            <li>📋 Имя и контактный телефон гостя</li>
+            <li>👥 Количество гостей и зона (зал / терраса)</li>
+            <li>📅 Дата и точное время</li>
+            <li>✨ Особые пожелания: аллергия, детское кресло, день рождения, годовщина</li>
+            <li>🌍 Язык гостя — вы знаете, как с ним общаться</li>
+            <li>Дубль в таблицу Google Sheets — если нужна история броней</li>
+          </ul>
+        </div>
+        <div class="steps-nav">
+          <button class="step-nav-btn" onclick="goStep(1)">← Назад</button>
+          <button class="step-nav-btn" onclick="goStep(3)">Следующий шаг →</button>
+          <span class="step-counter">3 / 4</span>
+        </div>
+      </div>
+
+      <div class="step-panel" data-panel="3">
+        <div class="step-meta">
+          <div class="step-number">04</div>
+          <h3>Запуск и первые две недели</h3>
+          <p>Агент выходит в эфир. Первые две недели — ежедневный мониторинг: я слушаю записи звонков, правлю фразы, которые звучат неестественно, добавляю ответы на неожиданные вопросы гостей.</p>
+          <p>После этого система работает самостоятельно. Вы можете в любой момент попросить изменить часы, добавить блюдо или сменить приветствие.</p>
+        </div>
+        <div class="step-detail">
+          <h4>Что включено в первые 30 дней</h4>
+          <ul>
+            <li>Ежедневный разбор первых 5 дней звонков</li>
+            <li>До 3 правок промпта и голоса агента</li>
+            <li>Добавление новых сценариев — сезонные меню, события, закрытые мероприятия</li>
+            <li>Отчёт по итогам месяца: сколько звонков, сколько броней, топ вопросов гостей</li>
+            <li>Поддержка в WhatsApp 7 дней в неделю</li>
+          </ul>
+        </div>
+        <div class="steps-nav">
+          <button class="step-nav-btn" onclick="goStep(2)">← Назад</button>
+          <a href="#pricing" class="step-nav-btn" style="text-decoration:none;">Условия →</a>
+          <span class="step-counter">4 / 4</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES ACCORDION -->
+<section id="features">
+  <div class="container">
+    <div class="section-label reveal">Подробно о возможностях</div>
+    <h2 class="section-title reveal">Что умеет агент —<br><em>честно, с плюсами и минусами</em></h2>
+    <p class="section-body reveal">Нажмите на любой раздел — раскроется подробное описание, что работает хорошо, что имеет ограничения и как это влияет на ваш ресторан.</p>
+
+    <div class="features-accordion reveal">
+
+      <!-- 1 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📞</div>
+          <div class="acc-title">Приём звонков и бронирование столиков</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">Основная задача агента — взять трубку в любой момент и провести гостя через бронирование от «здравствуйте» до подтверждения резервации. Именно здесь теряется больше всего денег в ресторанном бизнесе.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Работает отлично</div>
+              <ul>
+                <li><span class="li-icon">·</span>Отвечает на первом гудке 24 часа в сутки, 7 дней в неделю</li>
+                <li><span class="li-icon">·</span>Ведёт полный диалог: имя, дата, время, количество гостей</li>
+                <li><span class="li-icon">·</span>Уточняет особые пожелания — аллергии, детские стулья, поводы</li>
+                <li><span class="li-icon">·</span>Повторяет все данные для подтверждения гостем — ошибок меньше</li>
+                <li><span class="li-icon">·</span>Работает параллельно — нет очереди и «перезвоните позже»</li>
+                <li><span class="li-icon">·</span>Шлёт подтверждение гостю и уведомление управляющему мгновенно</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label minus">⚠ Ограничения</div>
+              <ul>
+                <li><span class="li-icon">·</span>Не видит в реальном времени, какие столы уже заняты — только ваши часы работы</li>
+                <li><span class="li-icon">·</span>Не отменяет и не переносит бронь автоматически (пока) — нужен человек</li>
+                <li><span class="li-icon">·</span>Сильный акцент или очень тихий звонок иногда требует уточнения</li>
+                <li><span class="li-icon">·</span>Очень нестандартные просьбы («хочу стол прямо у воды») — передаёт управляющему</li>
+              </ul>
+            </div>
+          </div>
+          <div class="acc-full">
+            <div class="acc-full-label">Как это выглядит на практике</div>
+            <p>Пятница, 21:00. Ресторан полон, официанты не могут отойти от столиков. Телефон звонит — агент отвечает. За следующие 2 минуты он принимает бронь на субботу, записывает, что у гостя годовщина, просит имя и номер, повторяет всё для проверки и прощается. Управляющий получает сообщение в WhatsApp и просто добавляет резервацию в свою книгу.</p>
+            <p>За месяц пилота типичный ресторан такого размера, как TerraCotta, перехватывает 40–80 звонков, которые иначе ушли бы в пустоту или на конкурентов.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🌍</div>
+          <div class="acc-title">Мультиязычность — 4 языка</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">Алгарве — один из самых интернациональных туристических регионов Европы. Гости TerraCotta говорят по-португальски, по-английски, по-русски и по-немецки. Агент переключается автоматически — вам не нужен многоязычный персонал.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Работает отлично</div>
+              <ul>
+                <li><span class="li-icon">·</span>Автоопределение языка с первой фразы гостя</li>
+                <li><span class="li-icon">·</span>Португальский: европейское произношение, не бразильское</li>
+                <li><span class="li-icon">·</span>Английский: нейтральный международный акцент</li>
+                <li><span class="li-icon">·</span>Русский и немецкий: правильные падежи и грамматика</li>
+                <li><span class="li-icon">·</span>Названия блюд произносятся правильно на каждом языке</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label minus">⚠ Ограничения</div>
+              <ul>
+                <li><span class="li-icon">·</span>Испанский, французский и другие языки — пока не настроены (добавляемо)</li>
+                <li><span class="li-icon">·</span>Сильный региональный диалект иногда вызывает уточняющие вопросы</li>
+                <li><span class="li-icon">·</span>Переключение языка в середине разговора — работает, но иногда с паузой</li>
+              </ul>
+            </div>
+          </div>
+          <div class="acc-full">
+            <div class="acc-full-label">Почему это важно именно для TerraCotta</div>
+            <p>По данным Turismo de Portugal, в Алгарве в летний сезон более 70% гостей ресторанов — иностранцы. Среди них значительная часть — немецкие и британские туристы, а также русскоязычные гости из Португалии и других стран Европы. Каждый такой гость, который не смог объясниться по телефону, — потерянный столик.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🍝</div>
+          <div class="acc-title">Знание меню и ответы на вопросы</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">Агент знает ваше меню так же хорошо, как лучший официант. Он может рассказать о составе блюда, предупредить об аллергенах, порекомендовать вино к пасте и объяснить, чем отличается одно ризотто от другого.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Работает отлично</div>
+              <ul>
+                <li><span class="li-icon">·</span>Полное меню с описаниями, ценами и составом</li>
+                <li><span class="li-icon">·</span>Аллергены и диетические ограничения — глютен, лактоза, морепродукты</li>
+                <li><span class="li-icon">·</span>Вегетарианские и веганские блюда</li>
+                <li><span class="li-icon">·</span>Фирменные блюда и история их происхождения</li>
+                <li><span class="li-icon">·</span>Часы работы, как добраться, парковка</li>
+                <li><span class="li-icon">·</span>Проведение мероприятий и специальных ужинов</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label minus">⚠ Ограничения</div>
+              <ul>
+                <li><span class="li-icon">·</span>Дневные специальные блюда (блюда дня) — нужно обновлять вручную или через сообщение</li>
+                <li><span class="li-icon">·</span>Изменения в меню — обновление занимает до 24 часов</li>
+                <li><span class="li-icon">·</span>Очень специфические вопросы о технике приготовления — передаёт шефу</li>
+              </ul>
+            </div>
+          </div>
+          <div class="acc-full">
+            <div class="acc-full-label">Реальный пример</div>
+            <p>Гость звонит и говорит: «У меня аллергия на морепродукты и я не ем мясо — есть ли у вас для меня варианты?» Агент отвечает развёрнуто: называет три блюда, которые подходят, уточняет, что соус в одном из них готовится на рыбном бульоне, и предлагает уточнить у шефа при визите. Такой ответ вместо «перезвоните завтра» — это уже другой уровень сервиса.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">💬</div>
+          <div class="acc-title">WhatsApp-уведомления и история броней</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">Каждое бронирование — структурированное сообщение в WhatsApp управляющему. Не надо заходить ни в какие приложения и панели — всё приходит туда, где вы уже работаете.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Работает отлично</div>
+              <ul>
+                <li><span class="li-icon">·</span>Мгновенное уведомление сразу после завершения звонка</li>
+                <li><span class="li-icon">·</span>Форматированное сообщение — имя, дата, время, кол-во гостей, пожелания</li>
+                <li><span class="li-icon">·</span>Подтверждение гостю на его языке</li>
+                <li><span class="li-icon">·</span>Дубль в Google Sheets — все брони в одной таблице</li>
+                <li><span class="li-icon">·</span>Месячный отчёт: сколько звонков, броней, вопросов</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label minus">⚠ Ограничения</div>
+              <ul>
+                <li><span class="li-icon">·</span>Пока нет прямой интеграции с TheFork или OpenTable — это отдельный поток</li>
+                <li><span class="li-icon">·</span>Напоминания гостям о брони за 24 часа — в планах, ещё не реализовано</li>
+                <li><span class="li-icon">·</span>Двухсторонняя переписка с гостем через WhatsApp — пока не автоматизирована</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">🔄</div>
+          <div class="acc-title">Переключение на живого человека</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">AI-агент — не замена команде, а фильтр. Он берёт на себя 80% звонков, которые решаются стандартно. Всё нестандартное он передаёт человеку — с контекстом, без потери гостя.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Работает отлично</div>
+              <ul>
+                <li><span class="li-icon">·</span>Гость нажимает «0» в любой момент — переключение на управляющего</li>
+                <li><span class="li-icon">·</span>Агент сам предлагает перевести звонок при сложных ситуациях</li>
+                <li><span class="li-icon">·</span>Если управляющий недоступен — предлагает перезвонить в удобное время</li>
+                <li><span class="li-icon">·</span>Жалобы всегда идут к человеку — агент не пытается их обработать сам</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label info">ℹ Важно понимать</div>
+              <ul>
+                <li><span class="li-icon">·</span>Агент — не полная замена администратора, а помощник первого контакта</li>
+                <li><span class="li-icon">·</span>VIP-гости и постоянные клиенты — их лучше узнавать и обрабатывать лично</li>
+                <li><span class="li-icon">·</span>Конфликтные ситуации и возвраты — только человек</li>
+              </ul>
+            </div>
+          </div>
+          <div class="acc-full">
+            <div class="acc-full-label">Честная позиция</div>
+            <p>AI-агент делает не всё. Он делает одну вещь очень хорошо: не даёт ни одному звонку уйти в пустоту. Постоянный гость, который всегда просит «тот столик у окна» — его лучше обслуживать лично. Но новый гость из Германии, который звонит в воскресенье в 22:00, чтобы забронировать на следующую пятницу? Его агент поймает без вашего участия.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="acc-item">
+        <div class="acc-header" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap">📊</div>
+          <div class="acc-title">Аналитика и история звонков</div>
+          <div class="acc-arrow">▼</div>
+        </div>
+        <div class="acc-body">
+          <p class="acc-lead">Каждый звонок записывается и транскрибируется. Вы получаете данные, которых никогда не было: откуда звонят гости, что их интересует, в какое время больше всего броней, какие блюда спрашивают чаще всего.</p>
+          <div class="acc-cols">
+            <div class="acc-col">
+              <div class="acc-col-label plus">✓ Что вы видите</div>
+              <ul>
+                <li><span class="li-icon">·</span>Сколько звонков принято, сколько завершились бронью</li>
+                <li><span class="li-icon">·</span>Пиковые часы звонков — когда гости хотят дозвониться</li>
+                <li><span class="li-icon">·</span>Языковой срез — сколько % звонков на каждом языке</li>
+                <li><span class="li-icon">·</span>Топ вопросов — что гости спрашивают помимо брони</li>
+                <li><span class="li-icon">·</span>Текстовая расшифровка каждого разговора</li>
+              </ul>
+            </div>
+            <div class="acc-col">
+              <div class="acc-col-label info">ℹ Формат получения</div>
+              <ul>
+                <li><span class="li-icon">·</span>Еженедельный краткий отчёт в WhatsApp</li>
+                <li><span class="li-icon">·</span>Полный месячный отчёт в PDF</li>
+                <li><span class="li-icon">·</span>Google Таблица с историей всех броней</li>
+                <li><span class="li-icon">·</span>Доступ к записям звонков по запросу</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING RESULT -->
+<section id="booking">
+  <div class="container">
+    <div class="section-label reveal">Так выглядит результат</div>
+    <h2 class="section-title reveal">После каждого звонка —<br><em>готовое бронирование</em></h2>
+    <div class="booking-wrap reveal">
+      <div>
+        <div class="booking-card">
+          <h3>Подтверждение резервации</h3>
+          <div class="booking-row">
+            <span class="label">Ресторан</span>
+            <span class="value">TerraCotta, Ferragudo</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Гость</span>
+            <span class="value">Андрей Соколов</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Дата и время</span>
+            <span class="value gold">Суббота 28 июня · 20:30</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Гостей</span>
+            <span class="value">4 персоны</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Зона</span>
+            <span class="value">Терраса</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Повод</span>
+            <span class="value">Годовщина свадьбы</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Телефон</span>
+            <span class="value">+351 9** *** 847</span>
+          </div>
+          <div class="booking-row">
+            <span class="label">Язык звонка</span>
+            <span class="value">🇷🇺 Русский</span>
+          </div>
+          <div class="booking-confirmed">
+            ✓ &nbsp; Управляющий уведомлён · Гостю отправлено подтверждение
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-text">
+        <h3>Что происходит за кадром</h3>
+        <p>Пока агент разговаривает с Андреем — вы за столиком с другими гостями. За 2 минуты после окончания звонка в ваш WhatsApp приходит карточка бронирования — точно в таком формате, как слева.</p>
+        <p>Андрей получает подтверждение на русском языке с деталями резервации. Никто ничего не забыл, ничего не перепутал.</p>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="stat-num">43%</div>
+            <div class="stat-desc">звонков в пиковые часы остаются без ответа</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">83%</div>
+            <div class="stat-desc">гостей не перезвонят после попадания на автоответчик</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">24/7</div>
+            <div class="stat-desc">агент работает без перерывов и выходных</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3 дня</div>
+            <div class="stat-desc">от первого разговора до запуска</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label reveal">Условия сотрудничества</div>
+    <h2 class="section-title reveal">Пилотный месяц —<br><em>бесплатно</em></h2>
+    <p class="section-body reveal">Первый месяц — тест без обязательств и без контракта. Вы видите реальный результат, и только потом решаете, продолжать или нет.</p>
+    <div class="pricing-wrap reveal">
+      <div>
+        <div class="pricing-card">
+          <div class="pricing-badge">Спецпредложение</div>
+          <div class="pricing-intro">Пилотный период · Первый месяц</div>
+          <div class="price-big">€0</div>
+          <div class="price-period">затем €199 / месяц при продолжении</div>
+          <ul class="price-features">
+            <li>Голосовой агент на 4 языках (PT · EN · RU · DE)</li>
+            <li>Португальский номер телефона (+351)</li>
+            <li>WhatsApp-уведомления управляющему</li>
+            <li>Подтверждение гостю автоматически</li>
+            <li>Знание полного меню и расписания TerraCotta</li>
+            <li>Google Таблица с историей всех броней</li>
+            <li>Настройка за 3 дня — без IT-специалиста</li>
+            <li>Ежедневный мониторинг первые две недели</li>
+            <li>Поддержка 7 дней в неделю в WhatsApp</li>
+            <li>Месячный отчёт по звонкам и бронированиям</li>
+          </ul>
+          <a href="https://wa.me/351912345678" class="btn-primary" style="width:100%; justify-content:center; display:flex;">
+            Начать пилот — написать в WhatsApp
+          </a>
+        </div>
+        <p class="pilot-note">Без контракта · Отключить в любой момент · Нет скрытых платежей</p>
+      </div>
+      <div class="pricing-note">
+        <h4>Почему я предлагаю первый месяц бесплатно</h4>
+        <p>Я живу в Алгарве, и TerraCotta — это ресторан, который я рекомендую друзьям. Для меня важно, чтобы технология реально работала в условиях вашего ресторана, а не только в презентации.</p>
+        <p>Бесплатный пилот — это честный способ проверить: <strong>сколько звонков перехватит агент, сколько из них станут бронированиями, насколько удобно получать уведомления</strong>. Если через месяц вы не видите ценности — просто говорите, и мы расстаёмся без лишних слов.</p>
+        <p>Если видите — €199 в месяц при среднем чеке TerraCotta окупается одним перехваченным столиком на четверых в пятницу вечером.</p>
+        <p style="margin-top:20px; opacity:.45; font-size:12px; font-style:italic;">Arseniy Shtain · Aira AI Agent · arseniy039@gmail.com</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo-text">AIRA · AI Агент для ресторанов</div>
+  <p>Сделано с уважением к TerraCotta Ferragudo</p>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ── STEP TABS ──
+function goStep(idx) {
+  document.querySelectorAll('.step-tab').forEach((t, i) => {
+    t.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.step-panel').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+  });
+}
+document.querySelectorAll('.step-tab').forEach((tab, idx) => {
+  tab.addEventListener('click', () => goStep(idx));
+});
+
+// ── ACCORDION ──
+function toggleAcc(header) {
+  const item = header.parentElement;
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.acc-item.open').forEach(i => i.classList.remove('open'));
+  // Open clicked if was closed
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
