@@ -626,6 +626,9 @@ section { padding: 96px 24px; }
   font-style: italic;
   text-align: center;
 }
+@media (max-width: 640px) {
+  .pricing-tiers { grid-template-columns: 1fr !important; }
+}
 
 /* ── FOOTER ── */
 footer {
@@ -1119,38 +1122,59 @@ footer p {
     <div class="section-label reveal">Условия сотрудничества</div>
     <h2 class="section-title reveal">Пилотный месяц —<br><em>бесплатно</em></h2>
     <p class="section-body reveal">Первый месяц — тест без обязательств и без контракта. Вы видите реальный результат, и только потом решаете, продолжать или нет.</p>
-    <div class="pricing-wrap reveal">
-      <div>
-        <div class="pricing-card">
-          <div class="pricing-badge">Спецпредложение</div>
-          <div class="pricing-intro">Пилотный период · Первый месяц</div>
-          <div class="price-big">€0</div>
-          <div class="price-period">затем €199 / месяц при продолжении</div>
-          <ul class="price-features">
-            <li>Голосовой агент на 4 языках (PT · EN · RU · DE)</li>
-            <li>Португальский номер телефона (+351)</li>
-            <li>WhatsApp-уведомления управляющему</li>
-            <li>Подтверждение гостю автоматически</li>
-            <li>Знание полного меню и расписания TerraCotta</li>
-            <li>Google Таблица с историей всех броней</li>
-            <li>Настройка за 3 дня — без IT-специалиста</li>
-            <li>Ежедневный мониторинг первые две недели</li>
-            <li>Поддержка 7 дней в неделю в WhatsApp</li>
-            <li>Месячный отчёт по звонкам и бронированиям</li>
-          </ul>
-          <a href="https://wa.me/351912345678" class="btn-primary" style="width:100%; justify-content:center; display:flex;">
-            Начать пилот — написать в WhatsApp
-          </a>
-        </div>
-        <p class="pilot-note">Без контракта · Отключить в любой момент · Нет скрытых платежей</p>
+
+    <!-- TWO TIERS -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:40px;" class="reveal pricing-tiers">
+      <!-- Tier 1: Incoming only -->
+      <div class="pricing-card">
+        <div class="pricing-badge">Старт</div>
+        <div class="pricing-intro">Входящие звонки · Брони</div>
+        <div class="price-big">€139</div>
+        <div class="price-period">/ месяц после пилота</div>
+        <ul class="price-features">
+          <li>Приём входящих звонков 24/7</li>
+          <li>Бронирование столиков на 4 языках</li>
+          <li>Португальский номер телефона (+351)</li>
+          <li>WhatsApp-уведомления управляющему</li>
+          <li>Подтверждение гостю автоматически</li>
+          <li>Знание меню, расписания и зон ресторана</li>
+          <li>Google Таблица с историей броней</li>
+          <li>Месячный отчёт по звонкам</li>
+          <li>Поддержка 7 дней в неделю</li>
+        </ul>
+        <a href="https://wa.me/351912345678" class="btn-ghost" style="width:100%; justify-content:center; display:flex;">
+          Начать пилот бесплатно
+        </a>
       </div>
-      <div class="pricing-note">
-        <h4>Почему я предлагаю первый месяц бесплатно</h4>
-        <p>Я живу в Алгарве, и TerraCotta — это ресторан, который я рекомендую друзьям. Для меня важно, чтобы технология реально работала в условиях вашего ресторана, а не только в презентации.</p>
-        <p>Бесплатный пилот — это честный способ проверить: <strong>сколько звонков перехватит агент, сколько из них станут бронированиями, насколько удобно получать уведомления</strong>. Если через месяц вы не видите ценности — просто говорите, и мы расстаёмся без лишних слов.</p>
-        <p>Если видите — €199 в месяц при среднем чеке TerraCotta окупается одним перехваченным столиком на четверых в пятницу вечером.</p>
-        <p style="margin-top:20px; opacity:.45; font-size:12px; font-style:italic;">Arseniy Shtain · Aira AI Agent · arseniy039@gmail.com</p>
+      <!-- Tier 2: Incoming + Outgoing -->
+      <div class="pricing-card" style="border-top-color: var(--gold);">
+        <div class="pricing-badge" style="background:var(--gold); color:var(--dark);">Полный</div>
+        <div class="pricing-intro">Входящие + Исходящие</div>
+        <div class="price-big">€299</div>
+        <div class="price-period">/ месяц после пилота</div>
+        <ul class="price-features">
+          <li>Всё из тарифа «Старт»</li>
+          <li>Исходящие звонки — напоминания о бронировании</li>
+          <li>Автозвонки гостям при отмене или переносе</li>
+          <li>Обзвон базы гостей по специальным поводам</li>
+          <li>Подтверждение броней за 24 часа до визита</li>
+          <li>Снижение no-show до 5% (в среднем с 18%)</li>
+          <li>Расширенная аналитика по гостям</li>
+          <li>До 500 исходящих минут в месяц включено</li>
+        </ul>
+        <a href="https://wa.me/351912345678" class="btn-primary" style="width:100%; justify-content:center; display:flex;">
+          Начать пилот бесплатно
+        </a>
       </div>
+    </div>
+    <p class="pilot-note reveal">Первый месяц — €0 для любого тарифа · Без контракта · Отключить в любой момент</p>
+
+    <!-- WHY FREE -->
+    <div class="pricing-note reveal" style="margin-top:40px; max-width:680px;">
+      <h4>Почему первый месяц бесплатно</h4>
+      <p>Пилот — это не маркетинговый ход. Любая технология должна доказать свою ценность в условиях конкретного ресторана, а не только в презентации. Бесплатный месяц — возможность проверить: <strong>сколько звонков перехватит агент, сколько станут реальными бронированиями, насколько удобно получать уведомления</strong>.</p>
+      <p>Если через месяц вы не видите ценности — просто говорите, расстаёмся без лишних слов. Если видите — тариф €139 окупается одним перехваченным столиком на четверых в пятницу вечером.</p>
+      <p style="margin-top:20px; opacity:.45; font-size:12px; font-style:italic;">Arseniy Shtain · Aira AI Agent · arseniy039@gmail.com</p>
     </div>
   </div>
 </section>
