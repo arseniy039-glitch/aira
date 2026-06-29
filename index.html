@@ -1050,13 +1050,17 @@ Keep answers to 2-4 sentences. Be warm, confident, never pushy. Respond in the s
     inp.value=''; addMsg('user',text);
     busy=true; showTyping();
     try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
+      const res=await fetch('https://primary-production-f690.up.railway.app/webhook/aira-chat',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:300,system:SYSTEM,messages:history.slice(-10)})
+        body:JSON.stringify({system:SYSTEM,messages:history.slice(-10)})
       });
       const data=await res.json(); hideTyping();
-      addMsg('bot',data.content?.[0]?.text||'Sorry, something went wrong. Email us at info@aira-ai.net');
+      // n8n proxy returns full Anthropic response object
+      const reply = (data.content && data.content[0] && data.content[0].text)
+        || data.reply || data.text
+        || 'Sorry, something went wrong. Email us at info@aira-ai.net';
+      addMsg('bot', reply);
     }catch(e){hideTyping();addMsg('bot','Connection error. Please email info@aira-ai.net');}
     busy=false;
   }
