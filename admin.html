@@ -202,11 +202,11 @@ footer a{color:var(--text-muted);text-decoration:none;}
   <div class="section-inner">
     <div class="section-label">Get Early Access</div>
     <form class="contact-form" onsubmit="handleSubmit(event)">
-      <div class="form-row"><label class="form-label">Name</label><input class="form-input" type="text" placeholder="Your name" required></div>
-      <div class="form-row"><label class="form-label">Business Name</label><input class="form-input" type="text" placeholder="Your business" required></div>
-      <div class="form-row"><label class="form-label">Email</label><input class="form-input" type="email" placeholder="your@email.com" required></div>
-      <div class="form-row"><label class="form-label">Phone</label><input class="form-input" type="tel" placeholder="+351 ..."></div>
-      <div class="form-row"><label class="form-label">City</label><input class="form-input" type="text" placeholder="City"></div>
+      <div class="form-row"><label class="form-label">Name</label><input class="form-input" id="f-name" type="text" placeholder="Your name" required></div>
+      <div class="form-row"><label class="form-label">Business Name</label><input class="form-input" id="f-business" type="text" placeholder="Your business" required></div>
+      <div class="form-row"><label class="form-label">Email</label><input class="form-input" id="f-email" type="email" placeholder="your@email.com" required></div>
+      <div class="form-row"><label class="form-label">Phone</label><input class="form-input" id="f-phone" type="tel" placeholder="+351 ..."></div>
+      <div class="form-row"><label class="form-label">City</label><input class="form-input" id="f-city" type="text" placeholder="City"></div>
       <button type="submit" class="form-submit">Get Early Access</button>
     </form>
   </div>
@@ -222,7 +222,32 @@ footer a{color:var(--text-muted);text-decoration:none;}
 </a>
 
 <script>
-function handleSubmit(e){e.preventDefault();const btn=e.target.querySelector('.form-submit');btn.textContent='✓ Sent';btn.disabled=true;}
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.form-submit');
+  const original=btn.textContent;
+  btn.textContent='...';
+  btn.disabled=true;
+  const payload={
+    page:'admin',
+    name:document.getElementById('f-name').value,
+    business:document.getElementById('f-business').value,
+    email:document.getElementById('f-email').value,
+    phone:document.getElementById('f-phone').value,
+    city:document.getElementById('f-city').value
+  };
+  fetch('https://primary-production-f690.up.railway.app/webhook/aira-site-leads',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(()=>{
+    btn.textContent='✓ Sent';
+  }).catch(()=>{
+    btn.textContent=original;
+    btn.disabled=false;
+    alert('Something went wrong — please email info@aira-ai.net directly.');
+  });
+}
 </script>
 
 </body>

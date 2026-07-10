@@ -406,8 +406,8 @@ No surprises.</h2>
         <p class="contact-desc" data-i18n="contact_desc">Tell us about your business and we'll show you exactly what an Aira agent would do on day one. We build a prototype before the call — you arrive with questions, not doubts.</p>
       </div>
       <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-        <div class="form-row"><label class="form-label" data-i18n="f_name">Name</label><input class="form-input" type="text" placeholder="Your name" data-i18n-ph="f_name_ph" required></div>
-        <div class="form-row"><label class="form-label" data-i18n="f_email">Email</label><input class="form-input" type="email" placeholder="your@email.com" data-i18n-ph="f_email_ph" required></div>
+        <div class="form-row"><label class="form-label" data-i18n="f_name">Name</label><input class="form-input" id="contact-name" type="text" placeholder="Your name" data-i18n-ph="f_name_ph" required></div>
+        <div class="form-row"><label class="form-label" data-i18n="f_email">Email</label><input class="form-input" id="contact-email" type="email" placeholder="your@email.com" data-i18n-ph="f_email_ph" required></div>
         <div class="form-row">
           <label class="form-label" data-i18n="f_agent">Agent interest</label>
           <select class="form-input" id="agent-select">
@@ -419,7 +419,7 @@ No surprises.</h2>
             <option data-i18n="f_agent_5">Not sure yet</option>
           </select>
         </div>
-        <div class="form-row"><label class="form-label" data-i18n="f_msg">Message</label><textarea class="form-input" placeholder="Tell us about your business..." data-i18n-ph="f_msg_ph"></textarea></div>
+        <div class="form-row"><label class="form-label" data-i18n="f_msg">Message</label><textarea class="form-input" id="contact-message" placeholder="Tell us about your business..." data-i18n-ph="f_msg_ph"></textarea></div>
         <button type="submit" class="form-submit" data-i18n="f_submit">Send message</button>
       </form>
     </div>
@@ -843,9 +843,28 @@ document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
 function handleSubmit(e) {
   e.preventDefault();
   const btn = e.target.querySelector('.form-submit');
-  btn.textContent = '✓';
-  btn.style.color = 'var(--dawn)';
+  const originalText = btn.textContent;
+  btn.textContent = '...';
   btn.disabled = true;
+  const payload = {
+    page: 'home',
+    name: document.getElementById('contact-name').value,
+    email: document.getElementById('contact-email').value,
+    business: document.getElementById('agent-select').value,
+    message: document.getElementById('contact-message').value
+  };
+  fetch('https://primary-production-f690.up.railway.app/webhook/aira-site-leads', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(r => {
+    btn.textContent = '✓';
+    btn.style.color = 'var(--dawn)';
+  }).catch(() => {
+    btn.textContent = originalText;
+    btn.disabled = false;
+    alert('Something went wrong — please email info@aira-ai.net directly.');
+  });
 }
 
 // ══════════════════════════════════════════
