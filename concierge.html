@@ -403,7 +403,7 @@ document.getElementById('pilotForm').addEventListener('submit', function(e){
     source: 'aira-ai.net v2'
   };
   st.className = 'status'; st.textContent = 'Sending…';
-  fetch('https://primary-production-f690.up.railway.app/webhook/aira-site-leads', {
+  fetch('https://n8n.aira-ai.net/webhook/aira-site-leads', {
     method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(data)
   }).then(function(r){
     if (!r.ok) throw new Error();
