@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira Rezeption — Die digitale Rezeption für Ihr Hotel</title>
+<meta name="description" content="KI-Sprachassistent für Hotels. Der Gast scannt einen QR-Code und hat die Rezeption auf dem Smartphone — in 5 Sprachen, rund um die Uhr. EU-Hosting, DSGVO-konform.">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef;--surface:#ffffff;--surface2:#f0ede5;
+  --navy:#10243b;--navy2:#1c3a5c;--ink:#14202e;--ink-soft:#4a5a6b;--ink-faint:#8a97a3;
+  --gold:#b88a2e;--gold-bright:#d4a23d;--gold-soft:#f3ead4;
+  --line:rgba(16,36,59,.1);--line-soft:rgba(16,36,59,.06);--max:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.serif{font-family:"Fraunces","Georgia",serif;font-weight:500}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:700}
+a{color:inherit;text-decoration:none}
+.logo{display:flex;align-items:center;gap:11px;font-weight:700}
+.logo .mark{width:32px;height:32px;display:grid;place-items:center;background:var(--navy);border-radius:8px;color:var(--gold-bright);font-family:"Fraunces",serif;font-size:18px;font-weight:600}
+.logo .name{font-size:18px;color:var(--navy)}.logo .name b{color:var(--gold)}
+header{position:sticky;top:0;z-index:50;background:rgba(246,244,239,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+.nav .cta-sm{font-size:13px;font-weight:600;background:var(--navy);color:#fff;padding:9px 18px;border-radius:8px;transition:.2s}
+.nav .cta-sm:hover{background:var(--navy2)}
+.hero{position:relative;padding:84px 0 72px}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:52px;align-items:center}
+.hero h1{font-size:clamp(34px,5vw,52px);line-height:1.08;letter-spacing:-.01em;margin:18px 0 0;color:var(--navy)}
+.hero h1 .g{color:var(--gold);font-style:italic}
+.hero .lead{font-size:18px;color:var(--ink-soft);margin-top:22px;max-width:31em}
+.hero .btns{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:14px 26px;border-radius:9px;transition:.2s;cursor:pointer;border:none}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--navy)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-note{margin-top:18px;font-size:13px;color:var(--ink-faint)}
+.trust-strip{display:flex;gap:22px;margin-top:26px;flex-wrap:wrap}
+.trust-strip span{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:7px}
+.trust-strip b{color:var(--gold)}
+.phone{position:relative;justify-self:center;width:248px;height:508px;border-radius:36px;background:#fff;border:1px solid var(--line);box-shadow:0 30px 60px -24px rgba(16,36,59,.28);padding:16px 14px;display:flex;flex-direction:column}
+.phone .notch{width:96px;height:22px;background:var(--navy);border-radius:0 0 13px 13px;margin:-16px auto 0;flex:none}
+.phone .scr-eyebrow{font-size:9px;letter-spacing:.26em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-top:18px}
+.phone .scr-hotel{font-family:"Fraunces",serif;font-size:21px;margin-top:5px;line-height:1.1;color:var(--navy)}
+.phone .scr-hotel b{color:var(--gold)}
+.phone .scr-langs{display:flex;gap:5px;margin-top:12px;flex-wrap:wrap}
+.phone .scr-langs span{font-size:9px;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--ink-soft)}
+.phone .scr-langs span.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:700}
+.phone .call{margin:26px auto 8px;width:94px;height:94px;border-radius:50%;background:var(--navy);display:grid;place-items:center;color:var(--gold-bright);position:relative;box-shadow:0 12px 30px -10px rgba(16,36,59,.4)}
+.phone .call .ring{position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--gold);animation:ring 2s ease-out infinite;opacity:0}
+@keyframes ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.45);opacity:0}}
+.phone .call .ic{font-size:30px}
+.phone .scr-cap{text-align:center;font-size:10px;color:var(--ink-faint);margin-top:4px}
+.phone .bubble{margin-top:auto;background:var(--surface2);color:var(--ink);font-size:10.5px;padding:8px 11px;border-radius:12px;border-bottom-left-radius:4px}
+.phone .bubble.me{background:var(--navy);color:#fff;align-self:flex-end;border-radius:12px;border-bottom-right-radius:4px;margin-top:7px}
+section{padding:78px 0;position:relative}
+.section-head{max-width:42em}
+.section-head h2{font-size:clamp(27px,3.6vw,40px);line-height:1.14;letter-spacing:-.01em;margin-top:14px;color:var(--navy)}
+.section-head p{color:var(--ink-soft);font-size:17px;margin-top:14px}
+.band-navy{background:var(--navy);color:#fff}
+.band-navy .eyebrow{color:var(--gold-bright)}
+.band-navy h2{color:#fff}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;text-align:center}
+.stat .num{font-family:"Fraunces",serif;font-size:clamp(40px,5vw,56px);color:var(--gold-bright);line-height:1;font-weight:600}
+.stat .lbl{color:rgba(255,255,255,.7);font-size:14px;margin-top:10px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.step{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:30px 26px;transition:.2s}
+.step:hover{border-color:var(--line);transform:translateY(-3px);box-shadow:0 18px 40px -22px rgba(16,36,59,.2)}
+.step .n{font-family:"Fraunces",serif;font-size:16px;color:#fff;background:var(--navy);width:36px;height:36px;border-radius:9px;display:grid;place-items:center;font-weight:600}
+.step h3{font-size:19px;margin:18px 0 8px;color:var(--navy)}.step p{color:var(--ink-soft);font-size:14.5px}
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:46px}
+.feat{display:flex;gap:16px;background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:24px}
+.feat .ic{flex:none;width:46px;height:46px;border-radius:11px;background:var(--gold-soft);display:grid;place-items:center;font-size:21px}
+.feat h3{font-size:17px;margin-bottom:5px;color:var(--navy)}.feat p{color:var(--ink-soft);font-size:14px}
+.cmp{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:44px}
+.cmp-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;border-top:1px solid var(--line-soft)}
+.cmp-row:first-child{border-top:none}
+.cmp-row>div{padding:18px 22px;font-size:14.5px}
+.cmp-row.head>div{background:var(--surface2);font-weight:600;font-size:13px;color:var(--navy)}
+.cmp-row.head .us{color:var(--gold)}
+.cmp .crit{color:var(--ink-soft)}.cmp .them{color:var(--ink-faint)}
+.cmp .us{color:var(--navy);font-weight:600}
+.cmp .us::before{content:"✓ ";color:var(--gold);font-weight:700}
+.cmp .them.x::before{content:"✕ ";color:#b06a4a}
+.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:46px;max-width:780px;margin-left:auto;margin-right:auto}
+.plan{background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;padding:34px 30px;position:relative;transition:.2s}
+.plan:hover{transform:translateY(-4px);box-shadow:0 22px 50px -26px rgba(16,36,59,.25)}
+.plan.pro{border:1.5px solid var(--gold)}
+.plan .tier{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.plan .badge{position:absolute;top:-12px;right:24px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;padding:6px 13px;border-radius:999px}
+.plan .price{font-family:"Fraunces",serif;font-size:46px;font-weight:600;margin:16px 0 2px;color:var(--navy)}
+.plan .price small{font-size:16px;color:var(--ink-soft);font-weight:400;font-family:"Inter",sans-serif}
+.plan .price-note{color:var(--ink-faint);font-size:13px}
+.plan ul{list-style:none;margin:24px 0 0}
+.plan li{padding:9px 0;font-size:14.5px;color:var(--ink-soft);display:flex;gap:10px;border-top:1px solid var(--line-soft)}
+.plan li:first-child{border-top:none}
+.plan li::before{content:"✓";color:var(--gold);font-weight:700;flex:none}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:46px}
+.tcard{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:30px 26px}
+.tcard .ti{font-size:26px;margin-bottom:12px}
+.tcard h3{font-size:16px;margin-bottom:6px;color:var(--navy)}
+.tcard p{color:var(--ink-soft);font-size:13.5px}
+.cta-band{text-align:center;padding:90px 0}
+.cta-band h2{font-size:clamp(28px,4vw,44px);line-height:1.12}
+.cta-band p{color:rgba(255,255,255,.75);font-size:17px;margin:18px auto 0;max-width:34em}
+footer{background:var(--navy);color:rgba(255,255,255,.6);padding:42px 0;font-size:13px}
+.foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.foot-row .logo .name{color:#fff}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:40px}.phone{order:-1}.steps,.feat-grid,.price-grid,.trust,.stat-grid{grid-template-columns:1fr}.cmp-row{grid-template-columns:1.3fr .85fr .85fr}.cmp-row>div{padding:14px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+  <div class="logo"><div class="mark">A</div><div class="name">Air<b>a</b></div></div>
+  <a class="cta-sm" href="#kontakt">Kostenlose Demo</a>
+</div></header>
+
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="eyebrow">Digitale Rezeption für Hotels</span>
+    <h1>Die Rezeption Ihres Hotels — <span class="g">jederzeit erreichbar.</span></h1>
+    <p class="lead">Der Gast scannt einen QR-Code und hat sofort Ihre Rezeption auf dem Smartphone. WLAN, Restaurant-Zeiten, Handtücher, Zimmerwünsche — per Sprache oder Text, in 5 Sprachen, rund um die Uhr. Mit deutscher Telefonnummer nimmt Aira auch Ihre Anrufe entgegen.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="#kontakt">Kostenlose Demo anfragen</a>
+      <a class="btn btn-ghost" href="#preise">Preise ansehen</a>
+    </div>
+    <div class="trust-strip">
+      <span><b>&#10003;</b> EU-Hosting</span>
+      <span><b>&#10003;</b> DSGVO-konform</span>
+      <span><b>&#10003;</b> Einsatzbereit in Tagen</span>
+    </div>
+  </div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="scr-eyebrow">Rezeption · 24/7</div>
+    <div class="scr-hotel">Hotel <b>Beispiel</b><br>Frankfurt</div>
+    <div class="scr-langs"><span class="on">DE</span><span>EN</span><span>FR</span><span>RU</span><span>PT</span></div>
+    <div class="call"><div class="ring"></div><div class="ic">&#9742;</div></div>
+    <div class="scr-cap">Tippen zum Sprechen</div>
+    <div class="bubble">Guten Abend! Das WLAN-Passwort lautet <b>Willkommen2026</b>. Kann ich sonst noch helfen?</div>
+    <div class="bubble me">Bis wann hat das Restaurant offen?</div>
+  </div>
+</div></section>
+
+<div class="band-navy"><div class="wrap" style="padding-top:56px;padding-bottom:56px"><div class="stat-grid">
+  <div class="stat"><div class="num">40%</div><div class="lbl">der Anrufe an Hotels bleiben unbeantwortet</div></div>
+  <div class="stat"><div class="num">24/7</div><div class="lbl">erreichbar — auch nachts und am Wochenende</div></div>
+  <div class="stat"><div class="num">5</div><div class="lbl">Sprachen: DE, EN, FR, RU, PT</div></div>
+</div></div></div>
+
+<section id="ablauf"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">So funktioniert es</span><h2>In drei Schritten startklar.</h2></div>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>QR-Code aufstellen</h3><p>Am Empfang, im Zimmer, im Aufzug. Der Gast scannt — und hat Ihre Rezeption sofort auf dem eigenen Smartphone, ohne App-Installation.</p></div>
+    <div class="step"><div class="n">2</div><h3>Aira antwortet</h3><p>Per Sprache oder Text, in 5 Sprachen, rund um die Uhr. Mit einer deutschen Rufnummer nimmt Aira zusätzlich Ihre Telefonanrufe entgegen.</p></div>
+    <div class="step"><div class="n">3</div><h3>Ihr Team behält die Kontrolle</h3><p>Jedes Gespräch landet per WhatsApp bei Ihrer Rezeption. Anfragen, die einen Menschen brauchen, werden sauber übergeben.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Was Aira leistet</span><h2>Eine Rezeption, die nie Feierabend macht.</h2></div>
+  <div class="feat-grid">
+    <div class="feat"><div class="ic">&#9742;</div><div><h3>Kein Anruf geht verloren</h3><p>Wenn das Team beschäftigt ist oder nachts: Aira nimmt ab. Keine verpasste Buchung, keine verärgerten Gäste.</p></div></div>
+    <div class="feat"><div class="ic">&#127760;</div><div><h3>5 Sprachen, sofort</h3><p>Deutsch, Englisch, Französisch, Russisch, Portugiesisch — jeder Gast wird in seiner Sprache verstanden.</p></div></div>
+    <div class="feat"><div class="ic">&#128241;</div><div><h3>Kein Gerät im Zimmer</h3><p>Keine Hardware, keine Installation in den Zimmern. Ein QR-Code genügt — der Rest läuft auf dem Smartphone des Gastes.</p></div></div>
+    <div class="feat"><div class="ic">&#9889;</div><div><h3>Startklar in Tagen</h3><p>Keine monatelangen Integrationsprojekte. Wir richten Aira mit Ihren Inhalten ein und gehen in wenigen Tagen live.</p></div></div>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Der Vergleich</span><h2>Eine zusätzliche Vollzeit-Kraft am Empfang kostet in Frankfurt rund 3.100 € im Monat.</h2><p>Arbeitgeberkosten einer Rezeptionskraft in Hessen. Aira deckt die wiederkehrenden Fragen rund um die Uhr ab — zu einem Bruchteil davon.</p></div>
+  <div class="cmp">
+    <div class="cmp-row head"><div>&nbsp;</div><div>Empfangskraft</div><div class="us">Aira</div></div>
+    <div class="cmp-row"><div class="crit">Erreichbarkeit</div><div class="them">~40 Std./Woche</div><div class="us">24 Std., 7 Tage</div></div>
+    <div class="cmp-row"><div class="crit">Sprachen</div><div class="them">1–2</div><div class="us">5 gleichzeitig</div></div>
+    <div class="cmp-row"><div class="crit">Krankheit / Urlaub / Fluktuation</div><div class="them x">ständiges Thema</div><div class="us">entfällt</div></div>
+    <div class="cmp-row"><div class="crit">Monatliche Kosten</div><div class="them">~3.100 €</div><div class="us">ab 349 €</div></div>
+  </div>
+</div></section>
+
+<section id="preise" style="background:var(--surface2)"><div class="wrap">
+  <div class="section-head" style="margin-left:auto;margin-right:auto;text-align:center"><span class="eyebrow">Preise</span><h2>Klar kalkulierbar. Monatlich kündbar.</h2></div>
+  <div class="price-grid">
+    <div class="plan">
+      <div class="tier">Basis</div>
+      <div class="price">349 €<small> /Monat</small></div>
+      <div class="price-note">Einrichtung ab 890 € einmalig</div>
+      <ul>
+        <li>QR-Rezeption auf dem Smartphone</li>
+        <li>5 Sprachen (DE, EN, FR, RU, PT)</li>
+        <li>Text & Sprache, rund um die Uhr</li>
+        <li>Weiterleitung an Ihre Rezeption per WhatsApp</li>
+      </ul>
+    </div>
+    <div class="plan pro">
+      <div class="badge">Empfohlen</div>
+      <div class="tier">Pro</div>
+      <div class="price">699 €<small> /Monat</small></div>
+      <div class="price-note">Einrichtung ab 890 € einmalig</div>
+      <ul>
+        <li>Alles aus Basis</li>
+        <li>Deutsche Telefonnummer — Aira nimmt Anrufe entgegen</li>
+        <li>Anrufannahme 24/7, kein verlorener Anruf</li>
+        <li>Individuelle Stimme & Inhalte Ihres Hauses</li>
+        <li>Bevorzugter Support</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section id="dsgvo"><div class="wrap">
+  <div class="section-head"><span class="eyebrow">Datenschutz</span><h2>In Europa gehostet. DSGVO-konform.</h2></div>
+  <div class="trust">
+    <div class="tcard"><div class="ti">&#127466;&#127482;</div><h3>EU-Hosting</h3><p>Ihre Daten und die Ihrer Gäste werden auf Servern innerhalb der Europäischen Union verarbeitet.</p></div>
+    <div class="tcard"><div class="ti">&#128274;</div><h3>DSGVO-konform</h3><p>Aufgebaut nach den Anforderungen der europäischen Datenschutz-Grundverordnung. Auftragsverarbeitungsvertrag inklusive.</p></div>
+    <div class="tcard"><div class="ti">&#128737;</div><h3>Keine Hardware-Risiken</h3><p>Keine Geräte in den Zimmern, keine Eingriffe in Ihre bestehende Telefonanlage nötig.</p></div>
+  </div>
+</div></section>
+
+<section id="kontakt" class="band-navy cta-band"><div class="wrap">
+  <span class="eyebrow">Kostenlose Demo</span>
+  <h2>Wir bauen Ihre Demo — mit dem Namen Ihres Hotels.</h2>
+  <p>Unverbindlich und kostenlos erstellen wir eine Demonstration mit dem Namen Ihres Hauses und einer deutschsprachigen Stimme. Sie testen selbst — und entscheiden danach.</p>
+  <div class="btns" style="justify-content:center;margin-top:32px">
+    <a class="btn btn-primary" style="background:var(--gold);color:var(--navy)" href="mailto:artechportugalia@gmail.com?subject=Aira%20Demo%20-%20Hotel">Demo anfragen</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap foot-row">
+  <div class="logo"><div class="mark">A</div><div class="name">Air<b>a</b></div></div>
+  <div>Aira — KI-Sprachassistenten für die Hotellerie · artechportugalia@gmail.com</div>
+  <div>Horizonte Solene Lda · EU-Hosting · DSGVO</div>
+</div></footer>
+</body>
+</html>

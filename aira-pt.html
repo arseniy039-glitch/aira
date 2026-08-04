@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira Recepção — A recepção do seu hotel, no bolso do hóspede</title>
+<meta name="description" content="Assistente de voz com IA para hotéis em Portugal. Sem equipamento, sem integração complexa. O hóspede faz a leitura de um QR e tem a recepção no telemóvel — em 5 idiomas, 24 horas.">
+<style>
+:root{
+  --bg:#0a0a0a;
+  --bg2:#121212;
+  --panel:#161616;
+  --panel2:#1c1c1c;
+  --gold:#c9a227;
+  --gold-bright:#e3bd3f;
+  --gold-dim:#8f7320;
+  --ink:#f2ede1;
+  --ink-soft:rgba(242,237,225,.62);
+  --ink-faint:rgba(242,237,225,.38);
+  --line:rgba(201,162,39,.16);
+  --line-soft:rgba(255,255,255,.07);
+  --max:1080px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"Inter",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+h1,h2,h3,.serif{font-family:"Playfair Display",Georgia,ui-serif,serif}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:700}
+a{color:inherit}
+
+/* logo mark */
+.logo{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:.02em}
+.logo .mark{width:30px;height:30px;flex:none;display:grid;place-items:center;border:1.5px solid var(--gold);border-radius:8px;color:var(--gold);font-family:"Playfair Display",serif;font-weight:700;font-size:17px}
+.logo .name{font-size:17px}
+.logo .name b{color:var(--gold)}
+
+/* nav */
+header{position:sticky;top:0;z-index:50;background:rgba(10,10,10,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line-soft)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav .cta-sm{font-size:13px;font-weight:600;border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:999px;text-decoration:none;transition:.2s}
+.nav .cta-sm:hover{background:var(--gold);color:var(--bg)}
+
+/* HERO */
+.hero{position:relative;padding:88px 0 76px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 78% 8%, rgba(201,162,39,.16), transparent 60%),
+  radial-gradient(50% 50% at 12% 95%, rgba(201,162,39,.07), transparent 60%);
+  pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5vw,56px);line-height:1.04;font-weight:700;letter-spacing:-.015em;margin:18px 0 0}
+.hero h1 .g{color:var(--gold);font-style:italic}
+.hero .lead{font-size:18px;color:var(--ink-soft);margin-top:22px;max-width:30em}
+.hero .btns{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:15px;padding:14px 26px;border-radius:999px;text-decoration:none;transition:.2s;cursor:pointer;border:none}
+.btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#1a1404;box-shadow:0 10px 30px -10px rgba(201,162,39,.5)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-note{margin-top:18px;font-size:13px;color:var(--ink-faint)}
+
+/* phone mockup */
+.phone{position:relative;justify-self:center;width:248px;height:506px;border-radius:38px;background:linear-gradient(160deg,#1a1a1a,#0d0d0d);border:1px solid rgba(201,162,39,.22);box-shadow:0 40px 80px -30px rgba(0,0,0,.8),0 0 0 8px rgba(0,0,0,.5);padding:16px 14px;display:flex;flex-direction:column}
+.phone .notch{width:110px;height:24px;background:#000;border-radius:0 0 14px 14px;margin:-16px auto 0;flex:none}
+.phone .scr-eyebrow{font-size:9px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-top:18px}
+.phone .scr-hotel{font-family:"Playfair Display",serif;font-size:21px;margin-top:5px;line-height:1.1}
+.phone .scr-hotel b{color:var(--gold)}
+.phone .scr-langs{display:flex;gap:5px;margin-top:12px;flex-wrap:wrap}
+.phone .scr-langs span{font-size:9px;padding:3px 7px;border-radius:99px;border:1px solid var(--line-soft);color:var(--ink-soft)}
+.phone .scr-langs span.on{background:var(--gold);color:#000;border-color:var(--gold);font-weight:700}
+.phone .call{margin:26px auto 8px;width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 36% 30%,var(--gold-bright),var(--gold) 50%,var(--gold-dim));display:grid;place-items:center;color:#1a1404;box-shadow:0 14px 34px -10px rgba(201,162,39,.55);position:relative}
+.phone .call .ring{position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--gold);animation:ring 2s ease-out infinite;opacity:0}
+@keyframes ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.45);opacity:0}}
+.phone .call .ic{font-size:30px}
+.phone .scr-cap{text-align:center;font-size:10px;color:var(--ink-faint);margin-top:4px}
+.phone .bubble{margin-top:auto;background:#f2ede1;color:#1a1a1a;font-size:10.5px;padding:8px 11px;border-radius:12px;border-bottom-left-radius:4px}
+.phone .bubble.me{background:var(--gold);align-self:flex-end;border-radius:12px;border-bottom-right-radius:4px;margin-top:7px}
+
+/* sections */
+section{padding:80px 0;position:relative}
+.section-head{max-width:42em}
+.section-head h2{font-size:clamp(27px,3.6vw,40px);line-height:1.12;letter-spacing:-.01em;margin-top:14px}
+.section-head p{color:var(--ink-soft);font-size:17px;margin-top:14px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+
+/* pain stat */
+.stat-band{background:var(--bg2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;text-align:center}
+.stat .num{font-family:"Playfair Display",serif;font-size:clamp(38px,5vw,54px);color:var(--gold);line-height:1;font-weight:700}
+.stat .lbl{color:var(--ink-soft);font-size:14px;margin-top:10px}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
+.step{background:var(--panel);border:1px solid var(--line-soft);border-radius:18px;padding:28px 24px;position:relative;transition:.25s}
+.step:hover{border-color:var(--line);transform:translateY(-3px)}
+.step .n{font-family:"Playfair Display",serif;font-size:15px;color:var(--gold);border:1px solid var(--gold);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700}
+.step h3{font-size:19px;margin:18px 0 8px}
+.step p{color:var(--ink-soft);font-size:14.5px}
+
+/* features */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:46px}
+.feat{display:flex;gap:16px;background:var(--panel);border:1px solid var(--line-soft);border-radius:16px;padding:22px 22px}
+.feat .ic{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(201,162,39,.1);display:grid;place-items:center;font-size:21px}
+.feat h3{font-size:17px;margin-bottom:5px}
+.feat p{color:var(--ink-soft);font-size:14px}
+
+/* comparison */
+.cmp{background:var(--panel);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:44px}
+.cmp-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;border-top:1px solid var(--line-soft)}
+.cmp-row:first-child{border-top:none}
+.cmp-row>div{padding:18px 22px;font-size:14.5px}
+.cmp-row.head>div{background:var(--bg2);font-weight:600;font-size:13px;letter-spacing:.02em}
+.cmp-row.head .us{color:var(--gold)}
+.cmp .crit{color:var(--ink-soft)}
+.cmp .them{color:var(--ink-faint)}
+.cmp .us{color:var(--ink);font-weight:600}
+.cmp .us::before{content:"✓ ";color:var(--gold);font-weight:700}
+.cmp .them.x::before{content:"✕ ";color:#8a4040}
+
+/* pricing */
+.price-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:46px;max-width:780px;margin-left:auto;margin-right:auto}
+.plan{background:var(--panel);border:1px solid var(--line-soft);border-radius:22px;padding:34px 30px;position:relative;transition:.25s}
+.plan:hover{transform:translateY(-4px)}
+.plan.pro{border-color:var(--gold);background:linear-gradient(180deg,var(--panel2),var(--panel))}
+.plan .tier{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.plan .badge{position:absolute;top:-12px;right:24px;background:var(--gold);color:#1a1404;font-size:11px;font-weight:700;padding:5px 12px;border-radius:999px;letter-spacing:.04em}
+.plan .price{font-family:"Playfair Display",serif;font-size:46px;font-weight:700;margin:16px 0 2px}
+.plan .price small{font-size:16px;color:var(--ink-soft);font-weight:400;font-family:"Inter",sans-serif}
+.plan .price-note{color:var(--ink-faint);font-size:13px}
+.plan ul{list-style:none;margin:24px 0 0}
+.plan li{padding:9px 0;font-size:14.5px;color:var(--ink-soft);display:flex;gap:10px;border-top:1px solid var(--line-soft)}
+.plan li:first-child{border-top:none}
+.plan li::before{content:"✓";color:var(--gold);font-weight:700;flex:none}
+.plan .pluslbl{color:var(--gold);font-weight:600}
+
+/* pilot / offer */
+.offer{background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(201,162,39,.03));border:1px solid var(--line);border-radius:24px;padding:48px 44px;text-align:center}
+.offer h2{font-size:clamp(26px,3.4vw,38px)}
+.offer p{color:var(--ink-soft);font-size:17px;max-width:38em;margin:16px auto 0}
+.offer .btns{justify-content:center;margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+
+/* testimonials placeholder */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.testi{background:var(--panel);border:1px dashed var(--line);border-radius:16px;padding:26px 24px}
+.testi .quote{color:var(--ink-soft);font-style:italic;font-size:15px}
+.testi .who{margin-top:18px;font-size:13px;color:var(--ink-faint)}
+.testi .who b{color:var(--ink);font-style:normal}
+
+/* faq */
+.faq{margin-top:40px;max-width:760px}
+.faq details{border-bottom:1px solid var(--line-soft);padding:6px 0}
+.faq summary{cursor:pointer;padding:16px 0;font-weight:600;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold);font-size:22px;font-weight:400}
+.faq details[open] summary::after{content:"–"}
+.faq p{color:var(--ink-soft);font-size:14.5px;padding:0 0 18px}
+
+/* footer */
+footer{border-top:1px solid var(--line-soft);padding:48px 0 60px;background:var(--bg2)}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .contact a{color:var(--gold);text-decoration:none}
+.foot .small{color:var(--ink-faint);font-size:13px;max-width:30em;margin-top:12px}
+
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .phone{order:-1}
+  .steps,.feat-grid,.price-grid,.stat-grid,.testi-grid{grid-template-columns:1fr}
+  .cmp-row{grid-template-columns:1.3fr 1fr 1fr}
+  .cmp-row>div{padding:14px 14px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><span class="mark">A</span><span class="name">Aira <b>Recepção</b></span></div>
+    <a href="#demo" class="cta-sm">Demonstração grátis</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Assistente de IA para hotéis · Portugal</span>
+      <h1>A recepção do seu hotel, no <span class="g">bolso do hóspede</span>.</h1>
+      <p class="lead">O hóspede faz a leitura de um código QR e tem, no telemóvel, uma recepção que fala. Wi-Fi, horários, reservas, pedidos para o quarto — em 5 idiomas, 24 horas por dia. Sem equipamento. Sem instalações.</p>
+      <div class="btns">
+        <a href="#demo" class="btn btn-gold">Quero uma demonstração do meu hotel →</a>
+        <a href="#como" class="btn btn-ghost">Ver como funciona</a>
+      </div>
+      <p class="hero-note">Criamos uma versão de demonstração do seu hotel — gratuita, sem compromisso.</p>
+    </div>
+
+    <!-- phone -->
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="scr-eyebrow">Recepção · 24h</div>
+      <div class="scr-hotel">Hotel <b>Carvoeiro Bay</b></div>
+      <div class="scr-langs"><span class="on">PT</span><span>EN</span><span>DE</span><span>FR</span><span>RU</span></div>
+      <div class="call"><span class="ring"></span><span class="ic">☎</span></div>
+      <div class="scr-cap">Tocar para falar com a recepção</div>
+      <div class="bubble">Olá! Sou a recepção do Carvoeiro Bay. Em que posso ajudar?</div>
+      <div class="bubble me">Qual é a palavra-passe do Wi-Fi?</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN STATS -->
+<div class="stat-band">
+  <div class="wrap" style="padding-top:54px;padding-bottom:54px">
+    <div class="stat-grid">
+      <div class="stat"><div class="num">40%</div><div class="lbl">das chamadas para hotéis ficam sem resposta — reservas e pedidos perdidos.</div></div>
+      <div class="stat"><div class="num">5</div><div class="lbl">idiomas no mesmo assistente: PT, EN, DE, FR, RU — sem mal-entendidos.</div></div>
+      <div class="stat"><div class="num">24h</div><div class="lbl">disponível dia e noite, sem aumentar a carga da sua equipa de recepção.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="como">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Três passos. Nenhum equipamento.</h2>
+      <p>O hóspede não instala nada na loja de aplicações. Abre pelo QR e está pronto a usar.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>O hóspede lê o QR</h3>
+        <p>No quarto, na recepção ou na chave do quarto. Abre no telemóvel a recepção do seu hotel — com o nome e as cores do hotel.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Fala ou escreve</h3>
+        <p>Pergunta o Wi-Fi, o horário do restaurante, pede toalhas ou faz um pedido para o quarto. Por voz ou por texto, no idioma dele.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>A recepção recebe</h3>
+        <p>Os pedidos chegam à sua equipa por WhatsApp ou Telegram. Durante a noite, ficam registados para consulta de manhã.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- FEATURES -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">O que faz</span>
+      <h2>Um recepcionista que nunca dorme.</h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat"><div class="ic">📶</div><div><h3>Informação instantânea</h3><p>Wi-Fi, horários do pequeno-almoço e do restaurante, check-out, piscina, parques — respostas corretas, sempre iguais.</p></div></div>
+      <div class="feat"><div class="ic">🛎️</div><div><h3>Pedidos para o quarto</h3><p>Room service, toalhas, limpeza, reservas no restaurante — encaminhados diretamente para a equipa certa.</p></div></div>
+      <div class="feat"><div class="ic">🌍</div><div><h3>5 idiomas, deteção automática</h3><p>Português, inglês, alemão, francês e russo. O hóspede fala na língua dele; o assistente responde na mesma.</p></div></div>
+      <div class="feat"><div class="ic">💬</div><div><h3>Tudo na recepção</h3><p>Cada conversa chega ao WhatsApp ou Telegram da recepção. A sua equipa assume sempre que quiser.</p></div></div>
+      <div class="feat"><div class="ic">📞</div><div><h3>Número português (plano Pro)</h3><p>Um número local que atende chamadas como uma recepção — e que também pode ligar a hóspedes para confirmar reservas.</p></div></div>
+      <div class="feat"><div class="ic">🔒</div><div><h3>Os dados são seus</h3><p>O hotel insere a sua própria informação num ambiente isolado. Em conformidade com o RGPD.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- COMPARISON (anonymous) -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Porquê Aira</span>
+      <h2>As soluções internacionais são pesadas. A nossa não.</h2>
+      <p>A maioria dos sistemas exige equipamento em cada quarto ou integração com o seu PMS — e meses de instalação. A Aira arranca em dias.</p>
+    </div>
+    <div class="cmp">
+      <div class="cmp-row head"><div>&nbsp;</div><div>Soluções internacionais</div><div class="us">Aira Recepção</div></div>
+      <div class="cmp-row"><div class="crit">Equipamento em cada quarto</div><div class="them x">Frequente</div><div class="us">Nenhum</div></div>
+      <div class="cmp-row"><div class="crit">Integração obrigatória com PMS</div><div class="them x">Quase sempre</div><div class="us">Não é preciso</div></div>
+      <div class="cmp-row"><div class="crit">Tempo de arranque</div><div class="them">Semanas a meses</div><div class="us">Dias</div></div>
+      <div class="cmp-row"><div class="crit">Apoio local, em português</div><div class="them x">Raro</div><div class="us">Sim, em Portugal</div></div>
+      <div class="cmp-row"><div class="crit">Preço de entrada</div><div class="them">a partir de ~$275/mês</div><div class="us">a partir de €199/mês</div></div>
+      <div class="cmp-row"><div class="crit">Demonstração do seu hotel</div><div class="them x">Sob orçamento</div><div class="us">Gratuita</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- PRICING -->
+<section id="precos">
+  <div class="wrap">
+    <div class="section-head" style="margin:0 auto;text-align:center">
+      <span class="eyebrow">Planos</span>
+      <h2>Simples e transparente.</h2>
+      <p style="margin-left:auto;margin-right:auto">Sem custo de instalação para os primeiros hotéis. Cancela quando quiser.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan">
+        <div class="tier">Básico</div>
+        <div class="price">€199<small>/mês</small></div>
+        <div class="price-note">recepção digital no telemóvel do hóspede</div>
+        <ul>
+          <li>Aplicação do hotel por QR (voz + texto)</li>
+          <li>5 idiomas com deteção automática</li>
+          <li>Base de conhecimento do hotel</li>
+          <li>Pedidos para o quarto e serviços</li>
+          <li>Conversas para WhatsApp / Telegram</li>
+          <li>Histórico de pedidos</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <div class="badge">Mais completo</div>
+        <div class="tier">Pro</div>
+        <div class="price">€449<small>/mês</small></div>
+        <div class="price-note">tudo do Básico + telefonia local</div>
+        <ul>
+          <li><span class="pluslbl">Número de telefone português</span></li>
+          <li>Atende chamadas como uma recepção</li>
+          <li>Chamadas de saída (confirmar reservas)</li>
+          <li>Análise avançada de pedidos</li>
+          <li>Apoio prioritário</li>
+          <li>Tudo o que está incluído no Básico</li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--ink-faint);font-size:13.5px;margin-top:26px">Uma só reserva recuperada numa noite já paga o mês.</p>
+  </div>
+</section>
+
+<!-- OFFER / PILOT -->
+<section id="demo">
+  <div class="wrap">
+    <div class="offer">
+      <span class="eyebrow">Programa-piloto Portugal</span>
+      <h2>Veja a funcionar — com o seu hotel.</h2>
+      <p>Criamos gratuitamente uma versão de demonstração com o nome do seu hotel, as suas informações e a voz a falar português. Testa você mesmo, sem compromisso. Se gostar, colocamos tudo a funcionar — dados do hotel, voz, número português — por uma mensalidade.</p>
+      <div class="btns">
+        <a href="mailto:artechportugalia@gmail.com?subject=Demonstração%20Aira%20Recepção&body=Olá,%20gostaria%20de%20uma%20demonstração%20do%20meu%20hotel." class="btn btn-gold">Pedir demonstração gratuita</a>
+        <a href="#precos" class="btn btn-ghost">Ver os planos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (placeholder — preencher após primeiras demos) -->
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">O que dizem os hoteleiros</span>
+      <h2>Hotéis em Portugal já estão a experimentar.</h2>
+    </div>
+    <!-- ⚠️ PLACEHOLDER: substituir por depoimentos reais após as primeiras demos. NÃO publicar vazio numa campanha. -->
+    <div class="testi-grid">
+      <div class="testi"><div class="quote">“Em breve — depoimento de um hotel parceiro.”</div><div class="who"><b>—</b>, Diretor · Portugal</div></div>
+      <div class="testi"><div class="quote">“Em breve — depoimento de um hotel parceiro.”</div><div class="who"><b>—</b>, Recepção · Portugal</div></div>
+      <div class="testi"><div class="quote">“Em breve — depoimento de um hotel parceiro.”</div><div class="who"><b>—</b>, Gerente · Portugal</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="section-head"><span class="eyebrow">Perguntas frequentes</span><h2>O essencial, sem rodeios.</h2></div>
+    <div class="faq">
+      <details open><summary>Preciso de instalar equipamento nos quartos?</summary><p>Não. Funciona inteiramente no telemóvel do hóspede, através de um código QR. Não há aparelhos, cablagem nem obras.</p></details>
+      <details><summary>Preciso de integrar com o meu sistema (PMS)?</summary><p>Não é necessário. A Aira funciona de forma independente — ideal para hotéis e alojamentos que não usam sistemas complexos.</p></details>
+      <details><summary>Quanto tempo demora a arrancar?</summary><p>Dias, não meses. Você fornece a informação do hotel, nós configuramos o assistente e a voz em português.</p></details>
+      <details><summary>E a proteção de dados (RGPD)?</summary><p>O hotel insere a sua própria informação num ambiente isolado. Tratamos os dados em conformidade com o RGPD, com contrato de tratamento de dados.</p></details>
+      <details><summary>Como experimento sem compromisso?</summary><p>Criamos uma demonstração gratuita do seu hotel. Testa você mesmo. Só avança para um plano pago se gostar.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="logo"><span class="mark">A</span><span class="name">Aira <b>Recepção</b></span></div>
+      <p class="small">Assistentes de voz com IA para a hotelaria em Portugal. Um produto Aira.</p>
+    </div>
+    <div class="contact">
+      <span class="eyebrow">Contacto</span>
+      <p style="margin-top:10px"><a href="mailto:artechportugalia@gmail.com">artechportugalia@gmail.com</a></p>
+      <p style="color:var(--ink-faint);font-size:13px;margin-top:4px">aira.agency · Portugal</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
