@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Черновики — Aira Assistant</title>
+<meta name="description" content="Черновики писем Йонаса: просмотр, обсуждение и правка с ассистентом в чате, включая голосовой ввод.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#2a2a2a;
+  --bg-deep:#222;
+  --panel:#1d1f20;
+  --panel-2:#232526;
+  --teal:#4ecdc4;
+  --teal-dim:rgba(78,205,196,.35);
+  --ink:#e0e0e0;
+  --ink-dim:rgba(224,224,224,.5);
+  --warn:#e8b34e;
+  --err:#e2695f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-weight:300;
+  display:flex;
+  flex-direction:column;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(ellipse 55% 40% at 70% 0%, rgba(78,205,196,.06), transparent 65%),
+    radial-gradient(ellipse 45% 50% at 8% 80%, rgba(255,255,255,.02), transparent 70%),
+    linear-gradient(180deg,#2d2d2d,#242424 45%,#202020);
+}
+
+nav.top{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px clamp(16px,4vw,36px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+}
+nav.top .brand{font-family:'Space Grotesk',sans-serif;font-size:.95rem;letter-spacing:.3em;color:var(--ink)}
+nav.top .brand span{color:var(--teal)}
+nav.top .sub{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:var(--ink-dim);text-transform:uppercase}
+
+.app{
+  flex:1;display:grid;grid-template-columns:300px 1fr;
+  min-height:0;
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .drafts-col{display:none}
+  .drafts-col.show{display:flex}
+  .chat-col.hide-mobile{display:none}
+}
+
+/* ---------- LEFT: draft list ---------- */
+.drafts-col{
+  border-right:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;min-height:0;
+  background:var(--panel);
+}
+.drafts-col .head{
+  padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.drafts-col .head h1{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:500}
+.drafts-col .head button{
+  background:none;border:1px solid rgba(255,255,255,.15);color:var(--ink-dim);
+  border-radius:6px;padding:5px 9px;font-size:.7rem;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;transition:border-color .2s,color .2s;
+}
+.drafts-col .head button:hover{border-color:var(--teal);color:var(--teal)}
+.draft-list{flex:1;overflow-y:auto;padding:8px}
+.draft-item{
+  padding:12px 12px;border-radius:8px;cursor:pointer;
+  border:1px solid transparent;margin-bottom:4px;transition:background .2s,border-color .2s;
+}
+.draft-item:hover{background:rgba(255,255,255,.04)}
+.draft-item.active{background:rgba(78,205,196,.08);border-color:var(--teal-dim)}
+.draft-item .to{font-size:.72rem;color:var(--teal);font-family:'JetBrains Mono',monospace;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.draft-item .subj{font-size:.86rem;color:var(--ink);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.draft-item .snip{font-size:.76rem;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.empty-state{padding:28px 18px;color:var(--ink-dim);font-size:.85rem;line-height:1.7;text-align:center}
+
+/* ---------- RIGHT: draft + chat ---------- */
+.chat-col{display:flex;flex-direction:column;min-height:0}
+.draft-view{
+  padding:18px clamp(16px,3vw,32px);border-bottom:1px solid rgba(255,255,255,.06);
+  background:var(--panel-2);
+}
+.draft-view .row{display:flex;gap:8px;font-size:.82rem;margin-bottom:6px;font-family:'JetBrains Mono',monospace;color:var(--ink-dim)}
+.draft-view .row b{color:var(--ink);font-weight:400}
+.draft-view .body-preview{
+  margin-top:10px;font-size:.86rem;line-height:1.7;color:var(--ink);
+  white-space:pre-wrap;max-height:160px;overflow-y:auto;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,.06);
+}
+.draft-view.empty{color:var(--ink-dim);font-size:.9rem;text-align:center;padding:40px 20px}
+
+.thread{flex:1;overflow-y:auto;padding:20px clamp(16px,3vw,32px);display:flex;flex-direction:column;gap:14px}
+.msg{max-width:72%;padding:11px 14px;border-radius:10px;font-size:.88rem;line-height:1.6}
+.msg.user{align-self:flex-end;background:rgba(78,205,196,.14);border:1px solid var(--teal-dim)}
+.msg.agent{align-self:flex-start;background:var(--panel);border:1px solid rgba(255,255,255,.08)}
+.msg.system{align-self:center;background:rgba(232,179,78,.1);border:1px solid rgba(232,179,78,.3);color:var(--warn);font-family:'JetBrains Mono',monospace;font-size:.76rem;max-width:90%;text-align:center}
+.msg.system.err{background:rgba(226,105,95,.1);border-color:rgba(226,105,95,.35);color:var(--err)}
+.msg .tag{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:5px}
+
+.composer{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:14px clamp(16px,3vw,32px) 18px;
+  display:flex;flex-direction:column;gap:8px;
+  flex-shrink:0;
+}
+.composer .lang-row{display:flex;align-items:center;gap:8px}
+.composer select{
+  background:var(--panel);color:var(--ink-dim);border:1px solid rgba(255,255,255,.12);
+  border-radius:6px;padding:4px 8px;font-family:'JetBrains Mono',monospace;font-size:.7rem;
+}
+.composer .mic-status{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-dim)}
+.composer .mic-status.listening{color:var(--teal)}
+.input-row{display:flex;gap:8px;align-items:flex-end}
+.input-row textarea{
+  flex:1;resize:none;background:var(--panel);color:var(--ink);
+  border:1px solid rgba(255,255,255,.12);border-radius:10px;
+  padding:12px 14px;font-family:'Inter',sans-serif;font-size:.9rem;line-height:1.5;
+  min-height:46px;max-height:160px;
+}
+.input-row textarea:focus{outline:none;border-color:var(--teal-dim)}
+.icon-btn{
+  width:46px;height:46px;border-radius:10px;border:1px solid rgba(255,255,255,.12);
+  background:var(--panel);color:var(--ink-dim);cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s,background .2s;
+}
+.icon-btn:hover{border-color:var(--teal-dim);color:var(--teal)}
+.icon-btn.mic.on{background:rgba(226,105,95,.15);border-color:var(--err);color:var(--err)}
+.icon-btn.send{background:var(--teal);border-color:var(--teal);color:#12312e}
+.icon-btn.send:hover{opacity:.9}
+.icon-btn:disabled{opacity:.35;cursor:default;pointer-events:none}
+.icon-btn svg{width:20px;height:20px}
+
+.typing{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--ink-dim);align-self:flex-start;padding:4px 0}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="brand">AIRA <span>·</span> ЧЕРНОВИКИ</div>
+  <div class="sub">Jonas Sostak</div>
+</nav>
+
+<div class="app">
+  <div class="drafts-col" id="draftsCol">
+    <div class="head">
+      <h1>Черновики</h1>
+      <button id="refreshBtn" title="Обновить список">↻</button>
+    </div>
+    <div class="draft-list" id="draftList">
+      <div class="empty-state">Загрузка…</div>
+    </div>
+  </div>
+
+  <div class="chat-col" id="chatCol">
+    <div class="draft-view empty" id="draftView">
+      Выберите черновик слева, чтобы посмотреть и обсудить его.
+    </div>
+    <div class="thread" id="thread"></div>
+    <div class="composer">
+      <div class="lang-row">
+        <label for="langSelect" style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--ink-dim)">Язык распознавания:</label>
+        <select id="langSelect">
+          <option value="ru-RU" selected>Русский</option>
+          <option value="lt-LT">Lietuvių</option>
+          <option value="pl-PL">Polski</option>
+          <option value="de-DE">Deutsch</option>
+          <option value="en-US">English</option>
+        </select>
+        <span class="mic-status" id="micStatus"></span>
+      </div>
+      <div class="input-row">
+        <textarea id="msgInput" rows="1" placeholder="Напишите сообщение или продиктуйте…" disabled></textarea>
+        <button class="icon-btn mic" id="micBtn" title="Голосовой ввод" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 11a7 7 0 0 1-14 0"/><path d="M12 19v3"/></svg>
+        </button>
+        <button class="icon-btn send" id="sendBtn" title="Отправить" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const N8N_BASE = 'https://n8n.aira-ai.net/webhook';
+const EP = {
+  list: N8N_BASE + '/list-drafts-jonas',
+  get: N8N_BASE + '/get-draft-jonas',
+  chat: N8N_BASE + '/chat-draft-jonas',
+};
+
+let currentDraft = null;
+let history = [];
+let lastDrafts = [];
+
+const draftListEl = document.getElementById('draftList');
+const draftViewEl = document.getElementById('draftView');
+const threadEl = document.getElementById('thread');
+const msgInput = document.getElementById('msgInput');
+const sendBtn = document.getElementById('sendBtn');
+const micBtn = document.getElementById('micBtn');
+const micStatus = document.getElementById('micStatus');
+const langSelect = document.getElementById('langSelect');
+const refreshBtn = document.getElementById('refreshBtn');
+
+function escapeHtml(s){
+  return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function loadDrafts(){
+  draftListEl.innerHTML = '<div class="empty-state">Загрузка…</div>';
+  try {
+    const res = await fetch(EP.list, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({}) });
+    const data = await res.json();
+    lastDrafts = data.drafts || [];
+    renderDraftList(lastDrafts);
+  } catch (e) {
+    draftListEl.innerHTML = '<div class="empty-state">Не удалось загрузить черновики.<br>' + escapeHtml(e.message) + '</div>';
+  }
+}
+
+function renderDraftList(drafts){
+  if (!drafts.length){
+    draftListEl.innerHTML = '<div class="empty-state">Черновиков пока нет.</div>';
+    return;
+  }
+  draftListEl.innerHTML = '';
+  drafts.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'draft-item' + (currentDraft && currentDraft.id === d.id ? ' active' : '');
+    el.innerHTML =
+      '<div class="to">' + escapeHtml(d.to || '') + '</div>' +
+      '<div class="subj">' + escapeHtml(d.subject || '(без темы)') + '</div>' +
+      '<div class="snip">' + escapeHtml(d.snippet || '') + '</div>';
+    el.addEventListener('click', () => openDraft(d.id));
+    draftListEl.appendChild(el);
+  });
+}
+
+async function openDraft(draftId){
+  draftViewEl.className = 'draft-view';
+  draftViewEl.innerHTML = 'Загрузка черновика…';
+  try {
+    const res = await fetch(EP.get, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ draftId }) });
+    const draft = await res.json();
+    currentDraft = draft;
+    history = [];
+    threadEl.innerHTML = '';
+    renderDraftView();
+    renderDraftList(lastDrafts);
+    msgInput.disabled = false;
+    sendBtn.disabled = false;
+    micBtn.disabled = !recognitionSupported;
+    msgInput.focus();
+  } catch (e) {
+    draftViewEl.innerHTML = 'Не удалось загрузить черновик: ' + escapeHtml(e.message);
+  }
+}
+
+function renderDraftView(){
+  if (!currentDraft){
+    draftViewEl.className = 'draft-view empty';
+    draftViewEl.innerHTML = 'Выберите черновик слева, чтобы посмотреть и обсудить его.';
+    return;
+  }
+  draftViewEl.className = 'draft-view';
+  draftViewEl.innerHTML =
+    '<div class="row"><span>Кому:</span> <b>' + escapeHtml(currentDraft.to || '') + '</b></div>' +
+    '<div class="row"><span>Тема:</span> <b>' + escapeHtml(currentDraft.subject || '(без темы)') + '</b></div>' +
+    '<div class="body-preview">' + escapeHtml(currentDraft.body || '') + '</div>';
+}
+
+function addMessage(role, text){
+  const el = document.createElement('div');
+  el.className = 'msg ' + role;
+  const tag = role === 'user' ? 'Йонас' : (role === 'agent' ? 'Ассистент' : '');
+  el.innerHTML = (tag ? '<div class="tag">' + tag + '</div>' : '') + escapeHtml(text);
+  threadEl.appendChild(el);
+  threadEl.scrollTop = threadEl.scrollHeight;
+  return el;
+}
+
+function addSystemMessage(text, isError){
+  const el = document.createElement('div');
+  el.className = 'msg system' + (isError ? ' err' : '');
+  el.textContent = text;
+  threadEl.appendChild(el);
+  threadEl.scrollTop = threadEl.scrollHeight;
+}
+
+async function sendMessage(){
+  const text = msgInput.value.trim();
+  if (!text || !currentDraft) return;
+  msgInput.value = '';
+  msgInput.style.height = 'auto';
+  sendBtn.disabled = true;
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
+
+  const typingEl = document.createElement('div');
+  typingEl.className = 'typing';
+  typingEl.textContent = 'Ассистент печатает…';
+  threadEl.appendChild(typingEl);
+  threadEl.scrollTop = threadEl.scrollHeight;
+
+  try {
+    const res = await fetch(EP.chat, {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ draftId: currentDraft.id, message: text, history }),
+    });
+    const data = await res.json();
+    typingEl.remove();
+
+    if (data.blocked){
+      addSystemMessage(data.reason || 'Лимит запросов исчерпан. Попробуйте позже.', true);
+      history.pop();
+      return;
+    }
+
+    addMessage('agent', data.reply || '(пустой ответ)');
+    history.push({ role: 'assistant', content: data.reply || '' });
+
+    if (data.draft){
+      currentDraft = data.draft;
+      renderDraftView();
+    }
+  } catch (e) {
+    typingEl.remove();
+    addSystemMessage('Ошибка сети: ' + e.message, true);
+    history.pop();
+  } finally {
+    sendBtn.disabled = false;
+  }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+msgInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+msgInput.addEventListener('input', () => {
+  msgInput.style.height = 'auto';
+  msgInput.style.height = Math.min(msgInput.scrollHeight, 160) + 'px';
+});
+
+refreshBtn.addEventListener('click', loadDrafts);
+
+/* ---------- Voice input: browser Web Speech API only, no ElevenLabs/TTS ---------- */
+const SpeechRecognitionImpl = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognitionSupported = !!SpeechRecognitionImpl;
+let recognition = null;
+let listening = false;
+
+if (!recognitionSupported){
+  micBtn.style.display = 'none';
+} else {
+  recognition = new SpeechRecognitionImpl();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+
+  recognition.addEventListener('start', () => {
+    listening = true;
+    micBtn.classList.add('on');
+    micStatus.classList.add('listening');
+    micStatus.textContent = 'Слушаю…';
+  });
+
+  recognition.addEventListener('result', (e) => {
+    let finalText = '';
+    let interimText = '';
+    for (let i = 0; i < e.results.length; i++){
+      const r = e.results[i];
+      if (r.isFinal) finalText += r[0].transcript;
+      else interimText += r[0].transcript;
+    }
+    // Recognized text lands in the textarea for review — never auto-sent.
+    msgInput.value = (finalText || interimText).trim();
+    msgInput.dispatchEvent(new Event('input'));
+  });
+
+  recognition.addEventListener('error', (e) => {
+    micStatus.classList.remove('listening');
+    micStatus.textContent = e.error === 'not-allowed' ? 'Доступ к микрофону запрещён' : 'Ошибка распознавания: ' + e.error;
+  });
+
+  recognition.addEventListener('end', () => {
+    listening = false;
+    micBtn.classList.remove('on');
+    micStatus.classList.remove('listening');
+    if (micStatus.textContent === 'Слушаю…') micStatus.textContent = '';
+    msgInput.focus();
+  });
+
+  micBtn.addEventListener('click', () => {
+    if (!currentDraft) return;
+    if (listening){
+      recognition.stop();
+      return;
+    }
+    recognition.lang = langSelect.value;
+    try {
+      recognition.start();
+    } catch (e) {
+      micStatus.textContent = 'Не удалось запустить распознавание';
+    }
+  });
+}
+
+loadDrafts();
+</script>
+</body>
+</html>
