@@ -16,6 +16,16 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://aira-ai.net/assistant</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aira-ai.net/airahome</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://aira-ai.net/terracotta.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
