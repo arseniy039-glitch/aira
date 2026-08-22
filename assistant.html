@@ -468,7 +468,7 @@ document.getElementById('hireForm').addEventListener('submit', function(e){
     email: f.email.value.trim(),
     message: f.message.value.trim(),
     page: '/assistant',
-    source: 'aira-ai.net v2'
+    source: 'aira-ai.net'
   };
   st.className = 'status'; st.textContent = 'Sending…';
   fetch('https://n8n.aira-ai.net/webhook/aira-site-leads',{
