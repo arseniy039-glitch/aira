@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira — Case Studies</title>
+<meta name="description" content="Real automation systems built and running in production: voice AI reception, multilingual lead funnels, WhatsApp bots, and remote ops infrastructure.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night:#04080f;--deep:#080f1c;--mid:#0d1e36;
+  --dawn:#4a9ad8;--dawn-glow:rgba(74,154,216,0.15);
+  --text:#e8edf5;--text-dim:#6a8aaa;--text-muted:#3a5470;
+  --line:rgba(74,154,216,0.2);--line-strong:rgba(74,154,216,0.4);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--night);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+#stars-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:2rem 4rem;background:linear-gradient(180deg,rgba(4,8,15,0.9) 0%,transparent 100%);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.5rem;letter-spacing:0.3em;color:var(--text);text-decoration:none;text-transform:uppercase;}
+.nav-links{display:flex;gap:3rem;list-style:none;}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.3s;}
+.nav-links a:hover{color:var(--dawn);}
+.nav-cta{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--dawn);text-decoration:none;border:0.5px solid var(--line-strong);padding:0.6rem 1.4rem;transition:background 0.3s;}
+.nav-cta:hover{background:var(--dawn-glow);}
+
+section{position:relative;z-index:1;}
+.section-inner{max-width:1100px;margin:0 auto;padding:0 4rem;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.3em;color:var(--text-muted);text-transform:uppercase;}
+
+#p-hero{padding:12rem 0 5rem;background:linear-gradient(180deg,var(--night) 0%,var(--deep) 100%);}
+.p-hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,6vw,4.5rem);line-height:1.1;color:var(--text);margin-top:1.5rem;max-width:820px;}
+.p-hero-desc{font-size:0.95rem;color:var(--text-dim);line-height:1.8;max-width:620px;margin-top:1.8rem;}
+
+#cases{padding:2rem 0 8rem;background:var(--deep);}
+.case{border-top:0.5px solid rgba(74,154,216,0.15);padding:5rem 0;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.case:last-child{border-bottom:0.5px solid rgba(74,154,216,0.15);}
+.case-media{background:var(--mid);border:0.5px solid var(--line);overflow:hidden;min-height:220px;display:flex;align-items:center;justify-content:center;}
+.case-media img{width:100%;display:block;}
+.case-media-placeholder{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--text-muted);text-align:center;padding:3rem 2rem;line-height:1.9;}
+.case-num{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--text-muted);letter-spacing:0.15em;margin-bottom:1rem;}
+.case-name{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--text);line-height:1.1;margin-bottom:1.5rem;}
+.case-block{margin-bottom:1.6rem;}
+.case-block-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--dawn);text-transform:uppercase;margin-bottom:0.5rem;}
+.case-block-text{font-size:0.88rem;color:var(--text-dim);line-height:1.75;}
+.case-stack{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.3rem;}
+.case-stack span{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text-muted);border:0.5px solid rgba(74,154,216,0.2);padding:0.3rem 0.7rem;letter-spacing:0.05em;}
+.case-result{border-top:0.5px solid rgba(74,154,216,0.1);padding-top:1.4rem;margin-top:1.4rem;}
+.case-result .case-block-label{color:var(--text);}
+.case-result .case-block-text{color:var(--text);}
+
+#cta{padding:8rem 0;background:linear-gradient(180deg,var(--deep) 0%,var(--mid) 100%);text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--text);margin-top:1.5rem;}
+.cta-links{display:flex;gap:2rem;justify-content:center;margin-top:2.5rem;}
+.cta-link{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--dawn);text-decoration:none;border:0.5px solid var(--line-strong);padding:0.9rem 2rem;transition:background 0.3s;}
+.cta-link:hover{background:var(--dawn-glow);}
+
+footer{position:relative;z-index:1;padding:3rem 4rem;border-top:0.5px solid rgba(74,154,216,0.1);display:flex;justify-content:space-between;align-items:center;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:0.3em;color:var(--text-dim);text-transform:uppercase;}
+.footer-copy{font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--text-muted);letter-spacing:0.1em;}
+.footer-links{display:flex;gap:2.5rem;list-style:none;}
+.footer-links a{font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--text-muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s;}
+.footer-links a:hover{color:var(--dawn);}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:1.5rem 1.5rem;}
+  .nav-links{display:none;}
+  .section-inner{padding:0 1.5rem;}
+  #p-hero{padding:9rem 0 3rem;}
+  .case{grid-template-columns:1fr;gap:2rem;padding:3.5rem 0;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;padding:2rem 1.5rem;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<nav>
+  <a href="/" class="nav-logo">Aira</a>
+  <ul class="nav-links">
+    <li><a href="/#agents">Agents</a></li>
+    <li><a href="/portfolio">Case Studies</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Talk to us</a>
+</nav>
+
+<section id="p-hero">
+  <div class="section-inner">
+    <div class="section-label reveal">Case Studies</div>
+    <h1 class="p-hero-title reveal">Systems we built and run in production — not slide decks.</h1>
+    <p class="p-hero-desc reveal">Six automations from the last two months: a voice AI receptionist taking real calls, a lead funnel built from zero to production in days, a deduplicated multi-source lead pipeline, a multilingual WhatsApp agent, the remote ops bridge that runs all of it from a phone, and a lead-sourcing pipeline that works around Facebook having no public API.</p>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="section-inner">
+
+    <div class="case reveal">
+      <div class="case-media">
+        <div class="case-media-placeholder">ElevenLabs Conversational AI<br>agent config + call log view<br><em>(screenshot pending — see report)</em></div>
+      </div>
+      <div>
+        <div class="case-num">01 — Voice AI</div>
+        <div class="case-name">Katerina — voice AI reception</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">Small businesses lose leads and admin time to calls nobody's free to answer — hiring reception staff for the call volume doesn't pencil out.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">A production ElevenLabs conversational voice agent handling real inbound and outbound calls, wired into Google Calendar and Gmail for scheduling and follow-up, Notion for task memory and per-caller personalization, and native DTMF touch-tone support so it can navigate IVR menus on its own. The same architecture runs Arseniy's own admin work internally — booking, email triage, weekly self-review — before being deployed to clients.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>ElevenLabs Conversational AI</span><span>n8n</span><span>Google Calendar API</span><span>Gmail API</span><span>Notion API</span><span>Zadarma / SIP</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">Live in production, handling real client calls — first paying client onboarded on a dedicated persona.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-media">
+        <img src="/img/portfolio/airahome-hero.png" alt="Airahome landing page — emergency home repair callout, Algarve">
+      </div>
+      <div>
+        <div class="case-num">02 — Lead Funnel</div>
+        <div class="case-name">Airahome — 4-language repair callout funnel</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">Expats and foreign property owners in the Algarve need home repairs fast, in their own language, without hunting for a contractor — and every minute of delay after they submit a request loses trust.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">Built aira-ai.net/airahome from zero to production in days: a 4-language landing page (EN/DE/FR/PT) with tiered urgency-based pricing, a lead form and WhatsApp entry point wired straight into n8n. One webhook pushes every lead to Telegram and immediately triggers an outbound ElevenLabs voice callback in the customer's own language confirming the request. A second webhook powers the on-page chat widget. No manual dispatching in the loop.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>Static HTML/CSS/JS</span><span>Cloudflare Pages</span><span>n8n webhooks</span><span>ElevenLabs outbound calling</span><span>Claude (chat + intake)</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">Full lead-to-callback funnel live in production, zero to shipped in days.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-media">
+        <div class="case-media-placeholder">n8n workflow canvas<br>fb-notify-relay<br><em>(screenshot pending — see report)</em></div>
+      </div>
+      <div>
+        <div class="case-num">03 — Lead Monitoring</div>
+        <div class="case-name">Multi-source lead pipeline with dedup</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">Handyman leads surface in Facebook groups and Telegram expat groups, in four languages, faster than anyone can manually watch — and scraping Facebook directly with automation risks getting the account banned.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">Two independent, ban-safe intake sources feed one pipeline: a Telethon-based Telegram userbot reading expat group chats from a real logged-in account (no scraping, no automation flags), and a push-based Facebook relay through n8n. Both land on a single intake listener that keyword-filters across EN/DE/FR/RU, dedupes by content hash in SQLite, and fuzzy-matches near-duplicate leads from different sources into one card before pushing it to Telegram. A read-only stats dashboard tracks demand across two independent business verticals from the same data.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>Python / Telethon</span><span>SQLite</span><span>n8n</span><span>Cloudflare Tunnel</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">Continuous deduplicated lead flow, live dashboard, replacing a person reading group chats all day.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-media">
+        <div class="case-media-placeholder">WhatsApp bot conversation<br>(Baileys + Claude Haiku)<br><em>(screenshot pending — see report)</em></div>
+      </div>
+      <div>
+        <div class="case-num">04 — WhatsApp Agent</div>
+        <div class="case-name">Sofia — multilingual WhatsApp agent</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">One WhatsApp number needed to do two different jobs — cold-outreach hotels for B2B sales, and handle inbound customer repair intake — each in the customer's own language, without maintaining two separate bots.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">A single n8n workflow behind a Baileys WhatsApp connection dynamically builds a different system prompt per context: a structured intake persona that asks for the problem, address and urgency, quotes tiered pricing, and emits a hidden structured lead tag for downstream automation — or a B2B outreach persona per hotel and city. Same agent, same deployment, branching logic decides the job.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>Baileys (WhatsApp Web protocol)</span><span>Docker</span><span>n8n</span><span>Claude Haiku 4.5</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">One bot covering both outbound sales and inbound intake — one thing to maintain instead of two.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-media">
+        <div class="case-media-placeholder">Telegram → n8n → VPS<br>remote command flow<br><em>(screenshot pending — see report)</em></div>
+      </div>
+      <div>
+        <div class="case-num">05 — Remote Ops</div>
+        <div class="case-name">Remote ops bridge — infra from a phone</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">Changing an n8n workflow or a VPS config normally means sitting at a laptop with SSH open — not practical mid-commute or away from a desk.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">A Telegram message to the ops bot gets parsed by Claude into an intended command, then routed either to a laptop tunnel if it's online, or queued directly on the VPS through a local command server — results report back over Telegram either way. A companion "Code Bridge" workflow lets a running agent session pause on a genuine decision point, write a waiting task into Notion, ping Telegram, and resume once answered — instead of hanging silently on a blocking question. A mandatory backup-before-change step is built into the workflow rules themselves.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>n8n</span><span>Telegram Bot API</span><span>Claude</span><span>Notion API</span><span>Python command server</span><span>Cloudflare Tunnel</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">Infra changes and agent decisions approved from a phone, with a built-in safety net against silent hangs and unbacked-up changes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case-media">
+        <div class="case-media-placeholder">Anonymous scraper + Android deep-loop<br>dual lead-source pipeline<br><em>(screenshot pending — see report)</em></div>
+      </div>
+      <div>
+        <div class="case-num">06 — Lead Sourcing</div>
+        <div class="case-name">Working around Facebook having no API</div>
+        <div class="case-block">
+          <div class="case-block-label">Problem</div>
+          <div class="case-block-text">Facebook has no public API for reading group content — and that's exactly where local repair and window-installation leads live, in closed expat groups.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Solution</div>
+          <div class="case-block-text">Built two independent systems running in parallel. An anonymous HTTP scraper reverse-engineers the logged-out mobile site's undocumented, non-deterministic behavior — the same request sometimes returns a hydrated page with posts and author IDs, sometimes an empty JS shell, with no dependency on IP or timing — and retries with a clean session rather than giving up on the cycle. In parallel, a device-level automation loop (MacroDroid on a real Android phone) emulates a human scrolling the group list and reading text off the screen, sidestepping the API restriction entirely. Both feed the same deduplicated, classified intake pipeline used for every other lead source.</div>
+        </div>
+        <div class="case-block">
+          <div class="case-block-label">Stack</div>
+          <div class="case-stack"><span>Python (HTTP scraper)</span><span>MacroDroid (Android)</span><span>n8n intake relay</span><span>Python + SQLite classifier</span></div>
+        </div>
+        <div class="case-result">
+          <div class="case-block-label">Result</div>
+          <div class="case-block-text">A working lead stream out of closed Facebook groups — zero official API keys, zero account-ban risk.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="cta">
+  <div class="section-inner">
+    <div class="section-label reveal">Next</div>
+    <h2 class="cta-title reveal">Want something like this built for your business?</h2>
+    <div class="cta-links reveal">
+      <a href="/#contact" class="cta-link">Get in touch</a>
+      <a href="mailto:arseniy039@gmail.com" class="cta-link">Email directly</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Aira</div>
+  <ul class="footer-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/portfolio">Case Studies</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Aira</div>
+</footer>
+
+<script>
+(function() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H, frame = 0;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 6000);
+    for (let i = 0; i < count; i++) {
+      stars.push({ x: Math.random()*W, y: Math.random()*H*0.65, r: Math.random()*0.8+0.2, o: Math.random()*0.5+0.1, sp: Math.random()*0.3+0.05 });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    frame++;
+    stars.forEach(s => {
+      const tw = s.o + Math.sin(frame*s.sp*0.05+s.x)*0.15;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${Math.max(0,Math.min(1,tw))})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize(); initStars(); draw();
+  window.addEventListener('resize',()=>{ resize(); initStars(); });
+})();
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if (e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), i*80); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+</script>
+
+</body>
+</html>
