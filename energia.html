@@ -18,7 +18,7 @@
   --radius:8px;--radius-pill:999px;--nav-h:72px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h);}
 body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 h1,h2,h3{font-weight:700;letter-spacing:-0.02em;color:var(--spark);}
 .mono{font-family:'JetBrains Mono',monospace;}
@@ -41,8 +41,11 @@ button{font-family:inherit;}
   opacity:0.14;animation:nodePulse 6s ease-in-out infinite;}
 @keyframes nodePulse{0%,100%{opacity:0.06;}50%{opacity:0.20;}}
 
-/* ── NAV ── */
-nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;background:rgba(5,8,16,0.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);gap:1rem;}
+/* ── NAV (glassmorphism, overlays hero) ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;gap:1rem;
+  background:rgba(8,12,22,0.24);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);
+  border-bottom:1px solid rgba(255,255,255,0.07);transition:background 0.3s,border-color 0.3s,box-shadow 0.3s;}
+nav.scrolled{background:rgba(5,8,16,0.9);border-bottom-color:var(--line);box-shadow:0 10px 34px -14px rgba(0,0,0,0.65);}
 .nav-logo{font-weight:800;font-size:1.15rem;letter-spacing:-0.01em;text-decoration:none;color:var(--spark);flex-shrink:0;}
 .nav-logo span{color:var(--volt);text-shadow:0 0 12px rgba(0,212,255,0.6);}
 .nav-mid{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;}
@@ -67,15 +70,47 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 .btn-secondary:hover{border-color:var(--volt);box-shadow:0 0 16px rgba(0,212,255,0.2);}
 @keyframes voltPulse{0%,100%{box-shadow:0 0 0 1px rgba(0,212,255,0.5),0 0 18px rgba(0,212,255,0.3);}50%{box-shadow:0 0 0 1px rgba(168,85,247,0.6),0 0 26px rgba(168,85,247,0.5);}}
 
-/* ── HERO ── */
-#hero{position:relative;padding:5rem 0 4rem;border-bottom:1px solid var(--line);overflow:hidden;}
-#bolt{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.9;}
-.hero-grid{display:flex;flex-direction:column;align-items:flex-start;gap:1.5rem;max-width:780px;}
-.hero-title{font-size:clamp(2.1rem,5.2vw,3.5rem);line-height:1.07;text-shadow:0 0 10px rgba(0,212,255,0.45),0 0 30px rgba(0,212,255,0.28),0 0 60px rgba(168,85,247,0.22);}
-.hero-sub{font-size:clamp(1.05rem,2vw,1.22rem);color:var(--ink-dim);font-weight:400;max-width:640px;}
-.hero-ctas{display:flex;flex-wrap:wrap;gap:0.85rem;margin-top:0.4rem;}
-.hero-langs{display:flex;align-items:center;gap:0.6rem;margin-top:0.3rem;flex-wrap:wrap;}
-.hero-micro{font-size:0.85rem;color:var(--ink-muted);}
+/* ── HERO (full-bleed cinematic photo) ── */
+#hero{position:relative;z-index:1;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:0 0 52px;border-bottom:1px solid var(--line);overflow:hidden;}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;z-index:0;}
+.hero-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(5,8,16,0.78) 0%,rgba(5,8,16,0.44) 46%,rgba(5,8,16,0.12) 100%),
+    linear-gradient(180deg,rgba(5,8,16,0.52) 0%,transparent 32%,rgba(5,8,16,0.55) 100%);}
+#bolt{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;}
+.hero-content{position:relative;z-index:3;display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem;max-width:640px;padding-top:var(--nav-h);}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--volt);font-weight:600;}
+.hero-title{font-weight:300;font-size:clamp(2.3rem,5.6vw,3.9rem);line-height:1.08;letter-spacing:-0.02em;
+  text-shadow:0 2px 30px rgba(0,0,0,0.6),0 0 26px rgba(0,212,255,0.22);}
+.hero-sub{font-size:clamp(1.03rem,2vw,1.2rem);color:var(--ink-dim);font-weight:400;max-width:560px;text-shadow:0 1px 12px rgba(0,0,0,0.55);}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:0.85rem;margin-top:0.5rem;}
+.btn.zapped{animation:ctaZap 0.5s ease-out !important;}
+@keyframes ctaZap{0%{box-shadow:0 0 0 1px #eaf6ff,0 0 40px 8px rgba(0,212,255,0.9);}40%{box-shadow:0 0 0 1px var(--volt),0 0 26px rgba(168,85,247,0.7);}100%{box-shadow:0 0 0 1px rgba(0,212,255,0.4),0 0 20px rgba(0,212,255,0.22);}}
+
+/* hero pins — thin callouts pointing at the photo */
+.hero-pin{position:absolute;z-index:3;display:none;align-items:center;flex-direction:row-reverse;
+  font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.09em;text-transform:uppercase;}
+.hero-pin__label{background:rgba(5,8,16,0.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid var(--line-strong);border-radius:var(--radius-pill);padding:0.38rem 0.75rem;color:var(--spark);white-space:nowrap;}
+.hero-pin__line{width:44px;height:1px;background:linear-gradient(270deg,var(--volt),rgba(0,212,255,0.1));}
+.hero-pin__dot{width:7px;height:7px;border-radius:50%;background:var(--volt);box-shadow:0 0 12px var(--volt);flex-shrink:0;animation:pinPulse 2.4s ease-in-out infinite;}
+.hero-pin--a{right:6%;top:60%;}
+.hero-pin--b{right:6%;top:34%;}
+@keyframes pinPulse{0%,100%{box-shadow:0 0 6px var(--volt);}50%{box-shadow:0 0 16px var(--volt);}}
+@media(min-width:1180px){.hero-pin{display:flex;}}
+
+/* hero stats strip */
+.hero-stats{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap;
+  padding:1rem 1.75rem;background:linear-gradient(180deg,transparent,rgba(5,8,16,0.7));border-top:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.05em;color:var(--ink-dim);text-transform:uppercase;}
+.hero-stat{display:inline-flex;align-items:baseline;gap:0.4rem;}
+.hero-stat b{color:var(--volt);font-weight:700;font-size:0.98rem;text-shadow:0 0 14px rgba(0,212,255,0.5);}
+@media(max-width:620px){
+  #hero{min-height:0;display:block;padding:calc(var(--nav-h) + 1.75rem) 0 0;}
+  .hero-content{padding-top:0;}
+  .hero-stats{position:static;margin-top:2.5rem;gap:0.9rem 1.4rem;font-size:0.6rem;padding:0.8rem 1rem;}
+  .hero-stat b{font-size:0.82rem;}
+}
 
 /* ── CALCULATOR ── */
 #calc{padding:4.5rem 0;border-bottom:1px solid var(--line);}
@@ -96,8 +131,8 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 .calc-btn:hover{box-shadow:0 0 28px rgba(0,212,255,0.6);}
 .calc-results{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.8rem;}
 .calc-res{background:var(--bg);border:1px solid var(--line-strong);border-radius:var(--radius);padding:1.2rem;opacity:0.35;transition:opacity 0.4s;}
-.calc-res.lit{opacity:1;animation:neonUp 0.55s ease-out;}
-@keyframes neonUp{0%{filter:brightness(0.4);box-shadow:none;}100%{filter:brightness(1);box-shadow:0 0 22px rgba(0,212,255,0.22);}}
+.calc-res.lit{opacity:1;animation:neonUp 0.6s ease-out;}
+@keyframes neonUp{0%{filter:brightness(0.35);box-shadow:none;}14%{filter:brightness(1.2);box-shadow:0 0 26px rgba(0,212,255,0.35);}22%{filter:brightness(0.55);}36%{filter:brightness(1.12);}55%{filter:brightness(0.9);}100%{filter:brightness(1);box-shadow:0 0 22px rgba(0,212,255,0.22);}}
 .calc-res-label{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:0.5rem;}
 .calc-res-val{font-family:'JetBrains Mono',monospace;font-size:clamp(1.2rem,3vw,1.7rem);font-weight:700;color:var(--volt);text-shadow:0 0 14px rgba(0,212,255,0.5);}
 .calc-res-hint{font-size:0.78rem;color:var(--ink-muted);margin-top:0.35rem;}
@@ -108,9 +143,12 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 #services{padding:5rem 0;border-bottom:1px solid var(--line);}
 .svc-head{max-width:640px;margin-bottom:2.5rem;}
 .svc-sub{color:var(--ink-dim);font-size:0.95rem;margin-top:0.6rem;}
-.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
-.svc-tile{background:var(--surface);padding:1.9rem 1.6rem;display:flex;flex-direction:column;gap:0.8rem;transition:background 0.2s;}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);perspective:1100px;}
+.svc-tile{background:var(--surface);padding:1.9rem 1.6rem;display:flex;flex-direction:column;gap:0.8rem;transition:background 0.2s,transform 0.3s ease,box-shadow 0.3s ease;transform-style:preserve-3d;}
 .svc-tile:hover{background:var(--surface-2);}
+.svc-tile.tilting{transition:transform 0.08s linear,box-shadow 0.2s;box-shadow:0 34px 60px -24px rgba(0,0,0,0.7);z-index:2;border-radius:var(--radius);}
+.svc-tile.tilting .svc-icon,.svc-tile.tilting .svc-name{transform:translateZ(28px);}
+.svc-icon,.svc-name{transition:transform 0.3s ease;}
 .svc-icon{width:30px;height:30px;color:var(--volt);}
 .svc-name{font-weight:600;font-size:1.05rem;color:var(--spark);}
 .svc-desc{font-size:0.85rem;color:var(--ink-dim);line-height:1.55;}
@@ -193,17 +231,29 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .reveal.in{opacity:1;transform:none;}
 
+/* ── PARALLAX SPARK FIELD (decorative, behind content) ── */
+#sparks{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+#sparks i{position:absolute;display:block;width:3px;height:3px;border-radius:50%;background:var(--volt-soft);
+  box-shadow:0 0 8px var(--volt-soft);opacity:0.35;will-change:transform;}
+#sparks i:nth-child(1){left:8%;top:22%;}
+#sparks i:nth-child(2){left:78%;top:14%;width:2px;height:2px;}
+#sparks i:nth-child(3){left:34%;top:58%;background:var(--arc);box-shadow:0 0 8px var(--arc);}
+#sparks i:nth-child(4){left:62%;top:72%;}
+#sparks i:nth-child(5){left:90%;top:46%;width:2px;height:2px;}
+#sparks i:nth-child(6){left:18%;top:84%;background:var(--arc);box-shadow:0 0 8px var(--arc);}
+
 @media(max-width:700px){
-  #bolt{display:none;}
   #faraday{opacity:0.32;}
   #faraday::after{animation:none;opacity:0.10;}
-  .hero-title{text-shadow:0 0 10px rgba(0,212,255,0.4);}
+  #sparks{display:none;}
+  .hero-title{text-shadow:0 2px 20px rgba(0,0,0,0.6);}
   .form-panel,.plan.featured{box-shadow:none;}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;}
   .reveal{opacity:1;transform:none;}
   #bolt{display:none;}
+  #sparks{display:none;}
   #faraday::after{animation:none;}
 }
 </style>
@@ -211,6 +261,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <body>
 
 <div id="faraday" aria-hidden="true"></div>
+<div id="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
 <!-- ══════════════════════ NAV ══════════════════════ -->
 <nav>
@@ -234,20 +285,40 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
+  <picture>
+    <source srcset="/assets/energia-hero.webp" type="image/webp">
+    <img class="hero-bg" src="/assets/energia-hero.jpg" alt="" fetchpriority="high" decoding="async" width="1920" height="1024">
+  </picture>
+  <div class="hero-veil"></div>
   <canvas id="bolt" aria-hidden="true"></canvas>
+
+  <div class="hero-pin hero-pin--a" aria-hidden="true">
+    <span class="hero-pin__label" data-i18n="hero_badge_a"></span>
+    <span class="hero-pin__line"></span>
+    <span class="hero-pin__dot"></span>
+  </div>
+  <div class="hero-pin hero-pin--b" aria-hidden="true">
+    <span class="hero-pin__label" data-i18n="hero_badge_b"></span>
+    <span class="hero-pin__line"></span>
+    <span class="hero-pin__dot"></span>
+  </div>
+
   <div class="section-inner">
-    <div class="hero-grid">
+    <div class="hero-content">
+      <span class="hero-eyebrow" data-i18n="hero_eyebrow"></span>
       <h1 class="hero-title" data-i18n="hero_h1"></h1>
       <p class="hero-sub" data-i18n="hero_sub"></p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#calc" data-i18n="hero_cta_calc"></a>
+        <a class="btn btn-primary" id="heroCta" href="#calc" data-i18n="hero_cta_calc"></a>
         <a class="btn btn-secondary" href="#request" data-i18n="hero_cta_form"></a>
       </div>
-      <div class="hero-langs">
-        <span class="lang-badge">PT</span><span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
-        <span class="hero-micro" data-i18n="hero_micro"></span>
-      </div>
     </div>
+  </div>
+
+  <div class="hero-stats">
+    <span class="hero-stat" data-i18n="hero_stat_coverage"></span>
+    <span class="hero-stat" data-i18n="hero_stat_licensed"></span>
+    <span class="hero-stat">PT · EN · DE · FR</span>
   </div>
 </section>
 
@@ -445,6 +516,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 // ══════════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════════
+const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-energia-leads';
 const WA_NUMBER = '351936800000';
 const ELEKTRA_AGENT_ID = 'agent_3001m1j0016septr0md25k391223';
@@ -466,6 +538,11 @@ pt:{
   hero_cta_calc:'Calcular a minha poupança',
   hero_cta_form:'Pedir análise gratuita',
   hero_micro:'Português · English · Deutsch · Français',
+  hero_eyebrow:'Energia · Algarve',
+  hero_badge_a:'Análise gratuita da fatura',
+  hero_badge_b:'Sem compromisso',
+  hero_stat_coverage:'Cobertura: todo o Algarve',
+  hero_stat_licensed:'Eletricistas licenciados',
   calc_eyebrow:'Calculadora de poupança',
   calc_title:'Quanto pode poupar por mês?',
   calc_mode_bill:'€ / mês',
@@ -529,6 +606,11 @@ en:{
   hero_cta_calc:'Calculate my savings',
   hero_cta_form:'Request a free review',
   hero_micro:'Português · English · Deutsch · Français',
+  hero_eyebrow:'Energy · Algarve',
+  hero_badge_a:'Free bill analysis',
+  hero_badge_b:'No commitment',
+  hero_stat_coverage:'Coverage: all of the Algarve',
+  hero_stat_licensed:'Licensed electricians',
   calc_eyebrow:'Savings calculator',
   calc_title:'How much could you save per month?',
   calc_mode_bill:'€ / month',
@@ -592,6 +674,11 @@ de:{
   hero_cta_calc:'Meine Ersparnis berechnen',
   hero_cta_form:'Kostenlose Prüfung anfragen',
   hero_micro:'Português · English · Deutsch · Français',
+  hero_eyebrow:'Energie · Algarve',
+  hero_badge_a:'Kostenlose Rechnungsprüfung',
+  hero_badge_b:'Unverbindlich',
+  hero_stat_coverage:'Abdeckung: ganze Algarve',
+  hero_stat_licensed:'Lizenzierte Elektriker',
   calc_eyebrow:'Spar-Rechner',
   calc_title:'Wie viel könnten Sie pro Monat sparen?',
   calc_mode_bill:'€ / Monat',
@@ -655,6 +742,11 @@ fr:{
   hero_cta_calc:'Calculer mes économies',
   hero_cta_form:'Demander une analyse gratuite',
   hero_micro:'Português · English · Deutsch · Français',
+  hero_eyebrow:'Énergie · Algarve',
+  hero_badge_a:'Analyse gratuite de la facture',
+  hero_badge_b:'Sans engagement',
+  hero_stat_coverage:'Couverture : tout l’Algarve',
+  hero_stat_licensed:'Électriciens agréés',
   calc_eyebrow:'Calculateur d’économies',
   calc_title:'Combien pourriez-vous économiser par mois ?',
   calc_mode_bill:'€ / mois',
@@ -774,12 +866,30 @@ function runCalc(){
   const B = calcMode === 'bill' ? raw : raw * PRICE_NOW;
   const tariffLo = B * 0.10, tariffHi = B * 0.30;
   const solarLo = B * DAY_SHARE * SOLAR_MIN, solarHi = B * DAY_SHARE * SOLAR_MAX;
-  tVal.textContent = fmtRange(tariffLo, tariffHi);
-  sVal.textContent = fmtRange(solarLo, solarHi);
+  countRange(tVal, tariffLo, tariffHi);
+  countRange(sVal, solarLo, solarHi);
   // re-trigger the neon animation
   tEl.classList.remove('lit'); sEl.classList.remove('lit');
   void tEl.offsetWidth;
   tEl.classList.add('lit'); sEl.classList.add('lit');
+}
+
+// count both ends of a €-range up from zero, then settle on fmtRange()
+function countRange(el, lo, hi){
+  if(PREFERS_REDUCED){ el.textContent = fmtRange(lo, hi); return; }
+  const dur = 620, t0 = performance.now();
+  cancelAnimationFrame(el._raf || 0);
+  const step = now => {
+    const k = Math.min(1, (now - t0) / dur);
+    const e = 1 - Math.pow(1 - k, 3);
+    if(k < 1){
+      el.textContent = fmtRange(lo * e, hi * e);
+      el._raf = requestAnimationFrame(step);
+    } else {
+      el.textContent = fmtRange(lo, hi);
+    }
+  };
+  el._raf = requestAnimationFrame(step);
 }
 
 function openElektra(){
@@ -838,126 +948,170 @@ document.getElementById('energiaForm').addEventListener('submit', function(e){
 });
 
 // ══════════════════════════════════════════
-// PROCEDURAL LIGHTNING (hero canvas, 2D)
-// disabled on <=700px and prefers-reduced-motion
+// EVENT-DRIVEN LIGHTNING — strikes the hero CTA on hover / focus / click
+// (no ambient loop; skipped for prefers-reduced-motion)
 // ══════════════════════════════════════════
 (function(){
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const small = window.matchMedia('(max-width: 700px)').matches;
-  if(reduce || small) return;
-
+  if(PREFERS_REDUCED) return;
   const canvas = document.getElementById('bolt');
+  const hero = document.getElementById('hero');
+  const cta = document.getElementById('heroCta');
+  if(!canvas || !hero || !cta) return;
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
-  let running = true, visible = true, rafId = null;
-  let flash = null; // {segments, born, life, color}
+  let bolts = [], rafId = null, lastStrike = 0;
 
   function resize(){
-    const r = canvas.getBoundingClientRect();
+    const r = hero.getBoundingClientRect();
     W = r.width; H = r.height;
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   resize();
-  let rt;
-  window.addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(resize, 200); });
+  let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(resize, 200); });
 
   function midpoint(a, b, displace, out){
-    if(displace < 1.2){ out.push(a); return; }
-    const mx = (a.x + b.x) / 2 + (Math.random() - 0.5) * displace;
-    const my = (a.y + b.y) / 2 + (Math.random() - 0.5) * displace;
-    const mid = {x: mx, y: my};
+    if(displace < 1.6){ out.push(a); return; }
+    const mid = {
+      x: (a.x + b.x) / 2 + (Math.random() - 0.5) * displace,
+      y: (a.y + b.y) / 2 + (Math.random() - 0.5) * displace
+    };
     midpoint(a, mid, displace / 2, out);
     midpoint(mid, b, displace / 2, out);
   }
 
-  function makeBolt(){
-    const startX = W * (0.15 + Math.random() * 0.7);
-    const a = {x: startX, y: -10};
-    const b = {x: startX + (Math.random() - 0.5) * W * 0.5, y: H + 10};
-    const pts = [];
-    midpoint(a, b, W * 0.28, pts);
-    pts.push(b);
+  function buildBolt(target){
+    const a = {x: target.x + (Math.random() - 0.5) * W * 0.5, y: -12};
+    const b = {x: target.x, y: target.y};
+    const pts = []; midpoint(a, b, Math.max(60, W * 0.16), pts); pts.push(b);
     const branches = [];
     const bn = 1 + Math.floor(Math.random() * 2);
     for(let i = 0; i < bn; i++){
-      const idx = Math.floor(pts.length * (0.3 + Math.random() * 0.4));
-      const p0 = pts[idx];
+      const p0 = pts[Math.floor(pts.length * (0.25 + Math.random() * 0.4))];
       if(!p0) continue;
-      const p1 = {x: p0.x + (Math.random() - 0.5) * W * 0.3, y: p0.y + H * (0.15 + Math.random() * 0.25)};
-      const bp = [];
-      midpoint(p0, p1, W * 0.12, bp);
-      bp.push(p1);
+      const p1 = {x: p0.x + (Math.random() - 0.5) * W * 0.22, y: p0.y + H * (0.1 + Math.random() * 0.18)};
+      const bp = []; midpoint(p0, p1, W * 0.08, bp); bp.push(p1);
       branches.push(bp);
     }
-    flash = {
-      main: pts, branches: branches,
-      born: performance.now(),
-      life: 90 + Math.random() * 70,
-      color: Math.random() < 0.5 ? '#00d4ff' : '#a855f7'
-    };
+    return {main: pts, branches, born: performance.now(), life: 150 + Math.random() * 90,
+      color: Math.random() < 0.5 ? '#00d4ff' : '#a855f7'};
   }
 
   function strokePath(pts, width, color, alpha){
     if(pts.length < 2) return;
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x, pts[0].y);
+    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
     for(let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
-    ctx.strokeStyle = color;
-    ctx.globalAlpha = alpha;
-    ctx.lineWidth = width;
+    ctx.strokeStyle = color; ctx.globalAlpha = alpha; ctx.lineWidth = width;
     ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-    ctx.shadowColor = color;
-    ctx.shadowBlur = width * 4;
+    ctx.shadowColor = color; ctx.shadowBlur = width * 4;
     ctx.stroke();
   }
 
   function frame(now){
-    if(!running || !visible){ rafId = null; return; }
     ctx.clearRect(0, 0, W, H);
-    if(flash){
-      const age = now - flash.born;
-      const k = 1 - age / flash.life;
-      if(k <= 0){
-        flash = null;
-        ctx.globalAlpha = 1; ctx.shadowBlur = 0;
-        scheduleNext();
-        return;
-      }
-      strokePath(flash.main, 5, flash.color, 0.18 * k);
-      flash.branches.forEach(b => strokePath(b, 3, flash.color, 0.14 * k));
-      strokePath(flash.main, 1.4, '#eaf6ff', 0.9 * k);
-      flash.branches.forEach(b => strokePath(b, 1, '#eaf6ff', 0.7 * k));
-      ctx.globalAlpha = 1; ctx.shadowBlur = 0;
-    }
-    rafId = requestAnimationFrame(frame);
+    bolts = bolts.filter(f => (now - f.born) < f.life);
+    bolts.forEach(f => {
+      const k = 1 - (now - f.born) / f.life;
+      const flick = 0.55 + 0.45 * Math.abs(Math.sin(now / 22));
+      strokePath(f.main, 5, f.color, 0.16 * k * flick);
+      f.branches.forEach(b => strokePath(b, 3, f.color, 0.12 * k));
+      strokePath(f.main, 1.5, '#eaf6ff', 0.95 * k * flick);
+      f.branches.forEach(b => strokePath(b, 1, '#eaf6ff', 0.7 * k));
+    });
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    rafId = bolts.length ? requestAnimationFrame(frame) : (ctx.clearRect(0,0,W,H), null);
   }
 
-  let nextTimer = null;
-  function scheduleNext(){
-    clearTimeout(nextTimer);
-    const wait = 2500 + Math.random() * 3500;
-    nextTimer = setTimeout(()=>{
-      if(running && visible){
-        makeBolt();
-        if(!rafId) rafId = requestAnimationFrame(frame);
-      }
-    }, wait);
+  function strike(){
+    const now = performance.now();
+    if(now - lastStrike < 380 || document.hidden) return;
+    lastStrike = now;
+    const cr = canvas.getBoundingClientRect(), br = cta.getBoundingClientRect();
+    const target = {x: br.left - cr.left + br.width / 2, y: br.top - cr.top + 4};
+    bolts.push(buildBolt(target));
+    setTimeout(() => bolts.push(buildBolt(target)), 60 + Math.random() * 50);
+    cta.classList.remove('zapped'); void cta.offsetWidth; cta.classList.add('zapped');
+    clearTimeout(cta._zt); cta._zt = setTimeout(() => cta.classList.remove('zapped'), 600);
+    if(!rafId) rafId = requestAnimationFrame(frame);
   }
 
-  const hero = document.getElementById('hero');
+  cta.addEventListener('pointerenter', strike);
+  cta.addEventListener('focus', strike);
+  cta.addEventListener('click', strike);
+})();
+
+// ══════════════════════════════════════════
+// NAV — solid background once scrolled off the hero
+// ══════════════════════════════════════════
+(function(){
+  const nav = document.querySelector('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive: true});
+})();
+
+// ══════════════════════════════════════════
+// COUNT-UP — numbers animate from 0 when they enter the viewport
+// ══════════════════════════════════════════
+(function(){
+  const els = document.querySelectorAll('.count[data-count]');
+  if(!els.length) return;
+  const run = el => {
+    const to = parseFloat(el.dataset.count) || 0;
+    if(PREFERS_REDUCED){ el.textContent = to; return; }
+    const dur = 1100, t0 = performance.now();
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if(k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
   const io = new IntersectionObserver((entries)=>{
-    visible = entries[0].isIntersecting;
-    if(visible && running && !rafId) rafId = requestAnimationFrame(frame);
-  }, {threshold: 0.01});
-  io.observe(hero);
+    entries.forEach(e => { if(e.isIntersecting){ run(e.target); io.unobserve(e.target); } });
+  }, {threshold: 0.6});
+  els.forEach(el => io.observe(el));
+})();
 
-  document.addEventListener('visibilitychange', ()=>{
-    running = !document.hidden;
-    if(running && visible && !rafId) rafId = requestAnimationFrame(frame);
+// ══════════════════════════════════════════
+// 3D TILT — service cards lean toward the cursor (hover-capable devices only)
+// ══════════════════════════════════════════
+(function(){
+  if(PREFERS_REDUCED) return;
+  if(!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  document.querySelectorAll('.svc-tile').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.classList.add('tilting');
+      card.style.transform = `perspective(900px) rotateY(${px * 7}deg) rotateX(${-py * 7}deg) translateY(-4px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('tilting');
+      card.style.transform = '';
+    });
   });
+})();
 
-  scheduleNext();
+// ══════════════════════════════════════════
+// PARALLAX — decorative sparks drift at their own pace on scroll (throttled)
+// ══════════════════════════════════════════
+(function(){
+  if(PREFERS_REDUCED) return;
+  if(window.matchMedia('(max-width: 700px)').matches) return;
+  const sparks = Array.from(document.querySelectorAll('#sparks i'));
+  if(!sparks.length) return;
+  const speeds = [0.05, 0.11, 0.07, 0.14, 0.04, 0.09];
+  let ticking = false;
+  const apply = () => {
+    const y = window.scrollY;
+    sparks.forEach((s, i) => { s.style.transform = `translateY(${(-y * speeds[i % speeds.length]).toFixed(1)}px)`; });
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => {
+    if(!ticking){ ticking = true; requestAnimationFrame(apply); }
+  }, {passive: true});
 })();
 
 // ══════════════════════════════════════════
