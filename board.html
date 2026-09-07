@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira / Artech — Доска проектов</title>
+<meta name="description" content="Внутренняя доска всех проектов Aira / Artech с зависимостями между задачами.">
+<meta name="robots" content="noindex, nofollow">
+<style>
+:root{
+  --ink:#1c1e21;
+  --ink-dim:#6b7076;
+  --line:#e3e5e8;
+  --ok:#2f9e52;
+  --active:#d69e2e;
+  --wait:#8a9099;
+  --accent:#1a9e8f;
+  --hi-bg:#ffd7d5;   --hi-bd:#e0a1a0;
+  --md-bg:#fff2c2;   --md-bd:#dcc370;
+  --lo-bg:#d8e9ff;   --lo-bd:#9bbde3;
+  --np-bg:#eceef0;   --np-bd:#c9ced4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Inter,sans-serif;
+  color:var(--ink);
+  background:#f4f5f6;
+  display:flex;flex-direction:column;
+}
+
+/* ---------- top bar ---------- */
+header{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:12px 20px;background:#fff;border-bottom:1px solid var(--line);
+  position:sticky;top:0;z-index:40;
+}
+header h1{font-size:1.02rem;font-weight:700;margin-right:4px}
+header .meta{font-size:.74rem;color:var(--ink-dim);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.spacer{flex:1}
+button,.toggle{
+  font:inherit;font-size:.82rem;cursor:pointer;
+  background:#fff;border:1px solid var(--line);color:var(--ink);
+  border-radius:8px;padding:6px 12px;
+}
+button:hover{border-color:var(--accent);color:var(--accent)}
+.modes{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.modes button{border:none;border-radius:0;padding:6px 14px}
+.modes button.on{background:var(--accent);color:#fff}
+.modes button:hover{color:#fff;background:var(--accent)}
+label.chk{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;color:var(--ink-dim);cursor:pointer}
+
+/* ---------- legend ---------- */
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:8px 20px;font-size:.75rem;color:var(--ink-dim);background:#fff;border-bottom:1px solid var(--line)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex-shrink:0}
+.dot.ok{background:var(--ok)} .dot.active{background:var(--active)} .dot.wait{background:var(--wait)}
+
+/* ---------- scroll area ---------- */
+#wrap{position:relative;flex:1;overflow:auto;padding:22px}
+#svg{position:absolute;left:0;top:0;pointer-events:none;z-index:6;overflow:visible}
+#grid{position:relative;z-index:2;display:grid;gap:18px;align-items:start}
+
+/* board mode grid */
+body.mode-board #grid{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+/* tree mode: one area per full-width row */
+body.mode-tree #grid{grid-template-columns:1fr}
+
+/* ---------- area tile ---------- */
+.area{
+  border:1px solid var(--line);border-radius:14px;background:#fff;
+  padding:12px 12px 14px;
+}
+.area > h2{
+  font-size:.86rem;font-weight:700;margin-bottom:10px;display:flex;align-items:baseline;gap:8px;
+}
+.area > h2 .cnt{font-size:.72rem;color:var(--ink-dim);font-weight:500}
+.prio-group{margin-bottom:8px}
+.prio-group:last-child{margin-bottom:0}
+.prio-label{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-dim);margin:6px 2px 5px}
+
+/* ---------- task card ---------- */
+.cards{display:flex;flex-direction:column;gap:8px}
+.card{
+  position:relative;border-radius:8px;padding:9px 11px;font-size:.82rem;line-height:1.34;
+  border:1px solid var(--np-bd);background:var(--np-bg);cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card .nm{display:block;padding-right:14px}
+.card .st{position:absolute;top:9px;right:9px}
+.card .na{margin-top:4px;font-size:.72rem;color:#5b5f64;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card.p-hi{background:var(--hi-bg);border-color:var(--hi-bd)}
+.card.p-md{background:var(--md-bg);border-color:var(--md-bd)}
+.card.p-lo{background:var(--lo-bg);border-color:var(--lo-bd)}
+.card.done{filter:grayscale(.85);opacity:.5}
+.card.done .nm{text-decoration:line-through}
+.card:hover{box-shadow:0 3px 10px rgba(0,0,0,.14);z-index:3}
+
+/* board mode look: sticky notes on cork */
+body.mode-board #wrap{background:#c9ac81;background-image:radial-gradient(rgba(120,90,50,.22) 1px,transparent 1px);background-size:7px 7px}
+body.mode-board .area{background:rgba(255,255,255,.94);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+body.mode-board .card{box-shadow:2px 3px 7px rgba(0,0,0,.18)}
+body.mode-board .card::before{
+  content:"";position:absolute;left:50%;top:-7px;transform:translateX(-50%);
+  width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#ff6b6b,#b3231f);box-shadow:0 1px 2px rgba(0,0,0,.4)
+}
+
+/* tree mode look: org chart */
+body.mode-tree .area{border:1px solid #d4d7db}
+body.mode-tree .area > h2{justify-content:center;background:#1c1e21;color:#fff;margin:-12px -12px 14px;padding:10px;border-radius:13px 13px 0 0}
+body.mode-tree .area > h2 .cnt{color:#b9bdc2}
+body.mode-tree .area{position:relative}
+body.mode-tree .branches{display:flex;flex-wrap:wrap;gap:10px;position:relative;padding-top:24px}
+body.mode-tree .branches::before{content:"";position:absolute;top:12px;left:10%;right:10%;height:2px;background:#c4c9cf}
+body.mode-tree .branches::after{content:"";position:absolute;top:0;left:50%;width:2px;height:12px;background:#c4c9cf}
+body.mode-tree .prio-group{flex:1 1 240px;min-width:220px;border:1px dashed var(--line);border-radius:10px;padding:8px;position:relative}
+body.mode-tree .prio-group::before{content:"";position:absolute;top:-12px;left:50%;width:2px;height:12px;background:#c4c9cf}
+body.mode-tree .card{box-shadow:0 1px 3px rgba(0,0,0,.1)}
+body.mode-tree .card::before{display:none}
+
+/* ---------- modal ---------- */
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;align-items:center;justify-content:center;z-index:100}
+#ov.show{display:flex}
+#modal{background:#fff;border-radius:14px;width:min(460px,92vw);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+#modal h3{font-size:1rem;margin-bottom:4px}
+#modal .sub{font-size:.76rem;color:var(--ink-dim);margin-bottom:12px}
+#modal .field{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim);margin:12px 0 3px}
+#modal .val{font-size:.9rem;white-space:pre-wrap;line-height:1.45}
+#modal .row{display:flex;gap:10px;margin-top:18px}
+#modal a.nl{font-size:.78rem;color:var(--accent);text-decoration:none;align-self:center}
+#doneBtn{background:var(--ok);color:#fff;border-color:var(--ok);flex:1}
+#doneBtn:hover{opacity:.9;color:#fff}
+#doneBtn:disabled{background:var(--np-bd);border-color:var(--np-bd);cursor:default;opacity:1}
+#closeBtn{flex:0 0 auto}
+.state{padding:40px;text-align:center;color:var(--ink-dim);grid-column:1/-1}
+.state.err{color:#c5453a}
+</style>
+</head>
+<body class="mode-board">
+
+<header>
+  <h1>Доска проектов</h1>
+  <div class="modes">
+    <button id="mBoard" class="on">Доска</button>
+    <button id="mTree">Дерево</button>
+  </div>
+  <label class="chk"><input type="checkbox" id="hideDone" checked> скрыть выполненные</label>
+  <span class="spacer"></span>
+  <span class="meta" id="meta">загрузка…</span>
+  <button id="refresh">↻ Обновить</button>
+</header>
+
+<div class="legend">
+  <span><span class="dot active"></span> Active</span>
+  <span><span class="dot wait"></span> Waiting</span>
+  <span><span class="dot ok"></span> Done</span>
+  <span>🔴 High · 🟡 Medium · 🟢 Low</span>
+  <span>— нить зависимости: задача → то, что её блокирует</span>
+</div>
+
+<div id="wrap">
+  <svg id="svg"></svg>
+  <div id="grid"><div class="state">загрузка…</div></div>
+</div>
+
+<div id="ov">
+  <div id="modal">
+    <h3 id="mName"></h3>
+    <div class="sub" id="mSub"></div>
+    <div class="field">Next Action</div>
+    <div class="val" id="mNA"></div>
+    <div class="field" id="mBBlabel" style="display:none">Blocked By</div>
+    <div class="val" id="mBB" style="display:none"></div>
+    <div class="row">
+      <button id="doneBtn">Отметить выполнено</button>
+      <button id="closeBtn">Закрыть</button>
+      <a class="nl" id="mLink" target="_blank" rel="noopener">Notion ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const ENDPOINT = 'https://n8n.aira-ai.net/webhook/board-data';
+
+const $ = s => document.querySelector(s);
+const grid = $('#grid'), svg = $('#svg'), wrap = $('#wrap'), meta = $('#meta');
+let TASKS = [];
+let current = null;      // task shown in modal
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function prioRank(p){
+  p = (p||'').toLowerCase();
+  if (p.includes('high')||p.includes('🔴')) return {k:0,cls:'p-hi',lbl:'🔴 High'};
+  if (p.includes('med')||p.includes('🟡'))  return {k:1,cls:'p-md',lbl:'🟡 Medium'};
+  if (p.includes('low')||p.includes('🟢'))  return {k:2,cls:'p-lo',lbl:'🟢 Low'};
+  return {k:3,cls:'',lbl:'без приоритета'};
+}
+function statusCls(s){
+  s=(s||'').toLowerCase();
+  if (s.startsWith('done')) return 'ok';
+  if (s.startsWith('wait')) return 'wait';
+  if (s.startsWith('active')) return 'active';
+  return 'wait';
+}
+const isDone = s => (s||'').toLowerCase().startsWith('done');
+
+/* deterministic pseudo-random tilt from an id string */
+function tilt(id){
+  let h=0; for (let i=0;i<id.length;i++) h=(h*31+id.charCodeAt(i))|0;
+  return ((h%100)/100*3.2 - 1.6).toFixed(2);   // -1.6 .. +1.6 deg
+}
+
+function render(){
+  const hideDone = $('#hideDone').checked;
+  const boardMode = document.body.classList.contains('mode-board');
+
+  // group by area
+  const areas = {};
+  for (const t of TASKS){
+    if (hideDone && isDone(t.status)) continue;
+    (areas[t.area] = areas[t.area] || []).push(t);
+  }
+  const areaNames = Object.keys(areas).sort((a,b)=> areas[b].length - areas[a].length || a.localeCompare(b,'ru'));
+
+  if (!areaNames.length){
+    grid.innerHTML = '<div class="state">Нет задач для показа' + (hideDone ? ' (сняты «скрыть выполненные», чтобы увидеть Done)' : '') + '.</div>';
+    svg.innerHTML=''; return;
+  }
+
+  grid.innerHTML = areaNames.map(area=>{
+    const list = areas[area].slice().sort((x,y)=> prioRank(x.priority).k - prioRank(y.priority).k);
+    const total = TASKS.filter(t=>t.area===area).length;
+    const doneN = TASKS.filter(t=>t.area===area && isDone(t.status)).length;
+
+    // sub-group by priority
+    const buckets = [[],[],[],[]];
+    for (const t of list) buckets[prioRank(t.priority).k].push(t);
+    const groupsHtml = buckets.map((b,ki)=>{
+      if (!b.length) return '';
+      const lbl = [{lbl:'🔴 High'},{lbl:'🟡 Medium'},{lbl:'🟢 Low'},{lbl:'без приоритета'}][ki].lbl;
+      const cards = b.map(cardHtml).join('');
+      return `<div class="prio-group"><div class="prio-label">${lbl}</div><div class="cards">${cards}</div></div>`;
+    }).join('');
+
+    const disp = area === '—' ? 'Без области' : area;
+    return `<div class="area" data-area="${esc(area)}">
+      <h2>${esc(disp)} <span class="cnt">${list.length} показано · ${doneN}/${total} done</span></h2>
+      <div class="branches">${groupsHtml}</div>
+    </div>`;
+  }).join('');
+
+  function cardHtml(t){
+    const pr = prioRank(t.priority);
+    const dep = t.blocked_by && t.blocked_by.trim() ? ' 🔗' : '';
+    const rot = boardMode ? ` style="transform:rotate(${tilt(t.id)}deg)"` : '';
+    return `<div class="card ${pr.cls} ${isDone(t.status)?'done':''}" data-id="${t.id}"${rot}>
+      <span class="st dot ${statusCls(t.status)}"></span>
+      <span class="nm">${esc(t.name)}${dep}</span>
+      ${t.next_action ? `<span class="na">${esc(t.next_action)}</span>` : ''}
+    </div>`;
+  }
+
+  requestAnimationFrame(drawLines);
+}
+
+/* ---------- dependency lines ---------- */
+function findTarget(blockedBy){
+  const q = blockedBy.trim().toLowerCase();
+  if (!q) return null;
+  let best=null;
+  for (const t of TASKS){
+    const n = t.name.toLowerCase();
+    if (n===q) return t;
+    if (n.includes(q) || q.includes(n)){
+      if (!best || Math.abs(n.length-q.length) < Math.abs(best.name.length-q.length)) best=t;
+    }
+  }
+  return best;
+}
+
+function drawLines(){
+  const boardMode = document.body.classList.contains('mode-board');
+  svg.setAttribute('width', wrap.scrollWidth);
+  svg.setAttribute('height', wrap.scrollHeight);
+  const wr = wrap.getBoundingClientRect();
+  const ox = wrap.scrollLeft - wr.left, oy = wrap.scrollTop - wr.top;
+  const nodeById = {};
+  grid.querySelectorAll('.card').forEach(el => nodeById[el.dataset.id]=el);
+
+  let defs = `<defs><marker id="arw" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+    <path d="M0,0 L8,4 L0,8 z" fill="#8a3b3b"/></marker></defs>`;
+  let paths = '';
+  const shown = new Set(Object.keys(nodeById));
+
+  for (const t of TASKS){
+    if (!t.blocked_by || !t.blocked_by.trim()) continue;
+    const src = nodeById[t.id];
+    const tgt = findTarget(t.blocked_by);
+    if (!src || !tgt || !nodeById[tgt.id] || tgt.id===t.id) continue;
+    const a = src.getBoundingClientRect(), b = nodeById[tgt.id].getBoundingClientRect();
+    const ax = a.left+ox+a.width/2, ay = a.top+oy+a.height/2;
+    const bx = b.left+ox+b.width/2, by = b.top+oy+b.height/2;
+    if (boardMode){
+      paths += `<line x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}" stroke="#b3231f" stroke-width="1.8" stroke-opacity="0.9"/>`;
+      paths += `<circle cx="${ax}" cy="${ay}" r="3.5" fill="#b3231f"/><circle cx="${bx}" cy="${by}" r="3.5" fill="#b3231f"/>`;
+    } else {
+      const my = (ay+by)/2;
+      paths += `<path d="M ${ax} ${ay} V ${my} H ${bx} V ${by}" fill="none" stroke="#8a3b3b" stroke-width="1.5" marker-end="url(#arw)"/>`;
+    }
+  }
+  svg.innerHTML = defs + paths;
+}
+
+/* ---------- modal ---------- */
+function openModal(id){
+  const t = TASKS.find(x=>x.id===id); if (!t) return;
+  current = t;
+  $('#mName').textContent = t.name;
+  $('#mSub').textContent = `${t.area}  ·  ${t.priority||'—'}  ·  ${t.status||'—'}`;
+  $('#mNA').textContent = t.next_action || '—';
+  const hasBB = t.blocked_by && t.blocked_by.trim();
+  $('#mBBlabel').style.display = hasBB ? '' : 'none';
+  $('#mBB').style.display = hasBB ? '' : 'none';
+  $('#mBB').textContent = hasBB ? t.blocked_by : '';
+  $('#mLink').href = t.url || '#';
+  const btn = $('#doneBtn');
+  btn.disabled = isDone(t.status);
+  btn.textContent = isDone(t.status) ? 'Уже выполнено' : 'Отметить выполнено';
+  $('#ov').classList.add('show');
+}
+function closeModal(){ $('#ov').classList.remove('show'); current=null; }
+
+async function markDone(){
+  if (!current) return;
+  const btn = $('#doneBtn');
+  btn.disabled = true; btn.textContent = 'Сохраняю…';
+  try{
+    const res = await fetch(ENDPOINT, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ page_id: current.id, status: 'Done' })
+    });
+    const j = await res.json();
+    if (!j.ok) throw new Error(j.error || 'ошибка');
+    current.status = 'Done';
+    render();
+    closeModal();
+  }catch(e){
+    btn.textContent = 'Не удалось: ' + e.message;
+    setTimeout(()=>{ btn.disabled=false; btn.textContent='Отметить выполнено'; }, 2500);
+  }
+}
+
+/* ---------- load ---------- */
+async function load(){
+  meta.textContent = 'загрузка…';
+  grid.innerHTML = '<div class="state">загрузка…</div>';
+  try{
+    const res = await fetch(ENDPOINT);
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    TASKS = data.tasks || [];
+    meta.textContent = `${TASKS.length} задач · ${new Date(data.generated_at).toLocaleString('ru-RU')}`;
+    render();
+  }catch(e){
+    grid.innerHTML = '<div class="state err">Не удалось загрузить: '+esc(e.message)+'</div>';
+    meta.textContent = 'ошибка';
+  }
+}
+
+/* ---------- events ---------- */
+grid.addEventListener('click', e=>{
+  const c = e.target.closest('.card'); if (c) openModal(c.dataset.id);
+});
+$('#refresh').addEventListener('click', load);
+$('#hideDone').addEventListener('change', render);
+$('#closeBtn').addEventListener('click', closeModal);
+$('#doneBtn').addEventListener('click', markDone);
+$('#ov').addEventListener('click', e=>{ if (e.target.id==='ov') closeModal(); });
+document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeModal(); });
+$('#mBoard').addEventListener('click', ()=>{ setMode('board'); });
+$('#mTree').addEventListener('click', ()=>{ setMode('tree'); });
+function setMode(m){
+  document.body.classList.toggle('mode-board', m==='board');
+  document.body.classList.toggle('mode-tree', m==='tree');
+  $('#mBoard').classList.toggle('on', m==='board');
+  $('#mTree').classList.toggle('on', m==='tree');
+  render();
+}
+let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(drawLines,120); });
+wrap.addEventListener('scroll', ()=>{ clearTimeout(rt); rt=setTimeout(drawLines,60); });
+
+load();
+</script>
+</body>
+</html>
