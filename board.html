@@ -129,9 +129,11 @@ body.mode-tree .card::before{display:none}
 #modal .val{font-size:.9rem;white-space:pre-wrap;line-height:1.45}
 #modal .row{display:flex;gap:10px;margin-top:18px}
 #modal a.nl{font-size:.78rem;color:var(--accent);text-decoration:none;align-self:center}
-#doneBtn{background:var(--ok);color:#fff;border-color:var(--ok);flex:1}
-#doneBtn:hover{opacity:.9;color:#fff}
-#doneBtn:disabled{background:var(--np-bd);border-color:var(--np-bd);cursor:default;opacity:1}
+#statusBtns{display:contents}
+#statusBtns button{flex:1}
+#statusBtns button.done-btn{background:var(--ok);color:#fff;border-color:var(--ok)}
+#statusBtns button.done-btn:hover{opacity:.9;color:#fff}
+#statusBtns button:disabled{background:var(--np-bd);border-color:var(--np-bd);cursor:default;opacity:1;color:#fff}
 #closeBtn{flex:0 0 auto}
 .state{padding:40px;text-align:center;color:var(--ink-dim);grid-column:1/-1}
 .state.err{color:#c5453a}
@@ -173,7 +175,7 @@ body.mode-tree .card::before{display:none}
     <div class="field" id="mBBlabel" style="display:none">Blocked By</div>
     <div class="val" id="mBB" style="display:none"></div>
     <div class="row">
-      <button id="doneBtn">Отметить выполнено</button>
+      <span id="statusBtns"></span>
       <button id="closeBtn">Закрыть</button>
       <a class="nl" id="mLink" target="_blank" rel="noopener">Notion ↗</a>
     </div>
@@ -325,30 +327,51 @@ function openModal(id){
   $('#mBB').style.display = hasBB ? '' : 'none';
   $('#mBB').textContent = hasBB ? t.blocked_by : '';
   $('#mLink').href = t.url || '#';
-  const btn = $('#doneBtn');
-  btn.disabled = isDone(t.status);
-  btn.textContent = isDone(t.status) ? 'Уже выполнено' : 'Отметить выполнено';
+  renderStatusBtns(t);
   $('#ov').classList.add('show');
 }
 function closeModal(){ $('#ov').classList.remove('show'); current=null; }
 
-async function markDone(){
+function renderStatusBtns(t){
+  const box = $('#statusBtns');
+  box.innerHTML = '';
+  const mk = (label, status, cls) => {
+    const b = document.createElement('button');
+    b.textContent = label;
+    if (cls) b.className = cls;
+    b.addEventListener('click', () => setStatus(status, b));
+    box.appendChild(b);
+  };
+  if (isDone(t.status)){
+    mk('Вернуть в Active', 'Active');
+    mk('→ Waiting', 'Waiting');
+  } else {
+    mk('Отметить выполнено', 'Done', 'done-btn');
+  }
+}
+
+async function setStatus(newStatus, btn){
   if (!current) return;
-  const btn = $('#doneBtn');
-  btn.disabled = true; btn.textContent = 'Сохраняю…';
+  const box = $('#statusBtns');
+  const btns = [...box.querySelectorAll('button')];
+  const labels = btns.map(b => b.textContent);
+  btns.forEach(b => b.disabled = true);
+  if (btn) btn.textContent = 'Сохраняю…';
   try{
     const res = await fetch(ENDPOINT, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ page_id: current.id, status: 'Done' })
+      body: JSON.stringify({ page_id: current.id, status: newStatus })
     });
     const j = await res.json();
     if (!j.ok) throw new Error(j.error || 'ошибка');
-    current.status = 'Done';
+    current.status = newStatus;
     render();
     closeModal();
   }catch(e){
-    btn.textContent = 'Не удалось: ' + e.message;
-    setTimeout(()=>{ btn.disabled=false; btn.textContent='Отметить выполнено'; }, 2500);
+    if (btn) btn.textContent = 'Не удалось: ' + e.message;
+    setTimeout(()=>{
+      btns.forEach((b,i) => { b.disabled = false; b.textContent = labels[i]; });
+    }, 2500);
   }
 }
 
@@ -376,7 +399,6 @@ grid.addEventListener('click', e=>{
 $('#refresh').addEventListener('click', load);
 $('#hideDone').addEventListener('change', render);
 $('#closeBtn').addEventListener('click', closeModal);
-$('#doneBtn').addEventListener('click', markDone);
 $('#ov').addEventListener('click', e=>{ if (e.target.id==='ov') closeModal(); });
 document.addEventListener('keydown', e=>{ if (e.key==='Escape') closeModal(); });
 $('#mBoard').addEventListener('click', ()=>{ setMode('board'); });
