@@ -31,6 +31,26 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://aira-ai.net/garden</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aira-ai.net/home/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aira-ai.net/home/home.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aira-ai.net/home/garden.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://aira-ai.net/portfolio</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
