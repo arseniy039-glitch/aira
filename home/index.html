@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira Home — Services for your property in the Algarve</title>
+<meta name="description" content="Aira Home: three local services for property owners in the Algarve — Airahome (24/7 emergency callout), Aira Energia (electricity bill & solar), Aira Garden (smart irrigation).">
+<link rel="canonical" href="https://aira-ai.net/home/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aira Home">
+<meta property="og:title" content="Aira Home — Services for your property in the Algarve">
+<meta property="og:description" content="Airahome (24/7 emergency callout), Aira Energia (electricity bill & solar), Aira Garden (smart irrigation) — one local operator, Algarve.">
+<meta property="og:url" content="https://aira-ai.net/home/">
+<meta property="og:image" content="https://aira-ai.net/assets/img/airahome-hero-1600.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232a2f28'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='800' fill='%23fff' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Aira Home","parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"url":"https://aira-ai.net/home/","email":"info@aira-ai.net","telephone":"+351308800687","address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"subOrganization":[{"@type":"LocalBusiness","name":"Airahome","url":"https://aira-ai.net/airahome"},{"@type":"LocalBusiness","name":"Aira Energia","url":"https://aira-ai.net/energia"},{"@type":"LocalBusiness","name":"Aira Garden","url":"https://aira-ai.net/garden"}]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1;--surface:#ffffff;
+  --ink:#22261f;--ink-dim:#5b6156;--ink-muted:#8b9086;
+  --line:rgba(34,38,31,0.10);--line-strong:rgba(34,38,31,0.20);
+  --accent:#4a5240;--accent-dark:#343a2c;--accent-soft:rgba(74,82,64,0.08);
+  --home:#e2501c;--home-soft:rgba(226,80,28,0.10);
+  --energia:#0f7a94;--energia-soft:rgba(15,122,148,0.10);
+  --garden:#2f6b3c;--garden-soft:rgba(47,107,60,0.10);
+  --radius:8px;--radius-pill:999px;--nav-h:72px;
+  --photo-sat:1.03;--photo-con:1.02;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+h1,h2,h3{font-weight:700;letter-spacing:-0.02em;color:var(--ink);}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:inherit;}
+button{font-family:inherit;}
+.section-inner{max-width:1120px;margin:0 auto;padding:0 1.75rem;position:relative;z-index:2;}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent-dark);font-weight:600;margin-bottom:0.9rem;display:block;}
+.photo-frame{position:relative;overflow:hidden;border-radius:calc(var(--radius)*1.5);}
+.photo-frame img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(var(--photo-sat)) contrast(var(--photo-con));}
+.photo-frame .photo-veil{position:absolute;inset:0;mix-blend-mode:multiply;}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;background:rgba(246,245,241,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);gap:1rem;}
+.nav-logo{font-weight:800;font-size:1.1rem;letter-spacing:-0.01em;text-decoration:none;color:var(--ink);flex-shrink:0;}
+.nav-logo span{color:var(--home);}
+.nav-mid{display:flex;align-items:center;gap:1rem;flex-wrap:nowrap;}
+.nav-phone{display:flex;align-items:center;gap:0.5rem;text-decoration:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.88rem;white-space:nowrap;}
+.lang-switch{display:flex;gap:0.15rem;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-pill);padding:0.2rem;flex-shrink:0;}
+.lang-btn{font-family:'JetBrains Mono',monospace;font-size:0.65rem;font-weight:600;letter-spacing:0.03em;color:var(--ink-muted);background:none;border:none;cursor:pointer;padding:0.35rem 0.55rem;border-radius:var(--radius-pill);transition:background 0.2s,color 0.2s;}
+.lang-btn.active{background:var(--ink);color:#fff;}
+.lang-btn:hover:not(.active){color:var(--ink);}
+@media(max-width:760px){.nav-phone{display:none;}}
+
+/* ── HERO ── */
+#hero{position:relative;overflow:hidden;padding:4.5rem 0 4rem;border-bottom:1px solid var(--line);}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 62%;z-index:0;filter:saturate(var(--photo-sat)) contrast(var(--photo-con));}
+.hero-veil{position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(246,245,241,0.97) 0%,rgba(246,245,241,0.94) 40%,rgba(74,82,64,0.26) 78%,rgba(74,82,64,0.12) 100%),linear-gradient(180deg,transparent 55%,var(--bg) 100%);}
+.hero-grid{max-width:720px;display:flex;flex-direction:column;gap:1.1rem;}
+.hero-title{font-size:clamp(2rem,4.6vw,3rem);line-height:1.12;}
+.hero-sub{font-size:clamp(1rem,1.8vw,1.15rem);color:var(--ink-dim);max-width:600px;}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:0.8rem;margin-top:0.3rem;}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;text-decoration:none;border-radius:var(--radius);padding:0.85rem 1.3rem;font-weight:600;font-size:0.92rem;cursor:pointer;border:1px solid var(--line-strong);transition:all 0.2s;background:var(--surface);color:var(--ink);}
+.btn-primary{background:var(--ink);border-color:var(--ink);color:#fff;}
+.btn-primary:hover{background:var(--accent-dark);}
+.btn-secondary:hover{border-color:var(--ink);}
+
+/* ── CARDS ── */
+#doors{padding:5rem 0;background:var(--surface);border-bottom:1px solid var(--line);}
+.doors-head{max-width:640px;margin-bottom:2.5rem;}
+.doors-lead{color:var(--ink-dim);font-size:0.95rem;margin-top:0.5rem;}
+.doors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.door-card{--c:var(--home);--c-soft:var(--home-soft);display:flex;flex-direction:column;border:1px solid var(--line-strong);border-radius:calc(var(--radius)*1.5);overflow:hidden;background:var(--bg);text-decoration:none;color:var(--ink);transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;}
+.door-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px -18px rgba(34,38,31,0.35);border-color:var(--c);}
+.door-photo{aspect-ratio:4/3;}
+.door-photo .photo-veil{background:linear-gradient(180deg,transparent 55%,var(--c) 150%);opacity:0.35;}
+.door-body{padding:1.5rem 1.4rem 1.7rem;display:flex;flex-direction:column;gap:0.6rem;flex:1;}
+.door-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--c);font-weight:700;}
+.door-title{font-size:1.2rem;}
+.door-desc{font-size:0.86rem;color:var(--ink-dim);line-height:1.55;flex:1;}
+.door-cta{margin-top:0.4rem;font-size:0.86rem;font-weight:600;color:var(--c);display:inline-flex;align-items:center;gap:0.35rem;}
+.door-card:hover .door-cta{gap:0.55rem;}
+@media(max-width:900px){.doors-grid{grid-template-columns:1fr;}}
+
+/* ── TRUST ── */
+#trust{padding:5rem 0;}
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:2.5rem;}
+.trust-tile{background:var(--surface);padding:1.7rem 1.6rem;display:flex;flex-direction:column;gap:0.5rem;}
+.trust-title{font-weight:600;font-size:0.98rem;}
+.trust-desc{font-size:0.85rem;color:var(--ink-dim);line-height:1.55;}
+@media(max-width:760px){.trust-grid{grid-template-columns:1fr;}}
+
+/* ── CONTACT ── */
+#contact{padding:4.5rem 0 5rem;background:var(--surface);border-top:1px solid var(--line);}
+.contact-wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:2rem;}
+.contact-title{font-size:clamp(1.4rem,2.6vw,1.9rem);max-width:480px;}
+.contact-actions{display:flex;flex-wrap:wrap;gap:0.8rem;}
+
+/* ── FOOTER ── */
+footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:1.6rem;justify-content:space-between;align-items:flex-start;background:var(--bg);}
+.footer-left{display:flex;flex-direction:column;gap:0.4rem;max-width:340px;}
+.footer-logo{font-weight:800;font-size:1rem;}
+.footer-logo span{color:var(--home);}
+.footer-legal{font-size:0.8rem;color:var(--ink-muted);line-height:1.6;}
+.footer-services{display:flex;flex-direction:column;gap:0.5rem;}
+.footer-services-label{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:0.3rem;}
+.footer-services a{font-size:0.86rem;color:var(--ink-dim);text-decoration:none;}
+.footer-services a:hover{color:var(--ink);}
+.footer-right{display:flex;flex-direction:column;align-items:flex-start;gap:0.6rem;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-logo">Aira<span>&nbsp;Home</span></a>
+  <div class="nav-mid">
+    <a class="nav-phone" href="tel:+351308800687">+351 308 800 687</a>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section id="hero">
+  <picture>
+    <source type="image/webp" srcset="/assets/img/airahome-hero-400.webp 400w, /assets/img/airahome-hero-800.webp 800w, /assets/img/airahome-hero-1600.webp 1600w" sizes="100vw">
+    <img class="hero-bg" src="/assets/img/airahome-hero-800.jpg" srcset="/assets/img/airahome-hero-400.jpg 400w, /assets/img/airahome-hero-800.jpg 800w, /assets/img/airahome-hero-1600.jpg 1600w" sizes="100vw" alt="" data-shot="vivenda algarvia branca com jardim, sem pessoas" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
+  </picture>
+  <div class="hero-veil"></div>
+  <div class="section-inner">
+    <div class="hero-grid">
+      <span class="eyebrow" data-i18n="hero_eyebrow"></span>
+      <h1 class="hero-title" data-i18n="hero_h1"></h1>
+      <p class="hero-sub" data-i18n="hero_sub"></p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#doors" data-i18n="hero_cta"></a>
+        <a class="btn btn-secondary" href="tel:+351308800687" data-i18n="hero_cta_call"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ DOORS ══════════════════════ -->
+<section id="doors">
+  <div class="section-inner">
+    <div class="doors-head">
+      <span class="eyebrow" data-i18n="doors_eyebrow"></span>
+      <h2 data-i18n="doors_title"></h2>
+      <p class="doors-lead" data-i18n="doors_lead"></p>
+    </div>
+    <div class="doors-grid">
+
+      <a class="door-card reveal" style="--c:var(--home);--c-soft:var(--home-soft);" href="/airahome">
+        <div class="photo-frame door-photo">
+          <picture>
+            <source type="image/webp" srcset="/assets/img/airahome-detail-tools-400.webp 400w, /assets/img/airahome-detail-tools-800.webp 800w">
+            <img src="/assets/img/airahome-detail-tools-400.jpg" srcset="/assets/img/airahome-detail-tools-400.jpg 400w, /assets/img/airahome-detail-tools-800.jpg 800w" sizes="(max-width:900px) 90vw, 33vw" alt="" data-shot="ferramentas e multímetro numa bancada, sem pessoas" width="1600" height="2844" loading="lazy" decoding="async">
+          </picture>
+          <div class="photo-veil"></div>
+        </div>
+        <div class="door-body">
+          <span class="door-eyebrow" data-i18n="door_1_eyebrow"></span>
+          <h3 class="door-title" data-i18n="door_1_title"></h3>
+          <p class="door-desc" data-i18n="door_1_desc"></p>
+          <span class="door-cta" data-i18n="door_1_cta"></span>
+        </div>
+      </a>
+
+      <a class="door-card reveal" style="--c:var(--energia);--c-soft:var(--energia-soft);" href="/energia">
+        <div class="photo-frame door-photo">
+          <img src="/assets/img/energia-detail-panels-515.jpg" alt="" data-shot="painéis solares em diagonal, sem pessoas" width="515" height="388" loading="lazy" decoding="async">
+          <div class="photo-veil"></div>
+        </div>
+        <div class="door-body">
+          <span class="door-eyebrow" data-i18n="door_2_eyebrow"></span>
+          <h3 class="door-title" data-i18n="door_2_title"></h3>
+          <p class="door-desc" data-i18n="door_2_desc"></p>
+          <span class="door-cta" data-i18n="door_2_cta"></span>
+        </div>
+      </a>
+
+      <a class="door-card reveal" style="--c:var(--garden);--c-soft:var(--garden-soft);" href="/garden">
+        <div class="photo-frame door-photo">
+          <picture>
+            <source type="image/webp" srcset="/assets/img/garden-detail-drip-400.webp 400w, /assets/img/garden-detail-drip-800.webp 800w">
+            <img src="/assets/img/garden-detail-drip-400.jpg" srcset="/assets/img/garden-detail-drip-400.jpg 400w, /assets/img/garden-detail-drip-800.jpg 800w" sizes="(max-width:900px) 90vw, 33vw" alt="" data-shot="linha de rega gota-a-gota junto a uma planta, sem pessoas" width="1600" height="1066" loading="lazy" decoding="async">
+          </picture>
+          <div class="photo-veil"></div>
+        </div>
+        <div class="door-body">
+          <span class="door-eyebrow" data-i18n="door_3_eyebrow"></span>
+          <h3 class="door-title" data-i18n="door_3_title"></h3>
+          <p class="door-desc" data-i18n="door_3_desc"></p>
+          <span class="door-cta" data-i18n="door_3_cta"></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TRUST ══════════════════════ -->
+<section id="trust">
+  <div class="section-inner">
+    <span class="eyebrow" data-i18n="trust_eyebrow"></span>
+    <h2 style="font-size:clamp(1.4rem,2.8vw,1.9rem);" data-i18n="trust_title"></h2>
+    <div class="trust-grid">
+      <div class="trust-tile reveal"><div class="trust-title" data-i18n="trust_1_title"></div><div class="trust-desc" data-i18n="trust_1_desc"></div></div>
+      <div class="trust-tile reveal"><div class="trust-title" data-i18n="trust_2_title"></div><div class="trust-desc" data-i18n="trust_2_desc"></div></div>
+      <div class="trust-tile reveal"><div class="trust-title" data-i18n="trust_3_title"></div><div class="trust-desc" data-i18n="trust_3_desc"></div></div>
+      <div class="trust-tile reveal"><div class="trust-title" data-i18n="trust_4_title"></div><div class="trust-desc" data-i18n="trust_4_desc"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-wrap">
+      <h2 class="contact-title" data-i18n="contact_title"></h2>
+      <div class="contact-actions">
+        <a class="btn btn-primary" href="tel:+351308800687"><span data-i18n="contact_call"></span>&nbsp;<span class="mono">+351 308 800 687</span></a>
+        <a class="btn btn-secondary" href="https://wa.me/351936800000?text=Ol%C3%A1%2C%20vim%20da%20p%C3%A1gina%20Aira%20Home" target="_blank" rel="noopener" data-i18n="contact_wa"></a>
+        <a class="btn btn-secondary" href="mailto:info@aira-ai.net" data-i18n="contact_email"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-logo">Aira<span>&nbsp;Home</span></div>
+    <div class="footer-legal" data-i18n="footer_legal"></div>
+  </div>
+  <div class="footer-services">
+    <div class="footer-services-label" data-i18n="footer_services_label"></div>
+    <a href="/airahome">Airahome</a>
+    <a href="/energia">Energia</a>
+    <a href="/garden">Garden</a>
+    <a href="https://aira-ai.net/">aira-ai.net ↗</a>
+  </div>
+  <div class="footer-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+    <div class="footer-legal mono" style="font-size:0.68rem;">powered by Aira</div>
+  </div>
+</footer>
+
+<script>
+const T = {
+en:{
+  hero_eyebrow:'Aira Home · Algarve',
+  hero_h1:'Three local services for your property in the Algarve.',
+  hero_sub:'One operator, one phone number, work done in your language — emergency repairs, your electricity bill, and watering the garden while you’re away.',
+  hero_cta:'See the three services',
+  hero_cta_call:'Call us',
+  doors_eyebrow:'Choose a service',
+  doors_title:'What do you need?',
+  doors_lead:'Each service has its own team, price and page — pick the one that matches what’s going on right now.',
+  door_1_eyebrow:'Right now',
+  door_1_title:'Airahome',
+  door_1_desc:'Something broke — plumbing, electrical, locks, appliances, air conditioning. 24/7 emergency callout, price confirmed before anyone drives out.',
+  door_1_cta:'Request a callout →',
+  door_2_eyebrow:'When you have time to compare',
+  door_2_title:'Aira Energia',
+  door_2_desc:'Check your electricity bill, compare tariffs, and look into solar with a licensed electrician. No pressure, no obligation.',
+  door_2_cta:'Check my bill →',
+  door_3_eyebrow:'Before the season',
+  door_3_title:'Aira Garden',
+  door_3_desc:'Wireless smart irrigation for your property. No trenching, works offline, keeps the garden alive while you’re not there.',
+  door_3_cta:'Request a consultation →',
+  trust_eyebrow:'Why Aira Home',
+  trust_title:'A local operator, not a random name from a listing',
+  trust_1_title:'Portuguese company',trust_1_desc:'Horizonte Solene Lda, based in the Algarve — not a marketplace or a broker.',
+  trust_2_title:'Price before we start',trust_2_desc:'Every service tells you the cost up front, on its own page, before you commit to anything.',
+  trust_3_title:'A real phone and WhatsApp',trust_3_desc:'One number, answered by a person, in your language.',
+  trust_4_title:'Local language',trust_4_desc:'English, German, French, Portuguese — no translation apps, no guessing.',
+  contact_title:'Not sure which service you need?',
+  contact_call:'Call now —',
+  contact_wa:'WhatsApp us',
+  contact_email:'Email us',
+  footer_legal:'Aira Home · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home services'
+},
+de:{
+  hero_eyebrow:'Aira Home · Algarve',
+  hero_h1:'Drei lokale Dienstleistungen für Ihr Zuhause an der Algarve.',
+  hero_sub:'Ein Ansprechpartner, eine Telefonnummer, Arbeit in Ihrer Sprache — Notfallreparaturen, Ihre Stromrechnung und die Gartenbewässerung, wenn Sie nicht da sind.',
+  hero_cta:'Die drei Dienste ansehen',
+  hero_cta_call:'Anrufen',
+  doors_eyebrow:'Dienst wählen',
+  doors_title:'Was brauchen Sie?',
+  doors_lead:'Jeder Dienst hat sein eigenes Team, seinen eigenen Preis und seine eigene Seite — wählen Sie, was gerade zu Ihrer Situation passt.',
+  door_1_eyebrow:'Jetzt gerade',
+  door_1_title:'Airahome',
+  door_1_desc:'Etwas ist kaputt — Sanitär, Elektrik, Schlösser, Geräte, Klimaanlage. 24/7-Notdienst, Preis wird vor der Anfahrt bestätigt.',
+  door_1_cta:'Einsatz anfragen →',
+  door_2_eyebrow:'Wenn Sie Zeit zum Vergleichen haben',
+  door_2_title:'Aira Energia',
+  door_2_desc:'Prüfen Sie Ihre Stromrechnung, vergleichen Sie Tarife und informieren Sie sich über Solar mit einem lizenzierten Elektriker. Unverbindlich.',
+  door_2_cta:'Rechnung prüfen →',
+  door_3_eyebrow:'Vor der Saison',
+  door_3_title:'Aira Garden',
+  door_3_desc:'Kabellose intelligente Bewässerung für Ihr Grundstück. Ohne Grabenarbeiten, funktioniert offline, hält den Garten am Leben, wenn Sie nicht da sind.',
+  door_3_cta:'Beratung anfragen →',
+  trust_eyebrow:'Warum Aira Home',
+  trust_title:'Ein lokaler Anbieter, kein zufälliger Name aus einem Inserat',
+  trust_1_title:'Portugiesisches Unternehmen',trust_1_desc:'Horizonte Solene Lda, ansässig an der Algarve — kein Marktplatz, kein Vermittler.',
+  trust_2_title:'Preis vor Arbeitsbeginn',trust_2_desc:'Jeder Dienst nennt die Kosten vorab, auf seiner eigenen Seite, bevor Sie sich festlegen.',
+  trust_3_title:'Echtes Telefon und WhatsApp',trust_3_desc:'Eine Nummer, beantwortet von einer echten Person, in Ihrer Sprache.',
+  trust_4_title:'Landessprache',trust_4_desc:'Englisch, Deutsch, Französisch, Portugiesisch — keine Übersetzungs-Apps, kein Rätselraten.',
+  contact_title:'Nicht sicher, welcher Dienst der richtige ist?',
+  contact_call:'Jetzt anrufen —',
+  contact_wa:'WhatsApp schreiben',
+  contact_email:'E-Mail schreiben',
+  footer_legal:'Aira Home · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home Dienste'
+},
+fr:{
+  hero_eyebrow:'Aira Home · Algarve',
+  hero_h1:'Trois services locaux pour votre propriété en Algarve.',
+  hero_sub:'Un seul interlocuteur, un seul numéro, un travail dans votre langue — réparations d’urgence, votre facture d’électricité, et l’arrosage du jardin en votre absence.',
+  hero_cta:'Voir les trois services',
+  hero_cta_call:'Nous appeler',
+  doors_eyebrow:'Choisissez un service',
+  doors_title:'De quoi avez-vous besoin ?',
+  doors_lead:'Chaque service a sa propre équipe, son propre prix et sa propre page — choisissez celui qui correspond à votre situation.',
+  door_1_eyebrow:'Maintenant',
+  door_1_title:'Airahome',
+  door_1_desc:'Quelque chose est cassé — plomberie, électricité, serrures, électroménager, climatisation. Intervention d’urgence 24/7, prix confirmé avant tout déplacement.',
+  door_1_cta:'Demander une intervention →',
+  door_2_eyebrow:'Quand vous avez le temps de comparer',
+  door_2_title:'Aira Energia',
+  door_2_desc:'Vérifiez votre facture d’électricité, comparez les tarifs et renseignez-vous sur le solaire avec un électricien agréé. Sans engagement.',
+  door_2_cta:'Vérifier ma facture →',
+  door_3_eyebrow:'Avant la saison',
+  door_3_title:'Aira Garden',
+  door_3_desc:'Arrosage intelligent sans fil pour votre propriété. Sans tranchées, fonctionne hors ligne, garde le jardin en vie en votre absence.',
+  door_3_cta:'Demander une consultation →',
+  trust_eyebrow:'Pourquoi Aira Home',
+  trust_title:'Un opérateur local, pas un nom au hasard trouvé sur une annonce',
+  trust_1_title:'Société portugaise',trust_1_desc:'Horizonte Solene Lda, basée en Algarve — ni une place de marché, ni un courtier.',
+  trust_2_title:'Prix avant le début des travaux',trust_2_desc:'Chaque service indique le coût à l’avance, sur sa propre page, avant tout engagement.',
+  trust_3_title:'Un vrai téléphone et WhatsApp',trust_3_desc:'Un seul numéro, une vraie personne qui répond, dans votre langue.',
+  trust_4_title:'Langue locale',trust_4_desc:'Anglais, allemand, français, portugais — pas d’application de traduction, pas de suppositions.',
+  contact_title:'Vous ne savez pas quel service choisir ?',
+  contact_call:'Appeler —',
+  contact_wa:'Nous écrire sur WhatsApp',
+  contact_email:'Nous écrire un email',
+  footer_legal:'Aira Home · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Services Aira Home'
+},
+pt:{
+  hero_eyebrow:'Aira Home · Algarve',
+  hero_h1:'Três serviços locais para a sua propriedade no Algarve.',
+  hero_sub:'Um único operador, um único número, trabalho no seu idioma — reparações urgentes, a sua fatura de eletricidade e a rega do jardim enquanto está ausente.',
+  hero_cta:'Ver os três serviços',
+  hero_cta_call:'Ligar agora',
+  doors_eyebrow:'Escolha um serviço',
+  doors_title:'Do que precisa?',
+  doors_lead:'Cada serviço tem a sua própria equipa, preço e página — escolha o que corresponde à sua situação.',
+  door_1_eyebrow:'Agora mesmo',
+  door_1_title:'Airahome',
+  door_1_desc:'Algo avariou — canalização, eletricidade, fechaduras, eletrodomésticos, ar condicionado. Intervenção 24/7, preço confirmado antes de sair alguém.',
+  door_1_cta:'Pedir intervenção →',
+  door_2_eyebrow:'Quando tiver tempo para comparar',
+  door_2_title:'Aira Energia',
+  door_2_desc:'Verifique a sua fatura de eletricidade, compare tarifários e informe-se sobre painéis solares com um eletricista licenciado. Sem compromisso.',
+  door_2_cta:'Verificar a minha fatura →',
+  door_3_eyebrow:'Antes da época',
+  door_3_title:'Aira Garden',
+  door_3_desc:'Rega inteligente sem fios para a sua propriedade. Sem obras, funciona offline, mantém o jardim vivo enquanto está ausente.',
+  door_3_cta:'Pedir consulta →',
+  trust_eyebrow:'Porquê Aira Home',
+  trust_title:'Um operador local, não um nome qualquer de um anúncio',
+  trust_1_title:'Empresa portuguesa',trust_1_desc:'Horizonte Solene Lda, sediada no Algarve — não é um marketplace nem um intermediário.',
+  trust_2_title:'Preço antes de começar',trust_2_desc:'Cada serviço indica o custo antecipadamente, na sua própria página, antes de se comprometer.',
+  trust_3_title:'Telefone e WhatsApp reais',trust_3_desc:'Um único número, atendido por uma pessoa real, no seu idioma.',
+  trust_4_title:'Idioma local',trust_4_desc:'Inglês, alemão, francês, português — sem aplicações de tradução, sem adivinhar.',
+  contact_title:'Não sabe qual serviço precisa?',
+  contact_call:'Ligar agora —',
+  contact_wa:'Falar por WhatsApp',
+  contact_email:'Enviar email',
+  footer_legal:'Aira Home · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Serviços Aira Home'
+}
+};
+
+let currentLang = 'en';
+function setLang(lang){
+  if(!T[lang]) return;
+  currentLang = lang;
+  const t = T[lang];
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+  });
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.dataset.i18n;
+    if(t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+(function(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+setLang('en');
+</script>
+</body>
+</html>
