@@ -237,8 +237,8 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 /* ── CARD MODAL (garden theme) ── */
 .card-modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(14,20,16,0.55);opacity:0;pointer-events:none;transition:opacity 0.25s ease;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
 .card-modal-overlay.open{opacity:1;pointer-events:all;}
-.card-modal{position:fixed;bottom:0;left:0;right:0;z-index:501;background:var(--surface);border-radius:calc(var(--radius)*2) calc(var(--radius)*2) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.22,0.8,0.3,1);box-shadow:0 -3px 0 0 var(--leaf),0 -20px 60px rgba(28,42,32,0.18);}
-.card-modal.open{transform:translateY(0);}
+.card-modal{position:fixed;bottom:0;left:0;right:0;z-index:501;background:var(--surface);border-radius:calc(var(--radius)*2) calc(var(--radius)*2) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);opacity:0;pointer-events:none;transition:transform 0.35s cubic-bezier(0.22,0.8,0.3,1),opacity 0.25s ease;box-shadow:0 -3px 0 0 var(--leaf),0 -20px 60px rgba(28,42,32,0.18);}
+.card-modal.open{transform:translateY(0);opacity:1;pointer-events:all;}
 .card-modal-inner{max-width:680px;margin:0 auto;padding:2rem 1.75rem 3.5rem;position:relative;}
 .card-modal-drag{width:38px;height:4px;border-radius:2px;background:var(--line-strong);margin:0 auto 1.8rem;}
 .card-modal-close{position:absolute;top:1.1rem;right:1.2rem;background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:1rem;padding:0.4rem 0.55rem;border-radius:var(--radius);transition:color 0.2s,background 0.15s;}
