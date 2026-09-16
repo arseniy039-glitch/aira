@@ -29,6 +29,7 @@
   --home:#e2501c;--home-soft:rgba(226,80,28,0.10);
   --energia:#0f7a94;--energia-soft:rgba(15,122,148,0.10);
   --garden:#2f6b3c;--garden-soft:rgba(47,107,60,0.10);
+  --construction:#c9711f;--construction-soft:rgba(201,113,31,0.10);
   --radius:8px;--radius-pill:999px;--nav-h:72px;
   --photo-sat:1.03;--photo-con:1.02;
 }
@@ -74,7 +75,7 @@ nav{position:sticky;top:0;z-index:100;height:var(--nav-h);display:flex;align-ite
 #doors{padding:5rem 0;background:var(--surface);border-bottom:1px solid var(--line);}
 .doors-head{max-width:640px;margin-bottom:2.5rem;}
 .doors-lead{color:var(--ink-dim);font-size:0.95rem;margin-top:0.5rem;}
-.doors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.doors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;}
 .door-card{--c:var(--home);--c-soft:var(--home-soft);display:flex;flex-direction:column;border:1px solid var(--line-strong);border-radius:calc(var(--radius)*1.5);overflow:hidden;background:var(--bg);text-decoration:none;color:var(--ink);transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;}
 .door-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px -18px rgba(34,38,31,0.35);border-color:var(--c);}
 .door-photo{aspect-ratio:4/3;}
@@ -210,6 +211,22 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
         </div>
       </a>
 
+      <a class="door-card reveal" style="--c:var(--construction);--c-soft:var(--construction-soft);" href="/construction">
+        <div class="photo-frame door-photo">
+          <picture>
+            <source type="image/webp" srcset="/assets/img/construction-detail-trowel-400.webp 400w, /assets/img/construction-detail-trowel-800.webp 800w">
+            <img src="/assets/img/construction-detail-trowel-400.jpg" srcset="/assets/img/construction-detail-trowel-400.jpg 400w, /assets/img/construction-detail-trowel-800.jpg 800w" sizes="(max-width:900px) 90vw, 33vw" alt="" data-shot="talocha com argamassa a trabalhar parede, sem pessoas" width="1500" height="1900" loading="lazy" decoding="async">
+          </picture>
+          <div class="photo-veil"></div>
+        </div>
+        <div class="door-body">
+          <span class="door-eyebrow" data-i18n="door_4_eyebrow"></span>
+          <h3 class="door-title" data-i18n="door_4_title"></h3>
+          <p class="door-desc" data-i18n="door_4_desc"></p>
+          <span class="door-cta" data-i18n="door_4_cta"></span>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -289,6 +306,10 @@ en:{
   door_3_title:'Aira Garden',
   door_3_desc:'Wireless smart irrigation for your property. No trenching, works offline, keeps the garden alive while you’re not there.',
   door_3_cta:'Request a consultation →',
+  door_4_eyebrow:'Planning a renovation',
+  door_4_title:'Aira Construction',
+  door_4_desc:'Full renovation and finishing work by our own crew — walls, floors, bathrooms, kitchens, electrics. You supply the materials, we handle everything else.',
+  door_4_cta:'Request a quote →',
   trust_eyebrow:'Why Aira Home',
   trust_title:'A local operator, not a random name from a listing',
   trust_1_title:'Portuguese company',trust_1_desc:'Horizonte Solene Lda, based in the Algarve — not a marketplace or a broker.',
@@ -323,6 +344,10 @@ de:{
   door_3_title:'Aira Garden',
   door_3_desc:'Kabellose intelligente Bewässerung für Ihr Grundstück. Ohne Grabenarbeiten, funktioniert offline, hält den Garten am Leben, wenn Sie nicht da sind.',
   door_3_cta:'Beratung anfragen →',
+  door_4_eyebrow:'Bei einer geplanten Renovierung',
+  door_4_title:'Aira Construction',
+  door_4_desc:'Komplette Renovierungs- und Ausbauarbeiten durch unser eigenes Team — Wände, Böden, Bäder, Küchen, Elektrik. Sie stellen die Materialien, wir übernehmen den Rest.',
+  door_4_cta:'Angebot anfragen →',
   trust_eyebrow:'Warum Aira Home',
   trust_title:'Ein lokaler Anbieter, kein zufälliger Name aus einem Inserat',
   trust_1_title:'Portugiesisches Unternehmen',trust_1_desc:'Horizonte Solene Lda, ansässig an der Algarve — kein Marktplatz, kein Vermittler.',
@@ -357,6 +382,10 @@ fr:{
   door_3_title:'Aira Garden',
   door_3_desc:'Arrosage intelligent sans fil pour votre propriété. Sans tranchées, fonctionne hors ligne, garde le jardin en vie en votre absence.',
   door_3_cta:'Demander une consultation →',
+  door_4_eyebrow:'En prévision d’une rénovation',
+  door_4_title:'Aira Construction',
+  door_4_desc:'Travaux de rénovation et de finition complets par notre propre équipe — murs, sols, salles de bain, cuisines, électricité. Vous fournissez les matériaux, nous gérons le reste.',
+  door_4_cta:'Demander un devis →',
   trust_eyebrow:'Pourquoi Aira Home',
   trust_title:'Un opérateur local, pas un nom au hasard trouvé sur une annonce',
   trust_1_title:'Société portugaise',trust_1_desc:'Horizonte Solene Lda, basée en Algarve — ni une place de marché, ni un courtier.',
@@ -391,6 +420,10 @@ pt:{
   door_3_title:'Aira Garden',
   door_3_desc:'Rega inteligente sem fios para a sua propriedade. Sem obras, funciona offline, mantém o jardim vivo enquanto está ausente.',
   door_3_cta:'Pedir consulta →',
+  door_4_eyebrow:'A planear uma remodelação',
+  door_4_title:'Aira Construction',
+  door_4_desc:'Obras de remodelação e acabamentos completos com equipa própria — paredes, pavimentos, casas de banho, cozinhas, eletricidade. Fornece os materiais, tratamos do resto.',
+  door_4_cta:'Pedir orçamento →',
   trust_eyebrow:'Porquê Aira Home',
   trust_title:'Um operador local, não um nome qualquer de um anúncio',
   trust_1_title:'Empresa portuguesa',trust_1_desc:'Horizonte Solene Lda, sediada no Algarve — não é um marketplace nem um intermediário.',
