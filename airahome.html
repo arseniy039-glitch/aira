@@ -215,6 +215,47 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
 .ah-send{width:34px;height:34px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s;}
 .ah-send:hover{transform:scale(1.06);}
 @media(max-width:480px){#ah-chat-panel{left:1rem;right:1rem;width:auto;bottom:5.2rem;}}
+
+/* ── PLAN CARDS — clickable ── */
+.plan[data-open-plan]{cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;}
+.plan[data-open-plan]:hover{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft-strong);transform:translateY(-3px);}
+.plan[data-open-plan]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+.plan-click-hint{font-size:0.72rem;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;margin-top:auto;padding-top:0.9rem;display:flex;align-items:center;gap:0.45rem;letter-spacing:0.04em;}
+.plan-click-hint::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink-muted);flex-shrink:0;}
+
+/* ── PULSE SIGNAL (hero — emergency accent) ── */
+.ah-pulse{position:absolute;top:clamp(3.5rem,7vw,6rem);right:clamp(5%,9vw,14%);z-index:3;pointer-events:none;width:52px;height:52px;}
+.ah-pulse-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--accent);animation:ahPulseRing 2.6s ease-out infinite;opacity:0;}
+.ah-pulse-ring:nth-child(2){animation-delay:1.3s;}
+.ah-pulse-dot{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.ah-pulse-dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(226,80,28,0.55);}
+@keyframes ahPulseRing{0%{transform:scale(0.2);opacity:0.85;}80%{opacity:0.1;}100%{transform:scale(2.6);opacity:0;}}
+@media(prefers-reduced-motion:reduce){.ah-pulse{display:none;}}
+
+/* ── CARD MODAL ── */
+.card-modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(20,24,28,0.52);opacity:0;pointer-events:none;transition:opacity 0.25s ease;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+.card-modal-overlay.open{opacity:1;pointer-events:all;}
+.card-modal{position:fixed;bottom:0;left:0;right:0;z-index:501;background:var(--surface);border-radius:calc(var(--radius)*2) calc(var(--radius)*2) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.22,0.8,0.3,1);box-shadow:0 -20px 60px rgba(20,24,28,0.22);}
+.card-modal.open{transform:translateY(0);}
+.card-modal-inner{max-width:680px;margin:0 auto;padding:2rem 1.75rem 3.5rem;position:relative;}
+.card-modal-drag{width:38px;height:4px;border-radius:2px;background:var(--line-strong);margin:0 auto 1.8rem;}
+.card-modal-close{position:absolute;top:1.1rem;right:1.2rem;background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:1rem;padding:0.4rem 0.55rem;border-radius:var(--radius);transition:color 0.2s,background 0.15s;}
+.card-modal-close:hover{color:var(--ink);background:var(--bg);}
+.card-modal-img{border-radius:var(--radius);overflow:hidden;margin-bottom:1.6rem;aspect-ratio:16/7;background:var(--bg);}
+.card-modal-img img{width:100%;height:100%;object-fit:cover;filter:saturate(1.04) contrast(1.02);}
+.card-modal-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:0.4rem;}
+.card-modal-title{font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.25rem;}
+.card-modal-price{font-size:2.1rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.2rem;}
+.card-modal-period{font-size:0.82rem;color:var(--ink-dim);margin-bottom:1.2rem;}
+.card-modal-desc{font-size:0.95rem;color:var(--ink-dim);line-height:1.72;margin-bottom:1.6rem;}
+.card-modal-cta{display:inline-flex;align-items:center;gap:0.55rem;text-decoration:none;border-radius:var(--radius);padding:0.9rem 1.4rem;font-weight:600;font-size:0.95rem;cursor:pointer;border:none;background:var(--accent);color:#fff;transition:background 0.2s;}
+.card-modal-cta:hover{background:var(--accent-dark);}
+@media(min-width:640px){
+  .card-modal{bottom:auto;top:50%;left:50%;right:auto;transform:translate(-50%,-44%) scale(0.97);width:min(680px,92vw);border-radius:calc(var(--radius)*2);max-height:86vh;}
+  .card-modal.open{transform:translate(-50%,-50%) scale(1);}
+  .card-modal-drag{display:none;}
+}
+@media(prefers-reduced-motion:reduce){.card-modal,.card-modal-overlay{transition:none!important;}}
 </style>
 </head>
 <body>
@@ -250,6 +291,11 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
     <img class="hero-bg" src="/assets/img/airahome-hero-800.jpg" srcset="/assets/img/airahome-hero-400.jpg 400w, /assets/img/airahome-hero-800.jpg 800w, /assets/img/airahome-hero-1600.jpg 1600w" sizes="100vw" alt="" data-shot="vivenda algarvia branca com jardim, sem pessoas" width="1600" height="900" loading="eager" fetchpriority="high" decoding="async">
   </picture>
   <div class="hero-veil"></div>
+  <div class="ah-pulse" aria-hidden="true">
+    <div class="ah-pulse-ring"></div>
+    <div class="ah-pulse-ring"></div>
+    <div class="ah-pulse-dot"></div>
+  </div>
   <div class="section-inner">
     <div class="hero-grid">
       <h1 class="hero-title" data-i18n="hero_h1"></h1>
@@ -372,26 +418,29 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   <div class="section-inner">
     <span class="eyebrow" data-i18n="sec_pricing"></span>
     <div class="pricing-grid">
-      <div class="plan featured reveal">
+      <div class="plan featured reveal" data-open-plan="1" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="plan-name" data-i18n="price_1_name"></div>
         <div class="plan-sub" data-i18n="price_1_sub"></div>
         <div class="plan-price">€300</div>
         <div class="plan-period" data-i18n="price_1_period"></div>
         <div class="plan-desc" data-i18n="price_1_desc"></div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
       </div>
-      <div class="plan reveal">
+      <div class="plan reveal" data-open-plan="2" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="plan-name" data-i18n="price_2_name"></div>
         <div class="plan-sub" data-i18n="price_2_sub"></div>
         <div class="plan-price">€150</div>
         <div class="plan-period" data-i18n="price_2_period"></div>
         <div class="plan-desc" data-i18n="price_2_desc"></div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
       </div>
-      <div class="plan reveal">
+      <div class="plan reveal" data-open-plan="3" role="button" tabindex="0" aria-haspopup="dialog">
         <div class="plan-name" data-i18n="price_3_name"></div>
         <div class="plan-sub" data-i18n="price_3_sub"></div>
         <div class="plan-price">€50</div>
         <div class="plan-period" data-i18n="price_3_period"></div>
         <div class="plan-desc" data-i18n="price_3_desc"></div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
       </div>
     </div>
     <p class="pricing-note" data-i18n="pricing_note"></p>
@@ -497,6 +546,22 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </div>
 </footer>
 
+<!-- ══════════════════════ PLAN MODAL ══════════════════════ -->
+<div class="card-modal-overlay" id="plan-overlay" aria-hidden="true"></div>
+<div class="card-modal" id="plan-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="card-modal-inner">
+    <div class="card-modal-drag"></div>
+    <button class="card-modal-close" id="plan-modal-close" aria-label="Close">✕</button>
+    <div class="card-modal-img" id="modal-img"></div>
+    <div class="card-modal-eyebrow" id="modal-eyebrow"></div>
+    <div class="card-modal-title" id="modal-title"></div>
+    <div class="card-modal-price" id="modal-price"></div>
+    <div class="card-modal-period" id="modal-period"></div>
+    <div class="card-modal-desc" id="modal-desc"></div>
+    <a class="card-modal-cta" id="modal-cta" href="#request">Request a callout</a>
+  </div>
+</div>
+
 <!-- ══════════════════════ CHAT WIDGET ══════════════════════ -->
 <button id="ah-chat-btn" onclick="ahToggle()" aria-label="Open chat">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -583,7 +648,12 @@ en:{
   trust_2_title:'Price before we arrive',trust_2_desc:'No surprises, no haggling on-site.',
   trust_3_title:'Local craftsmen',trust_3_desc:"Same team behind Artech Portugalia's window installations.",
   trust_4_title:'Guaranteed work',trust_4_desc:'We stand behind every callout.',
-  footer_services_label:'Other Aira services',footer_link_energia:'Energy',footer_link_garden:'Garden'
+  footer_services_label:'Other Aira services',footer_link_energia:'Energy',footer_link_garden:'Garden',
+  plan_click_hint:'See what\'s included',
+  modal_cta:'Request a callout',
+  modal_1_detail:'The brigade arrives within 2–3 hours of your call. The €300 call-out fee covers the first hour end-to-end: travel, tools, and the work itself. Every additional hour is €35, agreed with you before it starts. For leaks, lockouts, power failures, appliance or A/C breakdown — anything that genuinely cannot wait.',
+  modal_2_detail:'We coordinate the visit for the same day, at a time that suits you. The €150 call-out fee covers the first hour including travel and diagnosis. Additional hours at €35. Right for real problems that need fixing today, but aren\'t a crisis requiring immediate response.',
+  modal_3_detail:'We book a visit within the week at your convenience — you choose the day and time. €50 for the first hour, then €35 per additional hour. Ideal for planned repairs, maintenance checks, furniture assembly, or anything you want done properly on your own schedule.'
 },
 de:{
   nav_cta:'Einsatz anfragen',
@@ -630,7 +700,12 @@ de:{
   trust_2_title:'Preis vor unserer Ankunft',trust_2_desc:'Keine Überraschungen, kein Feilschen vor Ort.',
   trust_3_title:'Lokale Handwerker',trust_3_desc:'Dasselbe Team, das die Fensterinstallationen von Artech Portugalia durchführt.',
   trust_4_title:'Garantierte Arbeit',trust_4_desc:'Wir stehen hinter jedem Einsatz.',
-  footer_services_label:'Weitere Aira-Dienste',footer_link_energia:'Energie',footer_link_garden:'Garden'
+  footer_services_label:'Weitere Aira-Dienste',footer_link_energia:'Energie',footer_link_garden:'Garden',
+  plan_click_hint:'Details ansehen',
+  modal_cta:'Einsatz anfragen',
+  modal_1_detail:'Die Mannschaft trifft innerhalb von 2–3 Stunden nach Ihrem Anruf ein. Die Einsatzpauschale von €300 deckt die erste Stunde vollständig ab: Anfahrt, Werkzeug und Arbeit. Jede weitere Stunde kostet €35, vorab mit Ihnen vereinbart. Für Lecks, Aussperrungen, Stromausfälle oder Klimaanlagen — alles, was nicht warten kann.',
+  modal_2_detail:'Wir koordinieren den Einsatz noch am selben Tag zu einem für Sie passenden Zeitpunkt. Die €150 decken die erste Stunde inklusive Anfahrt und Diagnose. Weitere Stunden zu €35. Geeignet für echte Probleme, die heute gelöst werden müssen, aber keine sofortige Notfallreaktion erfordern.',
+  modal_3_detail:'Wir buchen einen Besuch innerhalb der Woche nach Ihrer Verfügbarkeit — Sie wählen Tag und Uhrzeit. €50 für die erste Stunde, danach €35 je weitere Stunde. Ideal für geplante Reparaturen, Wartung oder Montagearbeiten, die Sie in Ruhe erledigen möchten.'
 },
 fr:{
   nav_cta:'Demander une intervention',
@@ -677,7 +752,12 @@ fr:{
   trust_2_title:'Prix avant notre arrivée',trust_2_desc:'Aucune surprise, aucune négociation sur place.',
   trust_3_title:'Artisans locaux',trust_3_desc:'La même équipe qui installe les fenêtres d\'Artech Portugalia.',
   trust_4_title:'Travail garanti',trust_4_desc:'Nous sommes responsables de chaque intervention.',
-  footer_services_label:'Autres services Aira',footer_link_energia:'Énergie',footer_link_garden:'Garden'
+  footer_services_label:'Autres services Aira',footer_link_energia:'Énergie',footer_link_garden:'Garden',
+  plan_click_hint:'Voir le détail',
+  modal_cta:'Demander une intervention',
+  modal_1_detail:'L\'équipe arrive dans les 2 à 3 heures suivant votre appel. Le forfait de €300 couvre la première heure dans son intégralité : déplacement, outillage et travaux. Chaque heure supplémentaire est de €35, convenue avec vous avant le début. Pour les fuites, les portes claquées, les coupures de courant, les pannes d\'électroménager ou de climatisation — tout ce qui ne peut pas attendre.',
+  modal_2_detail:'Nous planifions l\'intervention le jour même, à l\'heure qui vous convient. Le forfait de €150 couvre la première heure, déplacement et diagnostic inclus. Heures supplémentaires à €35. Adapté aux problèmes réels à régler aujourd\'hui, sans que ce soit une urgence absolue.',
+  modal_3_detail:'Nous prenons rendez-vous dans la semaine selon vos disponibilités — vous choisissez le jour et l\'heure. €50 pour la première heure, puis €35 par heure supplémentaire. Idéal pour les réparations planifiées, l\'entretien ou le montage de mobilier.'
 },
 pt:{
   nav_cta:'Pedir intervenção',
@@ -724,7 +804,12 @@ pt:{
   trust_2_title:'Preço antes de chegarmos',trust_2_desc:'Sem surpresas, sem negociação no local.',
   trust_3_title:'Profissionais locais',trust_3_desc:'A mesma equipa por trás das instalações de janelas da Artech Portugalia.',
   trust_4_title:'Trabalho garantido',trust_4_desc:'Respondemos por cada intervenção.',
-  footer_services_label:'Outros serviços Aira',footer_link_energia:'Energia',footer_link_garden:'Garden'
+  footer_services_label:'Outros serviços Aira',footer_link_energia:'Energia',footer_link_garden:'Garden',
+  plan_click_hint:'Ver detalhes',
+  modal_cta:'Pedir intervenção',
+  modal_1_detail:'A equipa chega em 2 a 3 horas após o seu contacto. A taxa de €300 cobre a primeira hora na íntegra: deslocação, ferramentas e trabalho. Cada hora adicional é €35, acordada consigo antes de começar. Para fugas, portas fechadas por fora, falhas de energia, avarias de eletrodomésticos ou ar condicionado — o que não pode esperar.',
+  modal_2_detail:'Coordenamos a visita no próprio dia, a uma hora conveniente para si. €150 cobre a primeira hora com deslocação e diagnóstico incluídos. Horas adicionais a €35. Indicado para problemas reais que precisam de atenção hoje, sem ser uma urgência imediata.',
+  modal_3_detail:'Marcamos a visita dentro da semana à sua conveniência — escolhe o dia e a hora. €50 pela primeira hora, depois €35 por hora adicional. Ideal para reparações planeadas, manutenção ou montagem de móveis, quando quer que seja feito com cuidado, sem pressão.'
 }
 };
 
@@ -907,6 +992,55 @@ document.getElementById('calloutForm').addEventListener('submit', function(e){
       setTimeout(()=>document.getElementById('ah-input').focus(), 100);
     }
   };
+})();
+
+// ══════════════════════════════════════════
+// PLAN MODAL
+// ══════════════════════════════════════════
+(function(){
+  const PLAN_PHOTOS = {
+    1:{photo:'airahome-detail-wrench',alt:''},
+    2:{photo:'airahome-detail-tools',alt:''},
+    3:{photo:'airahome-detail-ac',alt:''}
+  };
+  const PLAN_PRICES = {1:'€300',2:'€150',3:'€50'};
+
+  function openModal(planId){
+    const t = T[currentLang];
+    const p = PLAN_PHOTOS[planId];
+    document.getElementById('modal-eyebrow').textContent = t['price_'+planId+'_name'] || '';
+    document.getElementById('modal-title').textContent = t['price_'+planId+'_sub'] || '';
+    document.getElementById('modal-price').textContent = PLAN_PRICES[planId];
+    document.getElementById('modal-period').textContent = t['price_'+planId+'_period'] || '';
+    document.getElementById('modal-desc').textContent = t['modal_'+planId+'_detail'] || '';
+    document.getElementById('modal-cta').textContent = t.modal_cta || 'Request a callout';
+    document.getElementById('modal-img').innerHTML =
+      '<picture>'
+      +'<source type="image/webp" srcset="/assets/img/'+p.photo+'-400.webp 400w, /assets/img/'+p.photo+'-800.webp 800w" sizes="100%">'
+      +'<img src="/assets/img/'+p.photo+'-800.jpg" alt="'+p.alt+'" loading="lazy" decoding="async">'
+      +'</picture>';
+    document.getElementById('plan-overlay').classList.add('open');
+    document.getElementById('plan-modal').classList.add('open');
+    document.getElementById('plan-overlay').removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('plan-modal-close').focus();
+  }
+
+  function closeModal(){
+    document.getElementById('plan-overlay').classList.remove('open');
+    document.getElementById('plan-modal').classList.remove('open');
+    document.getElementById('plan-overlay').setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-open-plan]').forEach(function(card){
+    card.addEventListener('click', function(){ openModal(+card.dataset.openPlan); });
+    card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(+card.dataset.openPlan); } });
+  });
+  document.getElementById('plan-modal-close').addEventListener('click', closeModal);
+  document.getElementById('plan-overlay').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+  document.getElementById('modal-cta').addEventListener('click', closeModal);
 })();
 
 // ══════════════════════════════════════════

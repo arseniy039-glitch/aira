@@ -222,6 +222,47 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .reveal.in{opacity:1;transform:none;}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}}
+
+/* ── SERVICE TILES — clickable ── */
+.svc-tile[data-open-svc]{cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s;}
+.svc-tile[data-open-svc]:hover{background:var(--surface-2);transform:translateY(-3px);box-shadow:0 8px 24px -12px rgba(28,42,32,0.28);}
+.svc-tile[data-open-svc]:focus-visible{outline:2px solid var(--leaf);outline-offset:3px;}
+.svc-click-hint{font-size:0.72rem;color:var(--ink-muted);font-family:'JetBrains Mono',monospace;margin-top:auto;padding-top:0.9rem;display:flex;align-items:center;gap:0.45rem;letter-spacing:0.04em;}
+.svc-click-hint::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--leaf);flex-shrink:0;}
+
+/* ── BENEFIT CARDS — clickable ── */
+.benefit-card[data-open-svc]{cursor:pointer;transition:background 0.2s,transform 0.15s,box-shadow 0.2s,border-color 0.2s;}
+.benefit-card[data-open-svc]:hover{border-color:var(--leaf);transform:translateY(-3px);box-shadow:0 8px 24px -12px rgba(28,42,32,0.28);}
+
+/* ── CARD MODAL (garden theme) ── */
+.card-modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(14,20,16,0.55);opacity:0;pointer-events:none;transition:opacity 0.25s ease;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+.card-modal-overlay.open{opacity:1;pointer-events:all;}
+.card-modal{position:fixed;bottom:0;left:0;right:0;z-index:501;background:var(--surface);border-radius:calc(var(--radius)*2) calc(var(--radius)*2) 0 0;max-height:92vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.22,0.8,0.3,1);box-shadow:0 -3px 0 0 var(--leaf),0 -20px 60px rgba(28,42,32,0.18);}
+.card-modal.open{transform:translateY(0);}
+.card-modal-inner{max-width:680px;margin:0 auto;padding:2rem 1.75rem 3.5rem;position:relative;}
+.card-modal-drag{width:38px;height:4px;border-radius:2px;background:var(--line-strong);margin:0 auto 1.8rem;}
+.card-modal-close{position:absolute;top:1.1rem;right:1.2rem;background:none;border:none;cursor:pointer;color:var(--ink-muted);font-size:1rem;padding:0.4rem 0.55rem;border-radius:var(--radius);transition:color 0.2s,background 0.15s;}
+.card-modal-close:hover{color:var(--ink);background:var(--surface-2);}
+.card-modal-img{border-radius:var(--radius);overflow:hidden;margin-bottom:1.6rem;aspect-ratio:16/7;background:var(--surface-2);}
+.card-modal-img img{width:100%;height:100%;object-fit:cover;filter:saturate(var(--photo-sat)) contrast(var(--photo-con));}
+.card-modal-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--leaf);margin-bottom:0.4rem;}
+.card-modal-title{font-size:1.5rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:0.8rem;}
+.card-modal-desc{font-size:0.95rem;color:var(--ink-dim);line-height:1.72;margin-bottom:0.6rem;}
+.card-modal-note{font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--ink-muted);background:var(--surface-2);border-left:3px solid var(--leaf);padding:0.5rem 0.75rem;border-radius:0 var(--radius) var(--radius) 0;margin-bottom:1.6rem;line-height:1.5;}
+.card-modal-cta{display:inline-flex;align-items:center;gap:0.55rem;text-decoration:none;border-radius:var(--radius);padding:0.9rem 1.4rem;font-weight:700;font-size:0.95rem;cursor:pointer;border:none;background:var(--leaf);color:#fff;transition:background 0.2s,box-shadow 0.2s;}
+.card-modal-cta:hover{background:var(--leaf-dark);box-shadow:0 12px 26px -12px rgba(47,107,60,0.7);}
+@media(min-width:640px){
+  .card-modal{bottom:auto;top:50%;left:50%;right:auto;transform:translate(-50%,-44%) scale(0.97);width:min(680px,92vw);border-radius:calc(var(--radius)*2);max-height:86vh;}
+  .card-modal.open{transform:translate(-50%,-50%) scale(1);}
+  .card-modal-drag{display:none;}
+}
+@media(prefers-reduced-motion:reduce){.card-modal,.card-modal-overlay{transition:none!important;}}
+
+/* ── RAIN DROPS (hero accent — irrigation theme) ── */
+#gd-rain{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
+#gd-rain i{position:absolute;width:1.5px;background:linear-gradient(180deg,transparent,rgba(28,122,146,0.55));border-radius:999px;animation:gdDrop linear infinite;}
+@keyframes gdDrop{0%{transform:translateY(-20px) translateX(0);opacity:0;}8%{opacity:1;}88%{opacity:0.45;}100%{transform:translateY(110vh) translateX(4px);opacity:0;}}
+@media(prefers-reduced-motion:reduce){#gd-rain{display:none;}}
 </style>
 </head>
 <body>
@@ -252,6 +293,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
     <img class="hero-bg" src="/assets/img/garden-hero-800.jpg" srcset="/assets/img/garden-hero-400.jpg 400w, /assets/img/garden-hero-800.jpg 800w, /assets/img/garden-hero-1600.jpg 1600w" sizes="100vw" alt="" data-shot="jardim frondoso na luz da manhã, sem pessoas" width="1600" height="2400" loading="eager" fetchpriority="high" decoding="async">
   </picture>
   <div class="hero-veil"></div>
+  <div id="gd-rain" aria-hidden="true"></div>
   <div class="section-inner">
     <div class="hero-wrap">
       <div class="hero-content">
@@ -318,20 +360,23 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
     <h2 data-i18n="inc_title"></h2>
     <p class="section-lead" data-i18n="inc_lead"></p>
     <div class="svc-grid" style="margin-top:2.5rem;">
-      <div class="svc-tile reveal">
+      <div class="svc-tile reveal" data-open-svc="gateway" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M12 20h.01"/></svg>
         <div class="svc-name" data-i18n="inc_1_name"></div>
         <div class="svc-desc" data-i18n="inc_1_desc"></div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
       </div>
-      <div class="svc-tile reveal">
+      <div class="svc-tile reveal" data-open-svc="nodes" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.4-.8-2.3-2.3-3.2-4.2 2.7-.5 4.6-.3 5.7.8Z"/><path d="M14.1 6c-.9 1.2-1.2 2.5-1.1 4 1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.9-4.2-2.9-.1-4.1.3-5.1 1.6Z"/></svg>
         <div class="svc-name" data-i18n="inc_2_name"></div>
         <div class="svc-desc" data-i18n="inc_2_desc"></div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
       </div>
-      <div class="svc-tile reveal">
+      <div class="svc-tile reveal" data-open-svc="valves" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 4.24 7 3.5c-.29.74-1.14 1.63-2.29 2.56S3 11.09 3 12.25c0 2.22 1.8 4.05 4 4.05Z"/><path d="M12.56 6.6A11 11 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 0 1-11.91 4.97"/></svg>
         <div class="svc-name" data-i18n="inc_3_name"></div>
         <div class="svc-desc" data-i18n="inc_3_desc"></div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
       </div>
     </div>
     <div class="photo-pair">
@@ -554,6 +599,21 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   </div>
 </footer>
 
+<!-- ══════════════════════ SERVICE MODAL ══════════════════════ -->
+<div class="card-modal-overlay" id="svc-overlay" aria-hidden="true"></div>
+<div class="card-modal" id="svc-modal" role="dialog" aria-modal="true" aria-labelledby="svc-modal-title">
+  <div class="card-modal-inner">
+    <div class="card-modal-drag"></div>
+    <button class="card-modal-close" id="svc-modal-close" aria-label="Close">✕</button>
+    <div class="card-modal-img" id="svc-modal-img"></div>
+    <div class="card-modal-eyebrow" id="svc-modal-eyebrow"></div>
+    <div class="card-modal-title" id="svc-modal-title"></div>
+    <div class="card-modal-desc" id="svc-modal-desc"></div>
+    <div class="card-modal-note" id="svc-modal-note" style="display:none;"></div>
+    <a class="card-modal-cta" id="svc-modal-cta" href="#request">Pedir consulta</a>
+  </div>
+</div>
+
 <script>
 // ══════════════════════════════════════════
 // CONFIG
@@ -632,7 +692,16 @@ pt:{
   aside_email:'Escrever um email',
   footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
   footer_services_label:'Outros serviços Aira',
-  footer_link_energia:'Energia'
+  footer_link_energia:'Energia',
+  svc_click_hint:'Saber mais',
+  svc_modal_cta:'Pedir consulta',
+  svc_gateway_eyebrow:'O que está incluído',
+  svc_gateway_detail:'O gateway é a peça central do sistema. Liga-se à corrente num único ponto dentro de casa e comunica sem fios com todos os nós no jardim — sem obras, sem cabos a enterrar. Alcance típico até 100 m em campo aberto. Gere até 32 zonas de rega. Configuração inicial feita pela nossa equipa; depois controla tudo pela app.',
+  svc_nodes_eyebrow:'O que está incluído',
+  svc_nodes_detail:'Um nó sem fios por cada válvula de rega. Cada nó tem painel solar e bateria incorporada — nunca precisa de cabos ou tomadas no jardim. A bateria aguenta várias semanas sem sol direto. Resistente a chuva e poeira (IP67). A nossa equipa instala, calibra e associa cada nó ao gateway.',
+  svc_valves_eyebrow:'O que está incluído',
+  svc_valves_detail:'Válvulas de rega comandadas por cada nó. Abrem e fecham de acordo com o horário programado na app ou com um toque manual. Compatíveis com os sistemas de rega mais comuns (1 polegada BSP). Se já tiver válvulas instaladas, avaliamos na visita inicial se são compatíveis.',
+  svc_todo_note:'[TODO: Arsénio — adicionar aqui preços ou pacotes de instalação, se aplicável]'
 },
 en:{
   nav_cta:'Request a consultation',
@@ -701,7 +770,16 @@ en:{
   aside_email:'Write an email',
   footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
   footer_services_label:'Other Aira services',
-  footer_link_energia:'Energy'
+  footer_link_energia:'Energy',
+  svc_click_hint:'Learn more',
+  svc_modal_cta:'Request a consultation',
+  svc_gateway_eyebrow:'What\'s included',
+  svc_gateway_detail:'The gateway is the central piece of the system. It plugs into a single power point inside the house and communicates wirelessly with all nodes in the garden — no trenching, no buried cables. Typical range up to 100 m in open ground. Manages up to 32 irrigation zones. Initial setup done by our team; you control everything from the app afterwards.',
+  svc_nodes_eyebrow:'What\'s included',
+  svc_nodes_detail:'One wireless node per irrigation valve. Each node has a built-in solar panel and battery — no cables or outdoor sockets needed. The battery lasts several weeks without direct sun. Rainproof and dust-proof (IP67). Our team installs, calibrates and pairs each node to the gateway.',
+  svc_valves_eyebrow:'What\'s included',
+  svc_valves_detail:'Irrigation valves controlled by each node. They open and close on the schedule set in the app or at your command with a tap. Compatible with the most common irrigation systems (1-inch BSP). If you already have valves installed, we assess compatibility during the initial visit.',
+  svc_todo_note:'[TODO: Arsénio — add pricing or installation packages here if applicable]'
 }
 };
 
@@ -790,6 +868,75 @@ document.getElementById('gardenForm').addEventListener('submit', function(e){
     body: JSON.stringify(data), signal: ctrl.signal
   }).then(done).catch(done);
 });
+
+// ══════════════════════════════════════════
+// SERVICE MODAL
+// ══════════════════════════════════════════
+(function(){
+  const SVC_DATA = {
+    gateway:{photo:'garden-detail-valve',eyebrow:'svc_gateway_eyebrow',detail:'svc_gateway_detail'},
+    nodes:  {photo:'garden-detail-drip', eyebrow:'svc_nodes_eyebrow',  detail:'svc_nodes_detail'},
+    valves: {photo:'garden-detail-drip', eyebrow:'svc_valves_eyebrow', detail:'svc_valves_detail'}
+  };
+
+  function openModal(svcId){
+    const t = T[currentLang];
+    const d = SVC_DATA[svcId];
+    if(!d) return;
+    document.getElementById('svc-modal-eyebrow').textContent = t[d.eyebrow] || '';
+    document.getElementById('svc-modal-title').textContent =
+      document.querySelector('[data-open-svc="'+svcId+'"] .svc-name')?.textContent || '';
+    document.getElementById('svc-modal-desc').textContent = t[d.detail] || '';
+    document.getElementById('svc-modal-cta').textContent = t.svc_modal_cta || 'Request a consultation';
+    const note = document.getElementById('svc-modal-note');
+    if(t.svc_todo_note){ note.textContent = t.svc_todo_note; note.style.display=''; }
+    else { note.style.display='none'; }
+    document.getElementById('svc-modal-img').innerHTML =
+      '<picture>'
+      +'<source type="image/webp" srcset="/assets/img/'+d.photo+'-400.webp 400w, /assets/img/'+d.photo+'-800.webp 800w" sizes="100%">'
+      +'<img src="/assets/img/'+d.photo+'-800.jpg" alt="" loading="lazy" decoding="async">'
+      +'</picture>';
+    document.getElementById('svc-overlay').classList.add('open');
+    document.getElementById('svc-modal').classList.add('open');
+    document.getElementById('svc-overlay').removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('svc-modal-close').focus();
+  }
+
+  function closeModal(){
+    document.getElementById('svc-overlay').classList.remove('open');
+    document.getElementById('svc-modal').classList.remove('open');
+    document.getElementById('svc-overlay').setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-open-svc]').forEach(function(card){
+    card.addEventListener('click', function(){ openModal(card.dataset.openSvc); });
+    card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(card.dataset.openSvc); } });
+  });
+  document.getElementById('svc-modal-close').addEventListener('click', closeModal);
+  document.getElementById('svc-overlay').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+  document.getElementById('svc-modal-cta').addEventListener('click', closeModal);
+})();
+
+// ══════════════════════════════════════════
+// RAIN DROPS — hero accent
+// ══════════════════════════════════════════
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const rain = document.getElementById('gd-rain');
+  if(!rain) return;
+  for(var i=0;i<20;i++){
+    var el = document.createElement('i');
+    el.style.left = (Math.random()*100)+'%';
+    el.style.height = (10+Math.random()*18)+'px';
+    el.style.animationDuration = (0.7+Math.random()*1.2)+'s';
+    el.style.animationDelay = (Math.random()*4)+'s';
+    el.style.opacity = (0.25+Math.random()*0.4).toFixed(2);
+    rain.appendChild(el);
+  }
+})();
 
 // ══════════════════════════════════════════
 // INIT
