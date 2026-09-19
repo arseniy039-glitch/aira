@@ -1,0 +1,23 @@
+# Aira
+
+> Aira is an AI voice and chat concierge platform for hotels, salons, and small businesses in Portugal. It answers calls and messages 24/7 in multiple languages, books appointments, and never loses a lead.
+
+Aira is built and operated by Horizonte Solene Lda, based in Portimão, Algarve, Portugal.
+
+## Products
+
+- [Aira Concierge](https://aira-ai.net/concierge): AI voice receptionist for hotels — answers guest calls, handles bookings and requests, in multiple languages, 24/7.
+- [Aira Assistant](https://aira-ai.net/assistant): AI executive/personal assistant agent handling calls, scheduling and messages.
+- [Airahome](https://aira-ai.net/airahome): 24/7 emergency home-repair callout dispatch for the Algarve (plumbing, electrical, locks, appliances, air conditioning).
+- [Energia](https://aira-ai.net/energia): AI voice agent for energy/utility-related service calls.
+- [Garden](https://aira-ai.net/garden): AI voice agent for garden and outdoor maintenance service calls.
+- [Construction](https://aira-ai.net/construction): AI voice agent for construction and renovation service calls.
+
+## About
+
+Aira agents run on ElevenLabs conversational voice technology with custom automation (n8n) for booking, CRM updates, and follow-up. Aira is designed for small and mid-size hospitality and service businesses that cannot staff a 24/7 phone line.
+
+## Contact
+
+- Website: https://aira-ai.net
+- Location: Portimão, Algarve, Portugal
