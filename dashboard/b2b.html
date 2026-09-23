@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>B2B-контакты Лиссабон · Aira</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fffdf9;--ink:#15202e;--mut:#5b6573;--line:#e3ddd2;--acc:#c46a1b;--acc-bg:#fbeee0;
+--air:#2e6fd8;--con:#b5542a;--ene:#8a6d00;--gar:#2f7d4f;--oth:#6b7280;--red:#c0392b;--red-bg:#fbe6e3;--ok:#2f7d4f}
+@media (prefers-color-scheme:dark){:root{--bg:#11161d;--card:#1a212b;--ink:#eef1f5;--mut:#9aa4b2;--line:#2a3340;--acc:#f0a35a;--acc-bg:#3a2a1a;
+--air:#7aa7f2;--con:#e88f63;--ene:#e0c14a;--gar:#6fc493;--oth:#9aa4b2;--red:#f08070;--red-bg:#3a1f1c;--ok:#6fc493}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:40px}
+a{color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px 10px}
+.top{display:flex;align-items:center;gap:12px}
+.back{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);background:var(--card);text-decoration:none}
+h1{font-size:20px;font-weight:700;flex:1}
+.upd{font-size:13px;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px 4px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kpi b{display:block;font-size:24px;line-height:1.1}
+.kpi span{font-size:12px;color:var(--mut)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select.chip{appearance:none;padding-right:14px}
+.list{padding:6px 16px;display:flex;flex-direction:column;gap:10px;max-width:880px;margin:0 auto}
+.lead{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%;display:flex;flex-direction:column;gap:6px;position:relative}
+.lead.fresh{box-shadow:inset 4px 0 0 var(--acc)}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dir{font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:3px 8px;border-radius:8px;background:var(--bg)}
+.d-airahome{color:var(--air)}.d-construction{color:var(--con)}.d-energia{color:var(--ene)}.d-garden{color:var(--gar)}.d-other{color:var(--oth)}
+.place{font-size:14px;color:var(--mut)}
+.age{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
+.txt{font-size:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:8px}
+.t-large{background:var(--acc-bg);color:var(--acc)}.t-now{background:var(--red-bg);color:var(--red)}
+.t-st{background:var(--bg);color:var(--mut)}
+.empty,.err{padding:40px 16px;text-align:center;color:var(--mut)}
+.err button{margin-top:12px}
+.skel{height:92px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--line),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;background:var(--card);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .25s ease;z-index:21;display:flex;flex-direction:column}
+.open .scrim{opacity:1;pointer-events:auto}.open .sheet{transform:none}
+@media (min-width:900px){.sheet{left:auto;top:0;width:460px;max-height:none;border-radius:0;transform:translateX(100%)}}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 0}
+.sh-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sh-head h2{font-size:18px;flex:1}
+.x{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer}
+.sh-body{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.full{font-size:17px;line-height:1.5}
+dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:15px}
+dt{color:var(--mut)}dd{font-weight:500}
+.box{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:14px}
+.box h3{font-size:13px;color:var(--mut);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stbtns .btn[aria-pressed=true]{outline:2px solid var(--acc)}
+textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:10px}
+.msg{font-size:13px;color:var(--mut);min-height:18px}
+.call{display:flex;gap:8px;flex-wrap:wrap}.call a{flex:1 1 100%;padding:0 12px}
+.seg-al_manager{color:var(--air)}.seg-condo_admin{color:var(--con)}.seg-relocation{color:var(--gar)}
+</style>
+</head><body>
+<header><div class="top"><a class="back" href="/dashboard" aria-label="Назад на дашборд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
+<h1>B2B · Лиссабон</h1><span class="upd" id="upd"></span></div></header>
+<section class="kpis" id="kpis"></section>
+<nav class="chips" id="chipsSeg" aria-label="Сегмент"></nav>
+<nav class="chips"><select class="chip" id="fArea" aria-label="Район"><option value="">Все районы</option></select>
+<select class="chip" id="fStatus" aria-label="Статус"><option value="">Все статусы</option><option value="new">Не звонили</option><option value="taken">В работе</option><option value="won">Клиент</option><option value="skip">Не интересно</option><option value="lost">Отказ</option></select>
+<button class="chip" id="fCo" aria-pressed="false">Только с NIF юрлица</button></nav>
+<main class="list" id="list"></main>
+<div id="sheetWrap"><div class="scrim" id="scrim"></div><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+<div class="grab"></div><div class="sh-head"><h2 id="shTitle">Компания</h2><button class="x" id="shClose" aria-label="Закрыть">×</button></div><div class="sh-body" id="shBody"></div></aside></div>
+<script>
+const API='https://n8n.aira-ai.net/webhook/lisbon-leads-data?competitors=1&category=__b2b__';
+const STATUS_API='/dashboard/api/lead-status';
+const SEG={al_manager:'Управляющие AL',condo_admin:'Кондоминиумы',relocation:'Релокация'};
+const ST={new:'Не звонили',taken:'В работе',won:'Клиент',skip:'Не интересно',lost:'Отказ'};
+const PITCH={al_manager:'Olá, fala Arseniy da Aira Home. Fazemos manutenção e pequenas reparações para gestores de alojamento local em Lisboa — canalização, eletricidade, ar condicionado, pintura entre hóspedes. Resposta no próprio dia. Posso enviar-lhe a nossa tabela de preços?',
+condo_admin:'Olá, fala Arseniy da Aira Home. Trabalhamos com administrações de condomínio em Lisboa: reparações nas partes comuns, canalização, eletricidade, pintura e pequenas obras, com orçamento rápido. Com quem posso falar sobre fornecedores de manutenção?',
+relocation:'Hello, this is Arseniy from Aira Home. We help your clients after they buy or rent in Lisbon: renovation, repairs, electrics, plumbing, handled in English with fixed quotes. Could we be your go-to contractor for referrals?'};
+let all=[],seg='',onlyCo=false;const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const list=s=>String(s||'').split(',').map(x=>x.trim()).filter(Boolean);
+function ago(iso){if(!iso)return'';const m=(Date.now()-new Date(iso))/6e4;if(m<60)return Math.max(1,Math.round(m))+' мин назад';const h=m/60;if(h<24)return Math.round(h)+' ч назад';return Math.round(h/24)+' дн назад'}
+async function load(){$('list').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
+ try{const r=await fetch(API);if(!r.ok)throw new Error(r.status);const d=await r.json();all=d.b2b||[];
+ $('upd').textContent=d.generated_at?'обновлено '+ago(d.generated_at):'';
+ [...new Set(all.flatMap(x=>list(x.areas)))].sort().forEach(a=>$('fArea').add(new Option(a,a)));render()}
+ catch(e){$('list').innerHTML='<div class="err">Не удалось загрузить ('+esc(e.message)+').<br><button class="chip" onclick="location.reload()">Повторить</button></div>'}}
+function render(){
+ const area=$('fArea').value,st=$('fStatus').value;
+ const base=all.filter(x=>(!area||list(x.areas).includes(area))&&(!st||(x.status||'new')===st)&&(!onlyCo||x.is_company===1));
+ const cnt={};base.forEach(x=>cnt[x.segment]=(cnt[x.segment]||0)+1);
+ $('chipsSeg').innerHTML=[['','Все',base.length]].concat(Object.keys(SEG).map(k=>[k,SEG[k],cnt[k]||0])).map(([k,l,n])=>`<button class="chip" data-seg="${k}" aria-pressed="${seg===k}">${l} · ${n}</button>`).join('');
+ const L=base.filter(x=>!seg||x.segment===seg);
+ const done=all.filter(x=>x.status&&x.status!=='new').length;
+ $('kpis').innerHTML=[['Компаний',all.length],['Юрлиц с NIF',all.filter(x=>x.is_company===1).length],['Уже звонили',done],['Клиенты',all.filter(x=>x.status==='won').length]].map(([l,v])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
+ if(!L.length){$('list').innerHTML='<div class="empty">Под эти фильтры никого нет.</div>';return}
+ $('list').innerHTML=L.map(x=>`<button class="lead" data-d="${esc(x.domain)}"><div class="row"><span class="dir seg-${x.segment}">${SEG[x.segment]||x.segment}</span>
+ <span class="place">${esc(list(x.areas).slice(0,3).join(', ')||'район не указан')}</span><span class="age">${ST[x.status||'new']}</span></div>
+ <div class="txt"><b>${esc(x.name)}</b></div><div class="row"><span class="tag t-st">${esc(list(x.phones)[0])}</span>${x.is_company===1?'<span class="tag t-large">юрлицо</span>':''}</div></button>`).join('')}
+function openC(dm,push=true){const x=all.find(y=>y.domain===dm);if(!x)return;$('shTitle').textContent=x.name;
+ const ph=list(x.phones),em=list(x.emails);
+ $('shBody').innerHTML=`<div class="call">${ph.map(p=>`<a class="btn pri" href="tel:${p.replace(/\s/g,'')}">Позвонить ${esc(p)}</a>`).join('')}</div>
+ ${em.length?`<div class="call">${em.map(e=>`<a class="btn" href="mailto:${esc(e)}">${esc(e)}</a>`).join('')}</div>`:''}
+ <dl><dt>Сегмент</dt><dd>${SEG[x.segment]||x.segment}</dd><dt>Районы</dt><dd>${esc(x.areas)||'—'}</dd>
+ <dt>NIF</dt><dd>${esc(x.nif)||'не найден'}${x.is_company===1?' · юрлицо':''}</dd><dt>Сайт</dt><dd><a href="${esc(x.website)}" target="_blank" rel="noopener">${esc(x.domain)}</a></dd>
+ <dt>Контакты взяты</dt><dd><a href="${esc(x.contact_url)}" target="_blank" rel="noopener">страница сайта</a></dd><dt>Найдено</dt><dd>${ago(x.found_at)}</dd></dl>
+ <div class="box"><h3>Что сказать</h3>${esc(PITCH[x.segment]||'')}</div>
+ <div class="stbtns">${['taken','won','skip','lost'].map(s=>`<button class="btn" data-st="${s}" aria-pressed="${x.status===s}">${ST[s]}</button>`).join('')}</div>
+ <textarea id="note" placeholder="Заметка: с кем говорил, когда перезвонить">${esc(x.note||'')}</textarea><div class="msg" id="stMsg"></div>`;
+ $('shBody').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>setStatus(x,b.dataset.st));
+ document.body.classList.add('open');if(push)history.pushState({d:dm},'','#'+dm)}
+async function setStatus(x,st){const note=$('note').value;$('stMsg').textContent='Сохраняю…';
+ try{const r=await fetch(STATUS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:'b2b:'+x.domain,status:st,note})});
+ const j=await r.json().catch(()=>({}));if(!r.ok||j.ok===false)throw new Error(j.error||r.status);x.status=st;x.note=note;$('stMsg').textContent='Сохранено';
+ $('shBody').querySelectorAll('[data-st]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.st===st));render()}catch(e){$('stMsg').textContent='Не сохранилось ('+e.message+')'}}
+function closeSheet(fromPop){document.body.classList.remove('open');if(!fromPop&&location.hash)history.back()}
+$('chipsSeg').onclick=e=>{const b=e.target.closest('[data-seg]');if(!b)return;seg=b.dataset.seg;render()};
+$('list').onclick=e=>{const b=e.target.closest('.lead');if(b)openC(b.dataset.d)};
+['fArea','fStatus'].forEach(i=>$(i).onchange=render);
+$('fCo').onclick=function(){onlyCo=!onlyCo;this.setAttribute('aria-pressed',onlyCo);render()};
+$('scrim').onclick=()=>closeSheet();$('shClose').onclick=()=>closeSheet();
+window.onpopstate=()=>{if(document.body.classList.contains('open'))closeSheet(true)};
+let y0=null;$('sheet').addEventListener('touchstart',e=>{if($('shBody').scrollTop<=0)y0=e.touches[0].clientY},{passive:true});
+$('sheet').addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)closeSheet();y0=null});
+load();
+</script></body></html>

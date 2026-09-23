@@ -117,6 +117,11 @@ section h2{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:
       <div class="value" id="lbComp">—</div>
       <div class="breakdown" id="lbCompSub"><span>профилей мастеров</span></div>
     </a>
+    <a class="card" href="/dashboard/b2b" style="text-decoration:none;color:inherit;display:block">
+      <div class="label">B2B-контакты</div>
+      <div class="value" id="lbB2b">—</div>
+      <div class="breakdown" id="lbB2bSub"><span>компании с телефонами</span></div>
+    </a>
   </div>
 </section>
 
@@ -256,6 +261,12 @@ async function loadLisbon(){
     document.getElementById('lbComp').textContent = cs.total ?? '—';
     const top = Object.entries(cs.by_category || {}).sort((a,b)=>b[1]-a[1])[0];
     if (top) document.getElementById('lbCompSub').innerHTML = `<span>больше всего: ${escapeHtml(top[0])} (${top[1]})</span>`;
+    try {
+      const b = await (await fetch('https://n8n.aira-ai.net/webhook/lisbon-leads-data?competitors=1&category=__b2b__')).json();
+      document.getElementById('lbB2b').textContent = b.count ?? '—';
+      const bs = b.by_segment || {}, names = {al_manager:'AL', condo_admin:'кондоминиумы', relocation:'релокация'};
+      document.getElementById('lbB2bSub').innerHTML = Object.entries(bs).map(([k,v])=>`<span>${names[k]||k}: ${v}</span>`).join('');
+    } catch (e) {}
   } catch (e) {
     document.getElementById('lbSub').innerHTML = '<span>данные недоступны</span>';
   }
