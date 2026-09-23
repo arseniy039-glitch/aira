@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>Конкуренты Лиссабон · Aira</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fffdf9;--ink:#15202e;--mut:#5b6573;--line:#e3ddd2;--acc:#c46a1b;--acc-bg:#fbeee0;
+--air:#2e6fd8;--con:#b5542a;--ene:#8a6d00;--gar:#2f7d4f;--oth:#6b7280;--red:#c0392b;--red-bg:#fbe6e3;--ok:#2f7d4f}
+@media (prefers-color-scheme:dark){:root{--bg:#11161d;--card:#1a212b;--ink:#eef1f5;--mut:#9aa4b2;--line:#2a3340;--acc:#f0a35a;--acc-bg:#3a2a1a;
+--air:#7aa7f2;--con:#e88f63;--ene:#e0c14a;--gar:#6fc493;--oth:#9aa4b2;--red:#f08070;--red-bg:#3a1f1c;--ok:#6fc493}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:40px}
+a{color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px 10px}
+.top{display:flex;align-items:center;gap:12px}
+.back{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);background:var(--card);text-decoration:none}
+h1{font-size:20px;font-weight:700;flex:1}
+.upd{font-size:13px;color:var(--mut)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px 4px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
+.kpi b{display:block;font-size:24px;line-height:1.1}
+.kpi span{font-size:12px;color:var(--mut)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select.chip{appearance:none;padding-right:14px}
+.list{padding:6px 16px;display:flex;flex-direction:column;gap:10px;max-width:880px;margin:0 auto}
+.lead{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%;display:flex;flex-direction:column;gap:6px;position:relative}
+.lead.fresh{box-shadow:inset 4px 0 0 var(--acc)}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dir{font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:3px 8px;border-radius:8px;background:var(--bg)}
+.d-airahome{color:var(--air)}.d-construction{color:var(--con)}.d-energia{color:var(--ene)}.d-garden{color:var(--gar)}.d-other{color:var(--oth)}
+.place{font-size:14px;color:var(--mut)}
+.age{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
+.txt{font-size:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:8px}
+.t-large{background:var(--acc-bg);color:var(--acc)}.t-now{background:var(--red-bg);color:var(--red)}
+.t-st{background:var(--bg);color:var(--mut)}
+.empty,.err{padding:40px 16px;text-align:center;color:var(--mut)}
+.err button{margin-top:12px}
+.skel{height:92px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--line),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(10,14,20,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;background:var(--card);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .25s ease;z-index:21;display:flex;flex-direction:column}
+.open .scrim{opacity:1;pointer-events:auto}.open .sheet{transform:none}
+@media (min-width:900px){.sheet{left:auto;top:0;width:460px;max-height:none;border-radius:0;transform:translateX(100%)}}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 0}
+.sh-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.sh-head h2{font-size:18px;flex:1}
+.x{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer}
+.sh-body{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.full{font-size:17px;line-height:1.5}
+dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:15px}
+dt{color:var(--mut)}dd{font-weight:500}
+.box{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:14px}
+.box h3{font-size:13px;color:var(--mut);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.stbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stbtns .btn[aria-pressed=true]{outline:2px solid var(--acc)}
+textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:10px}
+.msg{font-size:13px;color:var(--mut);min-height:18px}
+</style>
+</head><body>
+<header><div class="top"><a class="back" href="/dashboard" aria-label="Назад на дашборд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
+<h1>Конкуренты · Лиссабон</h1><span class="upd" id="upd"></span></div></header>
+<section class="kpis" id="kpis"></section>
+<nav class="chips" id="chipsCat" aria-label="Категория"></nav>
+<nav class="chips"><select class="chip" id="fConc" aria-label="Район"><option value="">Все районы</option></select>
+<select class="chip" id="fSort" aria-label="Сортировка"><option value="reviews">По отзывам</option><option value="rating">По рейтингу</option><option value="name">По имени</option></select>
+<select class="chip" id="fSrc" aria-label="Источник"><option value="">Все площадки</option><option value="fixando">Fixando</option><option value="zaask">Zaask</option></select></nav>
+<main class="list" id="list"></main>
+<div id="sheetWrap"><div class="scrim" id="scrim"></div><aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+<div class="grab"></div><div class="sh-head"><h2 id="shTitle">Профиль</h2><button class="x" id="shClose" aria-label="Закрыть">×</button></div><div class="sh-body" id="shBody"></div></aside></div>
+<script>
+const API='https://n8n.aira-ai.net/webhook/lisbon-leads-data';
+const CAT={'remodelacoes':'Ремонт','paredes-de-pladur':'Гипсокартон','obras-casa':'Работы по дому','canalizadores':'Сантехники','electricistas':'Электрики','pintura-de-interiores':'Покраска','remodelar-cozinha':'Кухни','remodelar-casa-banho':'Ванные','jardineiros':'Садовники','transporte-e-montagem-de-moveis-ikea':'Сборка мебели'};
+let all=[],cat='';const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const catName=c=>String(c||'').split(',').map(x=>CAT[x.trim()]||x.trim()).join(', ');
+function ago(iso){if(!iso)return'';const m=(Date.now()-new Date(iso))/6e4;if(m<60)return Math.max(1,Math.round(m))+' мин назад';const h=m/60;if(h<24)return Math.round(h)+' ч назад';return Math.round(h/24)+' дн назад'}
+const initConc=new URLSearchParams(location.search).get('concelho')||'';
+async function load(){$('list').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
+ try{const r=await fetch(API+'?competitors=1');if(!r.ok)throw new Error(r.status);const d=await r.json();all=d.competitors||[];
+ $('upd').textContent=d.generated_at?'обновлено '+ago(d.generated_at):'';
+ const cs=[...new Set(all.map(x=>x.concelho))].sort();cs.forEach(c=>$('fConc').add(new Option(c,c)));if(initConc)$('fConc').value=initConc;render()}
+ catch(e){$('list').innerHTML='<div class="err">Не удалось загрузить ('+esc(e.message)+').<br><button class="chip" onclick="location.reload()">Повторить</button></div>'}}
+function render(){
+ const conc=$('fConc').value,src=$('fSrc').value;
+ const base=all.filter(x=>(!conc||x.concelho===conc)&&(!src||x.source===src));
+ const cnt={};base.forEach(x=>String(x.categories).split(',').forEach(c=>{c=c.trim();cnt[c]=(cnt[c]||0)+1}));
+ $('chipsCat').innerHTML=[['','Все',base.length]].concat(Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([c,n])=>[c,CAT[c]||c,n]))
+  .map(([c,l,n])=>`<button class="chip" data-cat="${c}" aria-pressed="${cat===c}">${l} · ${n}</button>`).join('');
+ let L=base.filter(x=>!cat||String(x.categories).split(',').map(s=>s.trim()).includes(cat));
+ const rated=L.filter(x=>x.rating);const avg=rated.length?(rated.reduce((s,x)=>s+x.rating,0)/rated.length).toFixed(1):'—';
+ const rev=L.reduce((s,x)=>s+(x.reviews_count||0),0);const top=L.filter(x=>(x.reviews_count||0)>=50).length;
+ $('kpis').innerHTML=[['Профилей',L.length],['Средний рейтинг',avg],['50+ отзывов',top],['Отзывов всего',rev]].map(([l,v])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
+ const s=$('fSort').value;L.sort((a,b)=>s==='name'?a.name.localeCompare(b.name):s==='rating'?(b.rating||0)-(a.rating||0)||(b.reviews_count||0)-(a.reviews_count||0):(b.reviews_count||0)-(a.reviews_count||0));
+ L=L.slice(0,300);
+ if(!L.length){$('list').innerHTML='<div class="empty">Никого не нашли под эти фильтры.</div>';return}
+ $('list').innerHTML=L.map((x,i)=>`<button class="lead" data-i="${all.indexOf(x)}"><div class="row"><span class="dir d-other">${esc(x.source)}</span>
+ <span class="place">${esc(x.concelho)}</span><span class="age">${x.rating?'★ '+x.rating:'без рейтинга'} · ${x.reviews_count||0} отз.</span></div>
+ <div class="txt"><b>${esc(x.name)}</b></div><div class="row"><span class="tag t-st">${esc(catName(x.categories))}</span>${x.price_text?`<span class="tag t-large">${esc(x.price_text)}</span>`:''}</div></button>`).join('')}
+function openC(i,push=true){const x=all[i];if(!x)return;$('shTitle').textContent=x.name;
+ const same=all.filter(y=>y.name===x.name&&y.source===x.source);const areas=[...new Set(same.map(y=>y.concelho))].join(', ');
+ const cats=[...new Set(same.flatMap(y=>String(y.categories).split(',').map(s=>s.trim())))].map(c=>CAT[c]||c).join(', ');
+ $('shBody').innerHTML=`<dl><dt>Площадка</dt><dd>${esc(x.source)}</dd><dt>Рейтинг</dt><dd>${x.rating?'★ '+x.rating:'—'}</dd>
+ <dt>Отзывов</dt><dd>${x.reviews_count||0}</dd><dt>Цена</dt><dd>${esc(x.price_text)||'не указана'}</dd>
+ <dt>Категории</dt><dd>${esc(cats)}</dd><dt>Районы</dt><dd>${esc(areas)}</dd><dt>Впервые видели</dt><dd>${ago(x.first_seen)}</dd><dt>Последний раз</dt><dd>${ago(x.last_seen)}</dd></dl>
+ <a class="btn pri" href="${esc(x.profile_url)}" target="_blank" rel="noopener">Открыть профиль</a>`;
+ document.body.classList.add('open');if(push)history.pushState({c:i},'','#c'+i)}
+function closeSheet(fromPop){document.body.classList.remove('open');if(!fromPop&&location.hash)history.back()}
+$('chipsCat').onclick=e=>{const b=e.target.closest('[data-cat]');if(!b)return;cat=b.dataset.cat;render()};
+$('list').onclick=e=>{const b=e.target.closest('.lead');if(b)openC(+b.dataset.i)};
+['fConc','fSort','fSrc'].forEach(i=>$(i).onchange=render);
+$('scrim').onclick=()=>closeSheet();$('shClose').onclick=()=>closeSheet();
+window.onpopstate=()=>{if(document.body.classList.contains('open'))closeSheet(true)};
+let y0=null;$('sheet').addEventListener('touchstart',e=>{if($('shBody').scrollTop<=0)y0=e.touches[0].clientY},{passive:true});
+$('sheet').addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)closeSheet();y0=null});
+load();
+</script></body></html>
