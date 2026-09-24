@@ -20,7 +20,7 @@
 <nav class="chips" id="chipsStatus" aria-label="Статус"></nav>
 <nav class="chips" aria-label="Фильтры">
   <select class="chip" id="fArea" aria-label="Область"><option value="">Все области</option></select>
-  <select class="chip" id="fPrio" aria-label="Приоритет"><option value="">Любой приоритет</option><option value="0">🔴 High</option><option value="1">🟡 Medium</option><option value="2">🟢 Low</option></select>
+  <select class="chip" id="fPrio" aria-label="Приоритет"><option value="">Любой приоритет</option><option value="0">High</option><option value="1">Medium</option><option value="2">Low</option></select>
   <button class="chip" id="fOver" aria-pressed="false">Только просроченные</button>
 </nav>
 <main id="list" aria-live="polite"></main>
@@ -34,9 +34,9 @@ let TASKS = [], f = {status: store.get('tasks_status', 'open'), area: '', prio: 
 const today = todayIso();
 const st = t => { const s = (t.status || '').toLowerCase(); return s.startsWith('done') ? 'done' : s.startsWith('active') ? 'active' : 'wait'; };
 function prio(p){ p = (p || '').toLowerCase();
-  if (p.includes('high') || p.includes('🔴')) return {k:0, lbl:'🔴 High', cls:'t-now'};
-  if (p.includes('med') || p.includes('🟡')) return {k:1, lbl:'🟡 Medium', cls:'t-warn'};
-  if (p.includes('low') || p.includes('🟢')) return {k:2, lbl:'🟢 Low', cls:'t-st'};
+  if (p.includes('high') || p.includes('🔴')) return {k:0, lbl:'High', cls:'t-now'};
+  if (p.includes('med') || p.includes('🟡')) return {k:1, lbl:'Medium', cls:'t-warn'};
+  if (p.includes('low') || p.includes('🟢')) return {k:2, lbl:'Low', cls:'t-st'};
   return {k:3, lbl:'без приоритета', cls:'t-st'}; }
 const overdue = t => t.deadline && t.deadline.slice(0,10) < today && st(t) !== 'done';
 // "Blocked By" is free text naming another task: exact name match, else the closest substring match (as in board.html).
