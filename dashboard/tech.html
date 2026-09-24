@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Техстатус · Aira</title>
+<link rel="stylesheet" href="/dashboard/app.css">
+</head>
+<body>
+<header>
+  <div class="top">
+    <a class="back" href="/dashboard" aria-label="Назад на сводку">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
+    <h1>Техстатус</h1>
+    <span class="upd" id="upd"></span>
+    <button class="chip" id="refresh">Обновить</button>
+  </div>
+</header>
+<section class="kpis" id="kpis" aria-label="Сводка"></section>
+<main class="wrap" id="main" aria-live="polite"></main>
+<footer class="foot"><a href="/dashboard-legacy">Старая сводка</a><a href="https://stats.aira-ai.net/scout" target="_blank" rel="noopener">Scout-дашборд</a></footer>
+
+<script src="/dashboard/app.js"></script>
+<script src="/dashboard/nav.js"></script>
+<script>
+const row = (dot, name, val) => `<div class="r"><i class="dot ${dot}"></i><span>${name}</span><span class="v">${val}</span></div>`;
+const block = (title, rows) => `<section class="sec"><div class="sec-head"><h2>${title}</h2></div><div class="rows">${rows}</div></section>`;
+
+async function load(){
+  $('main').innerHTML = '<div class="skel" style="margin-top:16px"></div><div class="skel" style="margin-top:10px"></div>';
+  let d = null, err = '';
+  try { d = await getJSON(API.dashboard); } catch (e) { err = e.message; }
+  let scout = null;
+  try { scout = await getLeads(new URLSearchParams({days: 1, source: 'fixando'})); } catch (e) {}
+  if (!d) {
+    $('kpis').innerHTML = '';
+    $('main').innerHTML = block('Сервер', row('err', 'VPS / n8n (dashboard-data)', `не отвечает · ${esc(err)}`))
+      + `<div class="err"><button class="chip" onclick="load()">Повторить</button></div>`;
+    return;
+  }
+  const t = d.tech || {}, C = t.containers || [];
+  const down = C.filter(c => !c.running || c.oomkilled), errs = +t.n8n_errors_24h || 0;
+  const disk = parseInt(t.disk_pct) || 0;
+  $('upd').textContent = 'обновлено ' + ago(d.generated_at);
+  $('kpis').innerHTML = [['Контейнеры', `${C.length - down.length}/${C.length}`, down.length ? 'bad-t' : ''],
+    ['Ошибки n8n 24 ч', errs, errs ? 'bad-t' : ''], ['Диск', esc(t.disk_pct || '—'), disk >= 85 ? 'bad-t' : ''], ['Load 1 мин', esc(t.load1 || '—'), '']]
+    .map(([l, v, c]) => `<div class="kpi"><b class="${c}">${v}</b><span>${l}</span></div>`).join('');
+  const md = scout && scout.scout_last_macrodroid_run, h = hoursSince(md);
+  const lr = scout && scout.last_run;
+  $('main').innerHTML =
+    block('Сервер VPS', row('ok', 'VPS отвечает (dashboard-data)', ago(d.generated_at))
+      + row(disk >= 85 ? 'err' : disk >= 75 ? 'wait' : 'ok', 'Диск', `${esc(t.disk_pct || '—')} · свободно ${esc(t.disk_free || '—')}`)
+      + row('ok', 'Нагрузка', `load ${esc(t.load1 || '—')} · ядер ${esc(t.cpu_cores || '—')}`))
+    + block('n8n', row('ok', 'n8n отвечает', 'webhook dashboard-data')
+      + row(errs ? 'wait' : 'ok', 'Ошибок выполнения за 24 ч', errs))
+    + block('Контейнеры', C.map(c => row(c.running && !c.oomkilled ? 'ok' : 'err', esc(c.name),
+        (c.found ? (c.running ? 'работает' : 'остановлен') : 'не найден') + (c.restarts ? ` · рестартов ${c.restarts}` : '') + (c.oomkilled ? ' · OOM' : ''))).join('') || row('', 'нет данных', ''))
+    + block('Голос и сбор лидов',
+        row('', 'ElevenLabs', 'нет данных — dashboard-data его не проверяет')
+      + row(md ? (h > 48 ? 'err' : 'ok') : '', 'Scout · MacroDroid', md ? `${fmtDate(md)} · ${ago(md)}${h > 48 ? ' — молчит больше 48 ч' : ''}` : 'нет данных')
+      + row(lr ? (lr.errors ? 'wait' : 'ok') : '', 'Сборщик лидов Fixando', lr ? `${esc(lr.region || '')} · ${ago(lr.finished_at)} · новых ${lr.new_leads} · ошибок ${lr.errors}` : 'нет данных'));
+}
+$('refresh').onclick = load;
+load();
+</script>
+</body>
+</html>

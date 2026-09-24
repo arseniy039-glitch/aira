@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow"><title>Конкуренты Лиссабон · Aira</title>
+<meta name="robots" content="noindex,nofollow"><title>Конкуренты · Aira</title>
 <style>
 :root{--bg:#f6f4ef;--card:#fffdf9;--ink:#15202e;--mut:#5b6573;--line:#e3ddd2;--acc:#c46a1b;--acc-bg:#fbeee0;
 --air:#2e6fd8;--con:#b5542a;--ene:#8a6d00;--gar:#2f7d4f;--oth:#6b7280;--red:#c0392b;--red-bg:#fbe6e3;--ok:#2f7d4f}
@@ -61,9 +61,10 @@ dt{color:var(--mut)}dd{font-weight:500}
 textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:10px}
 .msg{font-size:13px;color:var(--mut);min-height:18px}
 </style>
+<link rel="stylesheet" href="/dashboard/app.css">
 </head><body>
 <header><div class="top"><a class="back" href="/dashboard" aria-label="Назад на дашборд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
-<h1>Конкуренты · Лиссабон</h1><span class="upd" id="upd"></span></div></header>
+<h1>Конкуренты</h1><span class="upd" id="upd"></span></div></header>
 <section class="kpis" id="kpis"></section>
 <nav class="chips" id="chipsCat" aria-label="Категория"></nav>
 <nav class="chips"><select class="chip" id="fConc" aria-label="Район"><option value="">Все районы</option></select>
@@ -118,4 +119,5 @@ window.onpopstate=()=>{if(document.body.classList.contains('open'))closeSheet(tr
 let y0=null;$('sheet').addEventListener('touchstart',e=>{if($('shBody').scrollTop<=0)y0=e.touches[0].clientY},{passive:true});
 $('sheet').addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)closeSheet();y0=null});
 load();
-</script></body></html>
+</script><script src="/dashboard/nav.js"></script>
+</body></html>

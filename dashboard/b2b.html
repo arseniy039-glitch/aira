@@ -63,6 +63,7 @@ textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--li
 .call{display:flex;gap:8px;flex-wrap:wrap}.call a{flex:1 1 100%;padding:0 12px}
 .seg-al_manager{color:var(--air)}.seg-condo_admin{color:var(--con)}.seg-relocation{color:var(--gar)}
 </style>
+<link rel="stylesheet" href="/dashboard/app.css">
 </head><body>
 <header><div class="top"><a class="back" href="/dashboard" aria-label="Назад на дашборд"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
 <h1>B2B · Лиссабон</h1><span class="upd" id="upd"></span></div></header>
@@ -129,4 +130,5 @@ window.onpopstate=()=>{if(document.body.classList.contains('open'))closeSheet(tr
 let y0=null;$('sheet').addEventListener('touchstart',e=>{if($('shBody').scrollTop<=0)y0=e.touches[0].clientY},{passive:true});
 $('sheet').addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)closeSheet();y0=null});
 load();
-</script></body></html>
+</script><script src="/dashboard/nav.js"></script>
+</body></html>

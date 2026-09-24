@@ -1,0 +1,6 @@
+[
+  {"id": "scout", "name": "Scout · FB-группы", "color": "#2f7d4f", "trusted": true,
+   "note": "Aira Scout: живые посты из FB/Telegram-групп Алгарве, классифицированы, ссылка на пост или группу"},
+  {"id": "fixando", "name": "Fixando · не проверен", "color": "#a07c00", "trusted": false,
+   "note": "Публичный тизер Fixando, контакт не проверен"}
+]

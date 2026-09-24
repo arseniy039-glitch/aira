@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aira — Ops Dashboard (старая)</title>
+<meta name="description" content="Внутренняя оперативная панель Aira Agency: бизнес-метрики и статус инфраструктуры.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f6;
+  --card:#ffffff;
+  --border:#e3e5e8;
+  --ink:#1c1e21;
+  --ink-dim:#6b7076;
+  --teal:#1a9e8f;
+  --warn:#b8860b;
+  --warn-bg:#fdf3d9;
+  --err:#c5453a;
+  --err-bg:#fbe9e7;
+  --ok:#2f9e52;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  padding:clamp(16px,4vw,40px);
+}
+header{
+  display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;
+  margin-bottom:24px;
+}
+header h1{font-size:1.3rem;font-weight:600}
+header .meta{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink-dim)}
+button#refreshBtn{
+  background:var(--card);border:1px solid var(--border);color:var(--ink);
+  border-radius:8px;padding:7px 14px;font-size:.82rem;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+}
+button#refreshBtn:hover{border-color:var(--teal);color:var(--teal)}
+
+section{margin-bottom:28px}
+section h2{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:12px;font-weight:600}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;
+}
+.card .label{font-size:.76rem;color:var(--ink-dim);margin-bottom:6px}
+.card .value{font-size:1.6rem;font-weight:700;line-height:1.2}
+.card .breakdown{margin-top:8px;font-size:.78rem;color:var(--ink-dim);line-height:1.6}
+.card .breakdown span{display:block}
+.card.mrr{position:relative}
+.card.mrr .badge{
+  display:inline-block;background:var(--warn-bg);color:var(--warn);
+  border-radius:6px;padding:2px 7px;font-size:.68rem;font-family:'JetBrains Mono',monospace;
+  margin-top:8px;
+}
+
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.sec-head h2{margin-bottom:0}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:2px}
+.seg button{border:0;background:none;color:var(--ink-dim);font:inherit;font-size:.78rem;padding:5px 10px;border-radius:6px;cursor:pointer;min-height:30px}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--card)}
+
+.tech-list{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.tech-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 18px;border-bottom:1px solid var(--border);font-size:.88rem;
+}
+.tech-row:last-child{border-bottom:none}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:10px;flex-shrink:0}
+.dot.ok{background:var(--ok)}
+.dot.err{background:var(--err)}
+.dot.unknown{background:var(--ink-dim)}
+.tech-row .name{display:flex;align-items:center}
+.tech-row .status{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--ink-dim)}
+.tech-row .status.err{color:var(--err)}
+
+.stat-row .value.err{color:var(--err)}
+.stat-row .value.ok{color:var(--ok)}
+
+.empty-state, .error-state{
+  padding:24px;text-align:center;color:var(--ink-dim);font-size:.9rem;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+}
+.error-state{color:var(--err)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Aira — Ops Dashboard</h1>
+  <div>
+    <span class="meta" id="generatedAt">Загрузка…</span>
+    <button id="refreshBtn">↻ Обновить</button>
+  </div>
+</header>
+
+<section>
+  <h2>Бизнес</h2>
+  <div class="cards" id="businessCards">
+    <div class="empty-state">Загрузка…</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Лиды Aira Home</h2>
+    <div class="seg" id="lbRegion" role="group" aria-label="Регион">
+      <button data-r="all" aria-pressed="true">Все</button><button data-r="lisboa" aria-pressed="false">Лиссабон</button><button data-r="algarve" aria-pressed="false">Алгарве</button>
+    </div>
+  </div>
+  <div class="cards" id="lisbonCards">
+    <a class="card" id="lbLeadsLink" href="/dashboard/leads" style="text-decoration:none;color:inherit;display:block">
+      <div class="label">Лиды · сегодня</div>
+      <div class="value" id="lbToday">—</div>
+      <div class="breakdown" id="lbSub"><span>загрузка…</span></div>
+      <svg id="lbSpark" viewBox="0 0 120 28" width="100%" height="28" preserveAspectRatio="none" aria-hidden="true" style="color:var(--teal);margin-top:6px"></svg>
+    </a>
+    <a class="card" href="/dashboard/competitors" style="text-decoration:none;color:inherit;display:block">
+      <div class="label">Конкуренты</div>
+      <div class="value" id="lbComp">—</div>
+      <div class="breakdown" id="lbCompSub"><span>профилей мастеров</span></div>
+    </a>
+    <a class="card" href="/dashboard/b2b" style="text-decoration:none;color:inherit;display:block">
+      <div class="label">B2B-контакты</div>
+      <div class="value" id="lbB2b">—</div>
+      <div class="breakdown" id="lbB2bSub"><span>компании с телефонами</span></div>
+    </a>
+  </div>
+</section>
+
+<section>
+  <h2>Инфраструктура</h2>
+  <div id="techSection">
+    <div class="empty-state">Загрузка…</div>
+  </div>
+</section>
+
+<script>
+const DATA_ENDPOINT = 'https://n8n.aira-ai.net/webhook/dashboard-data';
+
+const businessCardsEl = document.getElementById('businessCards');
+const techSectionEl = document.getElementById('techSection');
+const generatedAtEl = document.getElementById('generatedAt');
+const refreshBtn = document.getElementById('refreshBtn');
+
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fmtBreakdown(obj){
+  if (!obj || typeof obj !== 'object') return '';
+  const entries = Object.entries(obj);
+  if (!entries.length) return '<span>—</span>';
+  return entries.map(([k, v]) => `<span>${escapeHtml(k)}: ${escapeHtml(v)}</span>`).join('');
+}
+
+function renderBusiness(b, mrr){
+  if (!b){
+    businessCardsEl.innerHTML = '<div class="error-state">Нет данных о бизнесе.</div>';
+    return;
+  }
+  businessCardsEl.innerHTML = `
+    <div class="card">
+      <div class="label">Клиенты</div>
+      <div class="value">${escapeHtml(b.clients ?? '—')}</div>
+    </div>
+    <div class="card">
+      <div class="label">Контакты</div>
+      <div class="value">${escapeHtml(b.contacts ?? '—')}</div>
+    </div>
+    <div class="card">
+      <div class="label">Задачи</div>
+      <div class="breakdown">${fmtBreakdown(b.tasks_by_status)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Custom calls</div>
+      <div class="breakdown">${fmtBreakdown(b.custom_calls_by_status)}</div>
+    </div>
+    <div class="card">
+      <div class="label">Scheduled calls</div>
+      <div class="breakdown">${fmtBreakdown(b.scheduled_calls_by_status)}</div>
+    </div>
+    <div class="card mrr">
+      <div class="label">MRR</div>
+      <div class="value">${mrr ? escapeHtml(mrr.value) + ' ' + escapeHtml(mrr.currency) : '—'}</div>
+      ${mrr && mrr.note ? `<div class="badge" title="${escapeHtml(mrr.note)}">${escapeHtml(mrr.note)}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderTech(t){
+  if (!t){
+    techSectionEl.innerHTML = '<div class="error-state">Нет данных об инфраструктуре.</div>';
+    return;
+  }
+  const containers = t.containers || [];
+  const containerRows = containers.map(c => {
+    let dotClass = 'ok', statusText = 'OK', statusClass = '';
+    if (!c.found){ dotClass = 'unknown'; statusText = 'не найден'; statusClass = 'err'; }
+    else if (!c.running){ dotClass = 'err'; statusText = 'НЕ running'; statusClass = 'err'; }
+    else if (c.restarts > 0 || c.oomkilled){ dotClass = 'err'; statusText = `инцидент (restarts=${c.restarts}, oom=${c.oomkilled})`; statusClass = 'err'; }
+    return `
+      <div class="tech-row">
+        <span class="name"><span class="dot ${dotClass}"></span>${escapeHtml(c.name)}</span>
+        <span class="status ${statusClass}">${escapeHtml(statusText)}</span>
+      </div>
+    `;
+  }).join('');
+
+  const errCount = t.n8n_errors_24h ?? 0;
+  const errClass = errCount > 0 ? 'err' : '';
+
+  techSectionEl.innerHTML = `
+    <div class="tech-list">
+      ${containerRows}
+      <div class="tech-row">
+        <span class="name">n8n ошибок за 24ч</span>
+        <span class="status ${errClass}">${escapeHtml(errCount)}</span>
+      </div>
+      <div class="tech-row">
+        <span class="name">Диск</span>
+        <span class="status">${escapeHtml(t.disk_pct ?? '—')} использовано, ${escapeHtml(t.disk_free ?? '—')} свободно</span>
+      </div>
+      <div class="tech-row">
+        <span class="name">Load average</span>
+        <span class="status">${escapeHtml(t.load1 ?? '—')} (ядер: ${escapeHtml(t.cpu_cores ?? '—')})</span>
+      </div>
+    </div>
+  `;
+}
+
+async function loadDashboard(){
+  generatedAtEl.textContent = 'Загрузка…';
+  businessCardsEl.innerHTML = '<div class="empty-state">Загрузка…</div>';
+  techSectionEl.innerHTML = '<div class="empty-state">Загрузка…</div>';
+  try {
+    const res = await fetch(DATA_ENDPOINT);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    generatedAtEl.textContent = data.generated_at ? new Date(data.generated_at).toLocaleString('ru-RU') : '';
+    let mrr = data.mrr;
+    try {
+      const cfg = await (await fetch('/config.json', {cache:'no-store'})).json();
+      if (cfg && cfg.mrr_eur) mrr = { value: cfg.mrr_eur, currency: 'EUR', note: 'обновлено ' + cfg.updated_at + ' · клиентов ' + cfg.clients_live };
+    } catch (e) {}
+    renderBusiness(data.business, mrr);
+    renderTech(data.tech);
+  } catch (e) {
+    generatedAtEl.textContent = 'Ошибка';
+    businessCardsEl.innerHTML = '<div class="error-state">Не удалось загрузить данные: ' + escapeHtml(e.message) + '</div>';
+    techSectionEl.innerHTML = '';
+  }
+}
+
+let lbRegion = 'all';
+try { lbRegion = localStorage.getItem('lead_region') || 'all'; } catch (e) {}
+document.getElementById('lbRegion').addEventListener('click', e => {
+  const b = e.target.closest('[data-r]'); if (!b) return;
+  lbRegion = b.dataset.r;
+  try { localStorage.setItem('lead_region', lbRegion); } catch (e) {}
+  loadLisbon();
+});
+
+async function loadLisbon(){
+  document.querySelectorAll('#lbRegion [data-r]').forEach(b => b.setAttribute('aria-pressed', b.dataset.r === lbRegion));
+  document.getElementById('lbLeadsLink').href = '/dashboard/leads' + (lbRegion === 'all' ? '' : '?region=' + lbRegion);
+  try {
+    const d = await (await fetch('https://n8n.aira-ai.net/webhook/lisbon-leads-data?days=7&region=' + lbRegion)).json();
+    const k = d.kpi || {};
+    const br = k.by_region || {}, rn = {lisboa:'Лиссабон', algarve:'Алгарве'};
+    document.getElementById('lbToday').textContent = k.today ?? '—';
+    document.getElementById('lbSub').innerHTML = `<span>7 дней: ${k.last7 ?? '—'}</span><span>крупные: ${k.large7 ?? '—'}</span><span>срочные: ${k.urgent7 ?? '—'}</span>`
+      + (lbRegion === 'all' ? Object.entries(br).map(([r,v]) => `<span>${rn[r]||r}: ${v.last7} за 7 дн</span>`).join('') : '');
+    const p = (k.per_day || []).map(x => x.count), mx = Math.max(1, ...p);
+    if (p.length > 1) document.getElementById('lbSpark').innerHTML = `<polyline fill="none" stroke="currentColor" stroke-width="2" points="${p.map((v,i)=>`${(i*120/(p.length-1)).toFixed(1)},${(26-v/mx*24).toFixed(1)}`).join(' ')}"/>`;
+    const cs = d.competitors_summary || {};
+    document.getElementById('lbComp').textContent = cs.total ?? '—';
+    const top = Object.entries(cs.by_category || {}).sort((a,b)=>b[1]-a[1])[0];
+    if (top) document.getElementById('lbCompSub').innerHTML = `<span>больше всего: ${escapeHtml(top[0])} (${top[1]})</span>`;
+    try {
+      const b = await (await fetch('https://n8n.aira-ai.net/webhook/lisbon-leads-data?competitors=1&category=__b2b__')).json();
+      document.getElementById('lbB2b').textContent = b.count ?? '—';
+      const bs = b.by_segment || {}, names = {al_manager:'AL', condo_admin:'кондоминиумы', relocation:'релокация'};
+      document.getElementById('lbB2bSub').innerHTML = Object.entries(bs).map(([k,v])=>`<span>${names[k]||k}: ${v}</span>`).join('');
+    } catch (e) {}
+  } catch (e) {
+    document.getElementById('lbSub').innerHTML = '<span>данные недоступны</span>';
+  }
+}
+
+refreshBtn.addEventListener('click', () => { loadDashboard(); loadLisbon(); });
+loadDashboard();
+loadLisbon();
+</script>
+</body>
+</html>

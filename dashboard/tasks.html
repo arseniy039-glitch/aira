@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Задачи · Aira</title>
+<link rel="stylesheet" href="/dashboard/app.css">
+</head>
+<body>
+<header>
+  <div class="top">
+    <a class="back" href="/dashboard" aria-label="Назад на сводку">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></a>
+    <h1>Задачи</h1>
+    <span class="upd" id="upd"></span>
+  </div>
+</header>
+<section class="kpis" id="kpis" aria-label="Сводка"></section>
+<nav class="chips" id="chipsStatus" aria-label="Статус"></nav>
+<nav class="chips" aria-label="Фильтры">
+  <select class="chip" id="fArea" aria-label="Область"><option value="">Все области</option></select>
+  <select class="chip" id="fPrio" aria-label="Приоритет"><option value="">Любой приоритет</option><option value="0">🔴 High</option><option value="1">🟡 Medium</option><option value="2">🟢 Low</option></select>
+  <button class="chip" id="fOver" aria-pressed="false">Только просроченные</button>
+</nav>
+<main id="list" aria-live="polite"></main>
+<footer class="foot"><a href="/board">Старая доска</a><a href="/dashboard-legacy">Старая сводка</a></footer>
+
+<script src="/dashboard/app.js"></script>
+<script src="/dashboard/nav.js"></script>
+<script>
+const GROUPS = [['active','Active','В работе'],['wait','Waiting','Ждут'],['done','Done','Готово']];
+let TASKS = [], f = {status: store.get('tasks_status', 'open'), area: '', prio: '', over: false};
+const today = todayIso();
+const st = t => { const s = (t.status || '').toLowerCase(); return s.startsWith('done') ? 'done' : s.startsWith('active') ? 'active' : 'wait'; };
+function prio(p){ p = (p || '').toLowerCase();
+  if (p.includes('high') || p.includes('🔴')) return {k:0, lbl:'🔴 High', cls:'t-now'};
+  if (p.includes('med') || p.includes('🟡')) return {k:1, lbl:'🟡 Medium', cls:'t-warn'};
+  if (p.includes('low') || p.includes('🟢')) return {k:2, lbl:'🟢 Low', cls:'t-st'};
+  return {k:3, lbl:'без приоритета', cls:'t-st'}; }
+const overdue = t => t.deadline && t.deadline.slice(0,10) < today && st(t) !== 'done';
+// "Blocked By" is free text naming another task: exact name match, else the closest substring match (as in board.html).
+function findTarget(q){
+  q = (q || '').trim().toLowerCase(); if (!q) return null;
+  let best = null;
+  for (const t of TASKS) { const n = t.name.toLowerCase();
+    if (n === q) return t;
+    if ((n.includes(q) || q.includes(n)) && (!best || Math.abs(n.length-q.length) < Math.abs(best.name.length-q.length))) best = t; }
+  return best;
+}
+
+async function load(){
+  $('list').innerHTML = '<div class="list"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>';
+  try {
+    const d = await getJSON(API.board);
+    TASKS = d.tasks || [];
+    $('upd').textContent = d.generated_at ? 'обновлено ' + ago(d.generated_at) : '';
+    const areas = [...new Set(TASKS.map(t => t.area).filter(a => a && a !== '—'))].sort();
+    const sel = $('fArea'), cur = sel.value; sel.length = 1; areas.forEach(a => sel.add(new Option(a, a))); sel.value = cur;
+    render();
+  } catch (e) {
+    $('list').innerHTML = `<div class="err">Не удалось загрузить задачи (${esc(e.message)}).<br><button class="chip" onclick="load()">Повторить</button></div>`;
+  }
+}
+function render(){
+  const cnt = g => TASKS.filter(t => st(t) === g).length;
+  const od = TASKS.filter(overdue).length;
+  $('kpis').innerHTML = [['В работе', cnt('active')], ['Ждут', cnt('wait')], ['Готово', cnt('done')], ['Просрочено', od, od ? 'bad-t' : '']]
+    .map(([l, v, c]) => `<div class="kpi"><b class="${c||''}">${v}</b><span>${l}</span></div>`).join('');
+  $('chipsStatus').innerHTML = [['open','Открытые',cnt('active')+cnt('wait')],['active','В работе',cnt('active')],['wait','Ждут',cnt('wait')],['done','Готово',cnt('done')],['all','Все',TASKS.length]]
+    .map(([k, l, n]) => `<button class="chip" data-st="${k}" aria-pressed="${f.status===k}">${l} · ${n}</button>`).join('');
+  const L = TASKS.filter(t => (f.status === 'all' || (f.status === 'open' ? st(t) !== 'done' : st(t) === f.status))
+    && (!f.area || t.area === f.area) && (f.prio === '' || prio(t.priority).k === +f.prio) && (!f.over || overdue(t)));
+  if (!L.length) { $('list').innerHTML = '<div class="empty">Под эти фильтры задач нет.</div>'; return; }
+  const sortKey = t => [overdue(t) ? 0 : 1, prio(t.priority).k, t.deadline || '9999'];
+  const cmp = (a, b) => { const x = sortKey(a), y = sortKey(b); for (let i = 0; i < x.length; i++) if (x[i] !== y[i]) return x[i] < y[i] ? -1 : 1; return 0; };
+  $('list').innerHTML = GROUPS.map(([g, , title]) => {
+    const G = L.filter(t => st(t) === g).sort(cmp);
+    if (!G.length) return '';
+    return `<div class="grp"><i class="dot ${g==='done'?'ok':g==='wait'?'wait':''}" style="${g==='active'?'background:var(--air)':''}"></i>${title} <span class="n">· ${G.length}</span></div>
+      <div class="list">${G.map(card).join('')}</div>`;
+  }).join('');
+}
+function card(t){
+  const p = prio(t.priority), od = overdue(t);
+  return `<button class="lead${st(t)==='done'?' muted':''}" data-id="${t.id}">
+    <div class="row"><span class="tag ${p.cls}">${p.lbl}</span><span class="place">${esc(t.area || '—')}</span>
+      ${t.deadline ? `<span class="age${od?' bad-t':''}">${od?'просрочено · ':''}${fmtDate(t.deadline)}</span>` : ''}</div>
+    <div class="txt"><b>${esc(t.name)}</b></div>
+    ${t.next_action && t.next_action !== t.name ? `<div class="place">${esc(t.next_action.slice(0, 160))}</div>` : ''}
+    ${t.blocked_by && t.blocked_by.trim() ? `<div class="row"><span class="tag t-warn">🔗 ждёт: ${esc(t.blocked_by.slice(0, 60))}</span></div>` : ''}
+  </button>`;
+}
+function openTask(id){
+  const t = TASKS.find(x => x.id === id); if (!t) return;
+  const p = prio(t.priority), od = overdue(t), tgt = t.blocked_by ? findTarget(t.blocked_by) : null;
+  const body = Sheet.open(t.name, `
+    <div class="row"><span class="tag ${p.cls}">${p.lbl}</span><span class="tag t-st">${esc(t.status || '—')}</span>${od ? '<span class="tag t-now">Просрочено</span>' : ''}</div>
+    <dl>
+      <dt>Область</dt><dd>${esc(t.area || '—')}</dd>
+      <dt>Дедлайн</dt><dd class="${od ? 'bad-t' : ''}">${t.deadline ? fmtDate(t.deadline) : '—'}</dd>
+    </dl>
+    <div class="box"><h3>Следующий шаг</h3>${esc(t.next_action || '—')}</div>
+    ${t.blocked_by && t.blocked_by.trim() ? `<div class="box warn"><h3>Blocked by</h3>${esc(t.blocked_by)}
+      ${tgt && tgt.id !== t.id ? `<br><a href="#" data-goto="${tgt.id}">Открыть: ${esc(tgt.name)} (${esc(tgt.status)}) →</a>` : ''}</div>` : ''}
+    ${t.url ? `<a class="btn" href="${esc(t.url)}" target="_blank" rel="noopener">Открыть в Notion</a>` : ''}
+    <div class="stbtns" id="stb"></div>
+    <div class="msg" id="stMsg">Смена статуса — двойным нажатием: первое спрашивает подтверждение.</div>`, 'task-' + id);
+  const opts = st(t) === 'done' ? [['Active','Вернуть в Active'],['Waiting','→ Waiting']]
+             : st(t) === 'wait' ? [['Done','Выполнено'],['Active','→ Active']]
+             : [['Done','Выполнено'],['Waiting','→ Waiting']];
+  $('stb').innerHTML = opts.map(([s, l]) => `<button class="btn${s==='Done'?' ok':''}" data-set="${s}">${l}</button>`).join('');
+  $('stb').querySelectorAll('[data-set]').forEach(b => b.onclick = () => confirmTap(b, 'Точно: ' + b.dataset.set + '?', () => setStatus(t, b.dataset.set)));
+  const g = body.querySelector('[data-goto]');
+  if (g) g.onclick = e => { e.preventDefault(); Sheet.close(); setTimeout(() => openTask(g.dataset.goto), 300); };
+}
+async function setStatus(t, status){
+  const btns = [...$('stb').querySelectorAll('button')];
+  btns.forEach(b => b.disabled = true); $('stMsg').textContent = 'Сохраняю…';
+  try {
+    const j = await getJSON(API.board, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({page_id: t.id, status})});
+    if (!j.ok) throw new Error(j.error || 'ошибка');
+    t.status = status; $('stMsg').textContent = 'Сохранено: ' + status; render();
+    setTimeout(() => Sheet.close(), 700);
+  } catch (e) {
+    $('stMsg').textContent = 'Не сохранилось (' + e.message + '). Попробуй ещё раз.'; btns.forEach(b => b.disabled = false);
+  }
+}
+$('chipsStatus').onclick = e => { const b = e.target.closest('[data-st]'); if (!b) return; f.status = b.dataset.st; store.set('tasks_status', f.status); render(); };
+$('fArea').onchange = e => { f.area = e.target.value; render(); };
+$('fPrio').onchange = e => { f.prio = e.target.value; render(); };
+$('fOver').onclick = function(){ f.over = !f.over; this.setAttribute('aria-pressed', f.over); render(); };
+$('list').onclick = e => { const b = e.target.closest('.lead'); if (b) openTask(b.dataset.id); };
+load();
+</script>
+</body>
+</html>

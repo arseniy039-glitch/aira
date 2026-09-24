@@ -5,70 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Лиды Aira Home · Aira</title>
-<style>
-:root{--bg:#f6f4ef;--card:#fffdf9;--ink:#15202e;--mut:#5b6573;--line:#e3ddd2;--acc:#c46a1b;--acc-bg:#fbeee0;
---air:#2e6fd8;--con:#b5542a;--ene:#8a6d00;--gar:#2f7d4f;--oth:#6b7280;--red:#c0392b;--red-bg:#fbe6e3;--ok:#2f7d4f}
-@media (prefers-color-scheme:dark){:root{--bg:#11161d;--card:#1a212b;--ink:#eef1f5;--mut:#9aa4b2;--line:#2a3340;--acc:#f0a35a;--acc-bg:#3a2a1a;
---air:#7aa7f2;--con:#e88f63;--ene:#e0c14a;--gar:#6fc493;--oth:#9aa4b2;--red:#f08070;--red-bg:#3a1f1c;--ok:#6fc493}}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:40px}
-a{color:inherit}
-header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px 10px}
-.top{display:flex;align-items:center;gap:12px}
-.back{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border-radius:12px;border:1px solid var(--line);background:var(--card);text-decoration:none}
-h1{font-size:20px;font-weight:700;flex:1}
-.upd{font-size:13px;color:var(--mut)}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px 4px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px}
-.kpi b{display:block;font-size:24px;line-height:1.1}
-.kpi span{font-size:12px;color:var(--mut)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex:none;min-height:36px;padding:0 14px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:14px;cursor:pointer}
-.seg{display:flex;gap:0;padding:12px 16px 0}
-.seg .chip{flex:1;border-radius:0;margin-left:-1px}
-.seg .chip:first-child{border-radius:18px 0 0 18px;margin-left:0}.seg .chip:last-child{border-radius:0 18px 18px 0}
-@media (min-width:600px){.seg .chip{flex:none}}
-.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-select.chip{appearance:none;padding-right:14px}
-.list{padding:6px 16px;display:flex;flex-direction:column;gap:10px;max-width:880px;margin:0 auto}
-.lead{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%;display:flex;flex-direction:column;gap:6px;position:relative}
-.lead.fresh{box-shadow:inset 4px 0 0 var(--acc)}
-.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.dir{font-size:12px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:3px 8px;border-radius:8px;background:var(--bg)}
-.d-airahome{color:var(--air)}.d-construction{color:var(--con)}.d-energia{color:var(--ene)}.d-garden{color:var(--gar)}.d-other{color:var(--oth)}
-.place{font-size:14px;color:var(--mut)}
-.age{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
-.txt{font-size:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:8px}
-.t-large{background:var(--acc-bg);color:var(--acc)}.t-now{background:var(--red-bg);color:var(--red)}
-.t-st{background:var(--bg);color:var(--mut)}
-.empty,.err{padding:40px 16px;text-align:center;color:var(--mut)}
-.err button{margin-top:12px}
-.skel{height:92px;border-radius:16px;background:linear-gradient(90deg,var(--card),var(--line),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
-@keyframes sh{to{background-position:-200% 0}}
-/* sheet */
-.scrim{position:fixed;inset:0;background:rgba(10,14,20,.45);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
-.sheet{position:fixed;left:0;right:0;bottom:0;max-height:92vh;background:var(--card);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform .25s ease;z-index:21;display:flex;flex-direction:column}
-.open .scrim{opacity:1;pointer-events:auto}.open .sheet{transform:none}
-@media (min-width:900px){.sheet{left:auto;top:0;width:460px;max-height:none;border-radius:0;transform:translateX(100%)}}
-.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 0}
-.sh-head{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
-.sh-head h2{font-size:18px;flex:1}
-.x{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:20px;cursor:pointer}
-.sh-body{overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
-.full{font-size:17px;line-height:1.5}
-dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:15px}
-dt{color:var(--mut)}dd{font-weight:500}
-.box{background:var(--bg);border-radius:14px;padding:12px 14px;font-size:14px}
-.box h3{font-size:13px;color:var(--mut);font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
-.btn{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
-.btn.pri{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.stbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stbtns .btn[aria-pressed=true]{outline:2px solid var(--acc)}
-textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;padding:10px}
-.msg{font-size:13px;color:var(--mut);min-height:18px}
-</style>
+<link rel="stylesheet" href="/dashboard/app.css">
 </head>
 <body>
 <header>
@@ -80,60 +17,58 @@ textarea{width:100%;min-height:72px;border-radius:12px;border:1px solid var(--li
   </div>
 </header>
 <nav class="seg" id="chipsRegion" role="group" aria-label="Регион"></nav>
+<nav class="seg" id="chipsSource" role="group" aria-label="Источник"></nav>
 <section class="kpis" id="kpis" aria-label="Сводка"></section>
 <nav class="chips" id="chipsDir" aria-label="Направление"></nav>
 <nav class="chips" id="chipsMore" aria-label="Фильтры">
   <select class="chip" id="fDays" aria-label="Период"><option value="1">Сегодня</option><option value="7" selected>7 дней</option><option value="30">30 дней</option></select>
   <select class="chip" id="fConc" aria-label="Район"><option value="">Все районы</option></select>
   <select class="chip" id="fStatus" aria-label="Статус"><option value="">Все статусы</option><option value="new">Новые</option><option value="taken">Взял</option><option value="skip">Пропущены</option><option value="won">Выиграли</option><option value="lost">Проиграли</option></select>
+  <button class="chip" id="fHideFix" aria-pressed="false">Скрывать Fixando</button>
   <button class="chip" id="fLarge" aria-pressed="false">Только крупные</button>
   <button class="chip" id="fNow" aria-pressed="false">Только срочные</button>
 </nav>
 <main class="list" id="list" aria-live="polite"></main>
 
-<div id="sheetWrap">
-  <div class="scrim" id="scrim"></div>
-  <aside class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
-    <div class="grab"></div>
-    <div class="sh-head"><h2 id="shTitle">Лид</h2><button class="x" id="shClose" aria-label="Закрыть">×</button></div>
-    <div class="sh-body" id="shBody"></div>
-  </aside>
-</div>
-
+<script src="/dashboard/app.js"></script>
+<script src="/dashboard/nav.js"></script>
 <script>
-const API='https://n8n.aira-ai.net/webhook/lisbon-leads-data';
-const STATUS_API='/dashboard/api/lead-status'; // Pages Function-прокси, ключ X-Aira-Key в env Cloudflare
 const DIRS={airahome:'Airahome',construction:'Construction',energia:'Energia',garden:'Garden',other:'Другое'};
 const REG={all:'Все',lisboa:'Лиссабон',algarve:'Алгарве'};
+const SRC={all:'Все',scout:'Scout',fixando:'Fixando'};
+const SUB={macrodroid:'MacroDroid (телефон)',http:'HTTP-скрапер',telegram:'Telegram-группы'};
 const ST={new:'Новый',taken:'Взял',skip:'Пропущен',won:'Выиграли',lost:'Проиграли'};
-let data=null, compByKey={}, f={dir:'',large:false,now:false};
-let region=new URLSearchParams(location.search).get('region');
-if(!REG[region]){region='all';try{region=localStorage.getItem('lead_region')||'all'}catch(e){}}
-if(!REG[region])region='all';
-let lastVisit=0; try{lastVisit=+localStorage.getItem('lead_last_visit')||0}catch(e){}
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function ago(iso){if(!iso)return'';const m=(Date.now()-new Date(iso))/6e4;if(m<60)return Math.max(1,Math.round(m))+' мин назад';const h=m/60;if(h<24)return Math.round(h)+' ч назад';return Math.round(h/24)+' дн назад'}
-function fmtDate(d){if(!d)return'—';const [y,m,dd]=d.split('-');return dd+'.'+m+'.'+y}
+let data=null, sources=[], f={dir:'',large:false,now:false};
+const params=new URLSearchParams(location.search);
+let region=params.get('region'); if(!REG[region]){region=store.get('lead_region','all');if(!REG[region])region='all'}
+let source=params.get('source'); if(!SRC[source])source='all';
+let hideFix=store.get('lead_hide_fixando','0')==='1';
+const lastVisit=+store.get('lead_last_visit',0)||0;
+// "Скрывать Fixando" narrows "Все" to Scout; an explicit Fixando choice still shows Fixando.
+const effSource=()=>source==='all'&&hideFix?'scout':source;
 
 async function load(){
   $('list').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
   const q=new URLSearchParams({days:$('fDays').value,region});
+  if(effSource()!=='all')q.set('source',effSource());
   if($('fConc').value)q.set('concelho',$('fConc').value);
   if($('fStatus').value)q.set('status',$('fStatus').value);
   try{
-    const r=await fetch(API+'?'+q);if(!r.ok)throw new Error(r.status);
-    data=await r.json();render();
+    [data,sources]=await Promise.all([getLeads(q),getSources()]);render();
   }catch(e){$('list').innerHTML='<div class="err">Не удалось загрузить данные ('+esc(e.message)+').<br><button class="chip" onclick="load()">Повторить</button></div>'}
 }
+function segHtml(map,cur,counts,attr){
+  return Object.keys(map).map(k=>{const n=counts[k];return `<button class="chip" data-${attr}="${k}" aria-pressed="${cur===k}">${map[k]}${n!=null?' · '+n:''}</button>`}).join('');
+}
 function render(){
-  const k=data.kpi||{};
+  const k=data.kpi||{}, br=k.by_region||{}, bs=k.by_source||{};
   $('upd').textContent=data.generated_at?'обновлено '+ago(data.generated_at):'';
+  const sum=o=>Object.values(o).reduce((a,v)=>a+(v.last7||0),0);
+  $('chipsRegion').innerHTML=segHtml(REG,region,{all:sum(br),lisboa:br.lisboa?.last7,algarve:br.algarve?.last7},'region');
+  $('chipsSource').innerHTML=segHtml(SRC,source,{all:sum(bs),scout:data.authorized?(bs.scout?.last7??0):null,fixando:bs.fixando?.last7},'source');
+  $('fHideFix').setAttribute('aria-pressed',hideFix);
   $('kpis').innerHTML=[['Сегодня',k.today],['7 дней',k.last7],['Крупные',k.large7],['Срочные',k.urgent7]]
     .map(([l,v])=>`<div class="kpi"><b>${v??'—'}</b><span>${l}</span></div>`).join('');
-  const br=k.by_region||{};
-  $('chipsRegion').innerHTML=Object.keys(REG).map(r=>{const n=r==='all'?Object.values(br).reduce((a,v)=>a+(v.last7||0),0):(br[r]||{}).last7;
-    return `<button class="chip" data-region="${r}" aria-pressed="${region===r}">${REG[r]}${n!=null?' · '+n:''}</button>`}).join('');
   const bd=k.by_direction||{};
   $('chipsDir').innerHTML=[['','Все',k.last7]].concat(Object.keys(DIRS).map(d=>[d,DIRS[d],bd[d]||0]))
     .map(([d,l,n])=>`<button class="chip" data-dir="${d}" aria-pressed="${f.dir===d}">${l} · ${n??0}</button>`).join('');
@@ -141,66 +76,81 @@ function render(){
   if(conc.options.length<=1)Object.keys(k.by_concelho||{}).forEach(c=>conc.add(new Option(c,c)));
   conc.value=cur;
   let L=(data.leads||[]).filter(x=>(!f.dir||x.direction===f.dir)&&(!f.large||x.size==='large')&&(!f.now||x.urgency==='now'));
-  if(!L.length){$('list').innerHTML='<div class="empty">Под эти фильтры заявок нет.</div>';return}
-  $('list').innerHTML=L.map(x=>{
+  const note=effSource()==='scout'&&!data.authorized
+    ?'<div class="box warn">Scout-лиды отдаются только через защищённый прокси дашборда (ключ AIRA_LEADS_KEY в Cloudflare Pages). Сейчас ключа нет — видны только публичные данные Fixando.</div>':'';
+  if(!L.length){$('list').innerHTML=note+'<div class="empty">Под эти фильтры заявок нет.</div>';return}
+  $('list').innerHTML=note+L.map(x=>{
     const fresh=lastVisit&&new Date(x.first_seen_at)>lastVisit;
-    return `<button class="lead${fresh?' fresh':''}" data-id="${x.id}">
-      <div class="row"><span class="dir d-${x.direction}">${DIRS[x.direction]||x.direction}</span>
-      <span class="place">${esc(x.freguesia)} · ${esc(x.concelho)}${region==='all'&&x.region?' · '+REG[x.region]:''}</span><span class="age">${ago(x.first_seen_at)}</span></div>
+    const trusted=(sources.find(s=>s.id===x.source)||{}).trusted;
+    const place=x.source==='scout'?`${esc(x.concelho)}${x.group_name?' · '+esc(x.group_name):''}`
+      :`${esc(x.freguesia)} · ${esc(x.concelho)}${region==='all'&&x.region?' · '+REG[x.region]:''}`;
+    return `<button class="lead${fresh?' fresh':''}${trusted?'':' muted'}" data-id="${esc(x.id)}">
+      <div class="row">${srcBadge(sources,x.source)}<span class="dir d-${x.direction}">${DIRS[x.direction]||esc(x.direction)}</span>
+      <span class="age">${ago(x.first_seen_at)}</span></div>
+      <div class="place">${place}</div>
       <div class="txt">${esc(x.text_clean)}</div>
       <div class="row">${x.size==='large'?'<span class="tag t-large">Крупный</span>':''}${x.urgency==='now'?'<span class="tag t-now">Срочно</span>':''}
       <span class="tag t-st">${esc(x.subcategory||x.category)}</span>${x.status&&x.status!=='new'?`<span class="tag t-st">${ST[x.status]}</span>`:''}</div></button>`}).join('');
 }
-function openLead(id,push=true){
+function sourceBox(x){
+  if(x.source==='scout'){
+    const link=x.url_page?`<a href="${esc(x.url_page)}" target="_blank" rel="noopener">${x.url_kind==='post'?'Открыть пост в FB':'Открыть группу в FB (ссылки на сам пост нет)'} →</a>`:'Ссылки на пост нет';
+    return `<div class="box"><h3>Источник</h3>Aira Scout · ${esc(SUB[x.subsource]||x.subsource)}<br>Группа: ${esc(x.group_name||'—')}<br>${link}</div>`;
+  }
+  return `<div class="box warn"><h3>Источник</h3>Fixando (публичный тизер, контакт не проверен)<br><a href="${esc(x.url_page)}" target="_blank" rel="noopener">Исходная страница Fixando →</a></div>`;
+}
+function openLead(id){
   const x=(data.leads||[]).find(l=>l.id===id);if(!x)return;
-  const mk=(data.market||[]).filter(m=>m.concelho===x.concelho&&(m.category===x.category||x.category.startsWith(m.category)));
-  const cs=(data.competitors_summary||{}).total;
-  $('shTitle').textContent=(DIRS[x.direction]||'Лид')+' · '+x.freguesia;
-  $('shBody').innerHTML=`
-    <p class="full">${esc(x.text_clean)}</p>
-    <div class="row">${x.size==='large'?'<span class="tag t-large">Крупный</span>':''}${x.urgency==='now'?'<span class="tag t-now">Срочно</span>':''}</div>
+  const mk=(data.market||[]).filter(m=>m.concelho===x.concelho&&(m.category===x.category||String(x.category).startsWith(m.category)));
+  const cs=(data.competitors_summary||{}).total, scout=x.source==='scout';
+  Sheet.open((DIRS[x.direction]||'Лид')+' · '+(scout?x.concelho:x.freguesia),`
+    <div class="row">${srcBadge(sources,x.source)}${x.size==='large'?'<span class="tag t-large">Крупный</span>':''}${x.urgency==='now'?'<span class="tag t-now">Срочно</span>':''}</div>
+    <p class="full">${esc(scout?(x.text_full||x.text_clean):x.text_clean)}</p>
+    ${scout&&x.text_full&&x.text_clean!==x.text_full?`<div class="box"><h3>Кратко</h3>${esc(x.text_clean)}</div>`:''}
     <dl>
       <dt>Категория</dt><dd>${esc(x.subcategory||x.category)}</dd>
-      <dt>Направление</dt><dd>${DIRS[x.direction]||x.direction}</dd>
-      <dt>Район</dt><dd>${esc(x.freguesia)}, ${esc(x.concelho)}${x.region?' · '+REG[x.region]:''}</dd>
-      <dt>Опубликован</dt><dd>${fmtDate(x.published_date)}</dd>
+      <dt>Направление</dt><dd>${DIRS[x.direction]||esc(x.direction)}</dd>
+      <dt>Район</dt><dd>${scout?esc(x.concelho)+(x.location_text?` <span class="place">(${esc(x.location_text)})</span>`:''):esc(x.freguesia)+', '+esc(x.concelho)}${x.region?' · '+REG[x.region]:''}</dd>
+      <dt>${scout?'Замечен':'Опубликован'}</dt><dd>${fmtDate(x.published_date)}</dd>
       <dt>Увидели</dt><dd>${ago(x.first_seen_at)}</dd>
-      <dt>Размер</dt><dd>${{small:'Мелкий',medium:'Средний',large:'Крупный'}[x.size]||x.size}</dd>
-      <dt>Источник</dt><dd>${esc(x.source)}</dd>
+      <dt>Размер</dt><dd>${{small:'Мелкий',medium:'Средний',large:'Крупный'}[x.size]||esc(x.size)}</dd>
+      ${scout?`<dt>Уверенность</dt><dd>${esc(x.confidence||'—')}</dd>`:''}
     </dl>
-    <div class="box"><h3>Рынок</h3>${x.price_hint?esc(x.price_hint):mk.length?mk.map(m=>`${esc(m.range_text)} / ${esc(m.unit)} (средн. ${m.avg_price}€)`).join('<br>'):'нет данных'}</div>
-    <div class="box"><h3>Конкуренты</h3>${cs?`В базе ${cs} профилей мастеров. <a href="/dashboard/competitors?concelho=${encodeURIComponent(x.concelho)}">Смотреть в ${esc(x.concelho)} →</a>`:'нет данных'}</div>
-    <a class="btn pri" href="${esc(x.url_page)}" target="_blank" rel="noopener">Открыть на ${esc(x.source)}</a>
+    ${sourceBox(x)}
+    ${scout&&x.reply_draft?`<div class="box"><h3>Черновик ответа</h3><p style="white-space:pre-wrap">${esc(x.reply_draft)}</p></div><button class="btn" id="copyDraft">Копировать черновик</button>`:''}
+    ${scout?'':`<div class="box"><h3>Рынок</h3>${x.price_hint?esc(x.price_hint):mk.length?mk.map(m=>`${esc(m.range_text)} / ${esc(m.unit)} (средн. ${m.avg_price}€)`).join('<br>'):'нет данных'}</div>
+    <div class="box"><h3>Конкуренты</h3>${cs?`В базе ${cs} профилей мастеров. <a href="/dashboard/competitors?concelho=${encodeURIComponent(x.concelho)}">Смотреть в ${esc(x.concelho)} →</a>`:'нет данных'}</div>`}
     <div class="stbtns">${['taken','skip','won','lost'].map(s=>`<button class="btn" data-st="${s}" aria-pressed="${x.status===s}">${ST[s]}</button>`).join('')}</div>
     <textarea id="note" placeholder="Заметка">${esc(x.note||'')}</textarea>
-    <div class="msg" id="stMsg"></div>`;
-  $('shBody').querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>setStatus(x,b.dataset.st));
-  document.body.classList.add('open');
-  if(push)history.pushState({lead:id},'','#'+id);
+    <div class="msg" id="stMsg"></div>`,x.id);
+  Sheet.body().querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>setStatus(x,b.dataset.st));
+  if($('copyDraft'))$('copyDraft').onclick=e=>copyText(x.reply_draft,e.target);
 }
-function closeSheet(fromPop){document.body.classList.remove('open');if(!fromPop&&location.hash)history.back()}
 async function setStatus(x,st){
   const note=$('note').value;$('stMsg').textContent='Сохраняю…';
-  try{const r=await fetch(STATUS_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:x.id,status:st,note})});
-    if(!r.ok)throw new Error(r.status);x.status=st;x.note=note;$('stMsg').textContent='Сохранено';
-    $('shBody').querySelectorAll('[data-st]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.st===st));render();
+  try{const r=await fetch(API.leadStatus,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:x.id,status:st,note})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||!j.ok)throw new Error(j.error||r.status);x.status=st;x.note=note;$('stMsg').textContent='Сохранено';
+    Sheet.body().querySelectorAll('[data-st]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.st===st));render();
   }catch(e){$('stMsg').textContent='Не сохранилось ('+e.message+'). Попробуй ещё раз.'}
 }
+function setUrl(){
+  const u=new URL(location.href);
+  region==='all'?u.searchParams.delete('region'):u.searchParams.set('region',region);
+  source==='all'?u.searchParams.delete('source'):u.searchParams.set('source',source);
+  history.replaceState(history.state,'',u);
+}
 $('chipsRegion').onclick=e=>{const b=e.target.closest('[data-region]');if(!b||b.dataset.region===region)return;
-  region=b.dataset.region;try{localStorage.setItem('lead_region',region)}catch(e){}
-  const u=new URL(location.href);region==='all'?u.searchParams.delete('region'):u.searchParams.set('region',region);history.replaceState(history.state,'',u);
-  const c=$('fConc');c.value='';c.length=1;load()};
+  region=b.dataset.region;store.set('lead_region',region);setUrl();const c=$('fConc');c.value='';c.length=1;load()};
+$('chipsSource').onclick=e=>{const b=e.target.closest('[data-source]');if(!b||b.dataset.source===source)return;
+  source=b.dataset.source;setUrl();load()};
+$('fHideFix').onclick=()=>{hideFix=!hideFix;store.set('lead_hide_fixando',hideFix?'1':'0');load()};
 $('chipsDir').onclick=e=>{const b=e.target.closest('[data-dir]');if(!b)return;f.dir=b.dataset.dir;render()};
 $('list').onclick=e=>{const b=e.target.closest('.lead');if(b)openLead(b.dataset.id)};
 ['fDays','fConc','fStatus'].forEach(i=>$(i).onchange=load);
 $('fLarge').onclick=function(){f.large=!f.large;this.setAttribute('aria-pressed',f.large);render()};
 $('fNow').onclick=function(){f.now=!f.now;this.setAttribute('aria-pressed',f.now);render()};
-$('scrim').onclick=()=>closeSheet();$('shClose').onclick=()=>closeSheet();
-window.onpopstate=()=>{if(document.body.classList.contains('open'))closeSheet(true)};
-document.onkeydown=e=>{if(e.key==='Escape'&&document.body.classList.contains('open'))closeSheet()};
-let y0=null;$('sheet').addEventListener('touchstart',e=>{if($('shBody').scrollTop<=0)y0=e.touches[0].clientY},{passive:true});
-$('sheet').addEventListener('touchend',e=>{if(y0!==null&&e.changedTouches[0].clientY-y0>90)closeSheet();y0=null});
-window.addEventListener('pagehide',()=>{try{localStorage.setItem('lead_last_visit',Date.now())}catch(e){}});
+window.addEventListener('pagehide',()=>store.set('lead_last_visit',Date.now()));
 load();
 </script>
 </body>
