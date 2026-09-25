@@ -1,6 +1,6 @@
 // SHA-256 hex digest of the expected "user:pass" string — not the plaintext,
 // so credentials aren't sitting in the clear in a repo pushed to GitHub.
-const CREDENTIAL_HASH = 'ab4d6605b67da17fedf1354cae999dfe887bbd155b6b480b7b127bb982a74a79';
+const CREDENTIAL_HASH = '0dde46af271d9c43c1b0243b371d1fff6c5c8008cecd7e930d85ebcdcb4b5c35';
 
 async function sha256Hex(str) {
   const data = new TextEncoder().encode(str);
