@@ -1,14 +1,23 @@
-// SHA-256 hex digest of the expected "user:pass" string — not the plaintext,
-// so credentials aren't sitting in the clear in a repo pushed to GitHub.
-const CREDENTIAL_HASH = '43e4568b242aafe2c3bf20b11196472331b6a1f65b8e6a99093558d16e91ee63';
+// Credentials come from Pages secrets DASH_USER / DASH_PASS (wrangler pages secret put),
+// so nothing secret lives in this repo. If either secret is missing, access is denied.
 
-async function sha256Hex(str) {
-  const data = new TextEncoder().encode(str);
-  const digest = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+async function sha256(str) {
+  return new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)));
 }
 
-export async function requireBasicAuth(request) {
+// Compare digests so timing doesn't depend on where the strings differ.
+async function safeEqual(a, b) {
+  const [x, y] = await Promise.all([sha256(a), sha256(b)]);
+  let diff = 0;
+  for (let i = 0; i < x.length; i++) diff |= x[i] ^ y[i];
+  return diff === 0;
+}
+
+export async function requireBasicAuth(request, env) {
+  const user = env && env.DASH_USER;
+  const pass = env && env.DASH_PASS;
+  if (!user || !pass) return false;
+
   const authHeader = request.headers.get('Authorization') || '';
   const match = authHeader.match(/^Basic\s+(.+)$/i);
   if (!match) return false;
@@ -20,8 +29,7 @@ export async function requireBasicAuth(request) {
     return false;
   }
 
-  const hash = await sha256Hex(decoded);
-  return hash === CREDENTIAL_HASH;
+  return safeEqual(decoded, `${user}:${pass}`);
 }
 
 export function unauthorizedResponse() {
