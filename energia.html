@@ -1029,6 +1029,7 @@ document.getElementById('energiaForm').addEventListener('submit', function(e){
     page: 'energia',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
   fetch(LEADS_WEBHOOK, {
