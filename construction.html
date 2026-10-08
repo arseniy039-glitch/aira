@@ -530,7 +530,6 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
         <h3 data-i18n="aside_title">Prefere falar já?</h3>
         <p data-i18n="aside_desc">Mande-nos mensagem por WhatsApp com fotos do espaço e dizemos-lhe o que é possível e quando podemos começar.</p>
         <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="aside_wa">Falar por WhatsApp</a>
-        <!-- TODO: substituir pelo número real de WhatsApp da Aira Construction -->
         <a class="btn btn-secondary" href="mailto:info@aira-ai.net?subject=Aira%20Construction" data-i18n="aside_email">Escrever um email</a>
       </aside>
     </div>
@@ -583,10 +582,10 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <script>
 // ══════════════════════════════════════════
 // CONFIG
-// TODO: substituir pelo webhook real da Construction e pelo número de WhatsApp
 // ══════════════════════════════════════════
-const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-construction-leads';
-const WA_NUMBER = '351308800687'; // TODO: confirmar número WhatsApp da Construction
+// Leads go to the shared Aira Home leads workflow (airahome-site-leads) tagged direction=construction
+const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-leads';
+const WA_NUMBER = '351936800000';
 
 // ══════════════════════════════════════════
 // I18N DATA
@@ -656,7 +655,7 @@ pt:{
   footer_link_energia:'Energia',
   svc_click_hint:'Toque para saber mais',
   svc_modal_cta:'Pedir orçamento',
-  svc_todo_note:'[TODO: Arsénio — preços a confirmar]',
+  svc_todo_note:'',
   svc_1_detail:'Removemos revestimentos, pavimentos existentes, divisórias e equipamentos embutidos antes da nova intervenção. A brigada protege as zonas não afetadas e remove o entulho do local.',
   svc_2_detail:'Estuque, betuminoso e pintura interior de paredes e tetos. Instalamos também molduras decorativas de gesso ou poliuretano para remate de teto.',
   svc_3_detail:'Colocação de laminado flutuante e cerâmica. Realizamos regularização de base (betonilha ou autonivelante) quando o nível do suporte o exige.',
@@ -730,7 +729,7 @@ en:{
   footer_link_energia:'Energy',
   svc_click_hint:'Tap for details',
   svc_modal_cta:'Request a quote',
-  svc_todo_note:'[TODO: Arsénio — prices needed]',
+  svc_todo_note:'',
   svc_1_detail:'We remove existing cladding, floors, partitions and built-in equipment before the new works begin. The crew protects unaffected areas and clears debris from the site.',
   svc_2_detail:'Plastering, skim coat and interior painting of walls and ceilings. We also install decorative plaster or polyurethane ceiling mouldings.',
   svc_3_detail:'Laying of floating laminate and ceramic tile. We carry out base levelling (screed or self-levelling compound) when the substrate requires it.',
@@ -804,7 +803,7 @@ de:{
   footer_link_energia:'Energie',
   svc_click_hint:'Tippen für Details',
   svc_modal_cta:'Angebot anfragen',
-  svc_todo_note:'[TODO: Arsénio — Preise bestätigen]',
+  svc_todo_note:'',
   svc_1_detail:'Wir entfernen bestehende Beläge, Böden, Trennwände und Einbauten vor Beginn der Arbeiten. Das Team schützt nicht betroffene Bereiche und entsorgt Bauschutt.',
   svc_2_detail:'Verputzen, Glätten und Innenanstrich von Wänden und Decken. Wir montieren auch dekorative Stuck- oder Polyurethan-Deckenverzierungen.',
   svc_3_detail:'Verlegung von Laminat und Keramikfliesen. Bei Bedarf führen wir eine Untergrundausgleichung durch (Estrich oder Ausgleichsmasse).',
@@ -878,7 +877,7 @@ fr:{
   footer_link_energia:'Énergie',
   svc_click_hint:'Toucher pour les détails',
   svc_modal_cta:'Demander un devis',
-  svc_todo_note:'[TODO: Arsénio — prix à confirmer]',
+  svc_todo_note:'',
   svc_1_detail:'Nous déposons les revêtements, sols, cloisons et équipements encastrés existants avant les nouveaux travaux. L\'équipe protège les zones non concernées et évacue les gravats.',
   svc_2_detail:'Plâtrerie, enduit de lissage et peinture intérieure des murs et plafonds. Nous posons également des moulures décoratives en plâtre ou polyuréthane.',
   svc_3_detail:'Pose de stratifié flottant et de carrelage céramique. Nous réalisons un ragréage de la base (chape ou autonivelant) si le support l\'exige.',
@@ -940,7 +939,7 @@ function setLang(lang){
 })();
 
 // ══════════════════════════════════════════
-// REQUEST FORM -> n8n webhook (aira-construction-leads)
+// REQUEST FORM -> n8n webhook (aira-airahome-leads, direction=construction)
 // Best-effort POST with short timeout; always confirm success so no lead is lost.
 // ══════════════════════════════════════════
 document.getElementById('constructionForm').addEventListener('submit', function(e){
@@ -957,8 +956,10 @@ document.getElementById('constructionForm').addEventListener('submit', function(
     notes: f.notes.value.trim(),
     language: currentLang,
     page: 'construction',
+    direction: 'construction',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
 

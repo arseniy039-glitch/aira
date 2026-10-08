@@ -273,13 +273,15 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <a href="#hero" class="nav-logo">Aira<span>&nbsp;Garden</span></a>
   <div class="nav-mid">
     <div class="lang-badges">
-      <span class="lang-badge">PT</span><span class="lang-badge">EN</span>
+      <span class="lang-badge">PT</span><span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;">
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('pt')">PT</button>
       <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
     <a href="#request" class="nav-cta" data-i18n="nav_cta">Pedir consulta</a>
   </div>
@@ -604,6 +606,8 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
       <div class="lang-switch">
         <button class="lang-btn active" onclick="setLang('pt')">PT</button>
         <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('fr')">FR</button>
       </div>
       <div class="footer-powered">powered by Aira</div>
     </div>
@@ -712,7 +716,7 @@ pt:{
   svc_nodes_detail:'Um nó sem fios por cada válvula de rega. Cada nó tem painel solar e bateria incorporada — nunca precisa de cabos ou tomadas no jardim. A bateria aguenta várias semanas sem sol direto. Resistente a chuva e poeira (IP67). A nossa equipa instala, calibra e associa cada nó ao gateway.',
   svc_valves_eyebrow:'O que está incluído',
   svc_valves_detail:'Válvulas de rega comandadas por cada nó. Abrem e fecham de acordo com o horário programado na app ou com um toque manual. Compatíveis com os sistemas de rega mais comuns (1 polegada BSP). Se já tiver válvulas instaladas, avaliamos na visita inicial se são compatíveis.',
-  svc_todo_note:'[TODO: Arsénio — adicionar aqui preços ou pacotes de instalação, se aplicável]'
+  svc_todo_note:''
 },
 en:{
   nav_cta:'Request a consultation',
@@ -790,13 +794,171 @@ en:{
   svc_nodes_detail:'One wireless node per irrigation valve. Each node has a built-in solar panel and battery — no cables or outdoor sockets needed. The battery lasts several weeks without direct sun. Rainproof and dust-proof (IP67). Our team installs, calibrates and pairs each node to the gateway.',
   svc_valves_eyebrow:'What\'s included',
   svc_valves_detail:'Irrigation valves controlled by each node. They open and close on the schedule set in the app or at your command with a tap. Compatible with the most common irrigation systems (1-inch BSP). If you already have valves installed, we assess compatibility during the initial visit.',
-  svc_todo_note:'[TODO: Arsénio — add pricing or installation packages here if applicable]'
+  svc_todo_note:''
+},
+de:{
+  nav_cta:'Beratung anfragen',
+  hero_eyebrow:'Intelligente Bewässerung · Algarve',
+  hero_h1:'Die Bewässerung Ihres ganzen Grundstücks, <em>gesteuert vom Handy</em>.',
+  hero_sub:'Ein kabelloses Bewässerungssystem, das ohne Gräben und ohne Bauarbeiten installiert wird. Jede Zone bewässert nach eigenem Zeitplan, läuft auch ohne Internet weiter und wächst mit Ihrem Garten.',
+  hero_cta_form:'Beratung & Angebot anfragen',
+  hero_cta_how:'So funktioniert es',
+  hero_stat_1:'Keine Bauarbeiten',
+  hero_stat_2:'Funktioniert offline',
+  hero_stat_3:'Zone für Zone erweitern',
+  how_eyebrow:'So funktioniert es',
+  how_title:'Vom ersten Gartenbesuch bis zur Bewässerung, die von selbst läuft',
+  how_1_title:'Beratung',how_1_desc:'Wir sehen uns das Grundstück an, legen die Bewässerungszonen fest und prüfen, was schon vorhanden ist. Unverbindlich.',
+  how_2_title:'Installation',how_2_desc:'Wir setzen das Gateway und die kabellosen Knoten an Ihre Ventile. Keine Gräben, nichts wird aufgerissen, meist an einem Tag.',
+  how_3_title:'Steuerung per App',how_3_desc:'Zeitpläne je Zone festlegen, Zonen von Hand ein- und ausschalten und den Zustand jedes Knotens auf dem Handy sehen.',
+  how_4_title:'Betreuung',how_4_desc:'Wir begleiten die ersten Wochen, passen die Zeitpläne an die Jahreszeit an und bleiben erreichbar, wenn Sie uns brauchen.',
+  inc_eyebrow:'Was enthalten ist',
+  inc_title:'Drei Teile, ein System',
+  inc_lead:'Eigene Ausrüstung, gebaut für echte Gärten — keine weiterverkauften Baumarktteile.',
+  inc_1_name:'Gateway',inc_1_desc:'Die Zentrale, die den Garten mit der App verbindet. Sie spricht kabellos mit allen Knoten, von einem einzigen Stromanschluss aus.',
+  inc_2_name:'Kabellose Solarknoten',inc_2_desc:'Ein kleiner Knoten an jedem Ventil, versorgt von Solarpanel und Akku. Keine Kabel quer durch den Garten.',
+  inc_3_name:'Ventile',inc_3_desc:'Bewässerungsventile, gesteuert vom Knoten. Sie öffnen und schließen jede Zone nach Zeitplan oder auf Befehl aus der App.',
+  app_eyebrow:'Die App',
+  app_title:'Der ganze Garten auf einen Blick',
+  app_lead:'Alles, was Sie im Alltag brauchen, passt auf einen Bildschirm.',
+  app_b1:'<b>Zeitplan je Zone</b> — jeder Bereich mit eigener Uhrzeit und Dauer.',
+  app_b2:'<b>Zonen von Hand ein- und ausschalten</b> — eine Extra-Bewässerung oder eine Pause, sofort.',
+  app_b3:'<b>Akku jedes Knotens sehen</b> — Ladung und Signal, immer sichtbar.',
+  app_b4:'<b>Bewässerungsverlauf</b> — was lief, wann und wie lange.',
+  ph_zones:'Zonen',
+  ph_z1:'Rasen',ph_z2:'Rosenbeet',ph_z3:'Gemüsebeet',
+  ph_off:'aus',
+  ph_last:'Letzte Bewässerung: heute, 06:30 · 12 Min.',
+  aud_eyebrow:'Für wen',
+  aud_title:'Gemacht für Grundstücke an der Algarve',
+  aud_1_name:'Villen & private Gärten',aud_1_desc:'Rasen, Beete, Bäume und Töpfe — jeweils richtig bewässert, ohne Schläuche herumzuziehen.',
+  aud_2_name:'Gewerbliche Grünanlagen',aud_2_desc:'Wohnanlagen, Hotels und Grünflächen mit vielen Zonen, gesteuert von einem Ort aus.',
+  aud_3_name:'Landwirtschaft',aud_3_desc:'Obstgärten, Gemüsefelder und Gewächshäuser, bei denen pünktliches Bewässern und Wassersparen sich auf der Rechnung zeigen.',
+  ben_eyebrow:'Warum Aira Garden',
+  ben_title:'Was Sie bekommen',
+  ben_1_title:'Wasser sparen',ben_1_desc:'Jede Zone bekommt nur, was sie braucht, zur kühlsten Stunde. Kein Bewässern des Weges, nicht in der Mittagshitze.',
+  ben_2_title:'Keine Gräben, keine Kabel',ben_2_desc:'Installation ohne Graben. Die Knoten kommunizieren kabellos und laufen mit Solarstrom.',
+  ben_3_title:'Funktioniert offline',ben_3_desc:'Die Zeitpläne sind in jedem Knoten gespeichert. Fallen Internet oder Strom aus, wird weiter bewässert.',
+  ben_4_title:'Wächst schrittweise',ben_4_desc:'Beginnen Sie mit einer Zone und fügen Sie den Rest hinzu, wann Sie wollen. Das System wächst mit.',
+  req_eyebrow:'Beratung anfragen',
+  form_heading:'Beratung und Angebot für Ihr Grundstück',
+  form_desc:'Hinterlassen Sie Ihre Daten — wir rufen an, um den Garten zu verstehen, und machen Ihnen ein Angebot. Unverbindlich.',
+  f_name:'Name',f_name_ph:'Ihr Name',
+  f_phone:'Telefon / WhatsApp',f_phone_ph:'+351...',
+  f_location:'Ort (Gemeinde / Kreis)',f_location_ph:'z. B. Almancil, Loulé',
+  f_property_label:'Art des Grundstücks (Zutreffendes wählen)',
+  f_prop_villa:'Villa',f_prop_commercial:'Gewerblich',f_prop_agro:'Landwirtschaftlich',f_prop_other:'Sonstiges',
+  f_zones_label:'Bewässerungszonen (ca.)',
+  f_zones_none:'Noch unklar',
+  f_notes:'Anmerkungen',f_notes_ph:'Erzählen Sie uns vom Garten, was schon installiert ist und was Sie lösen möchten…',
+  f_consent:'Ich bin einverstanden, dass Aira Garden diese Angaben speichert und nutzt, um mich zu meiner Anfrage zu kontaktieren, gemäß der <a href="/home/privacy.html" target="_blank" rel="noopener">Datenschutzerklärung</a>.',
+  photo_drip_caption:'Tropfbewässerungsleitung neben einer Pflanze.',
+  photo_valve_caption:'Rasensprenger im Rasen.',
+  f_submit:'Beratung anfragen',
+  form_sending:'Wird gesendet…',
+  form_ok:'Danke, wir melden uns. Wenn Sie möchten, schreiben Sie uns jetzt auf WhatsApp oder an info@aira-ai.net.',
+  aside_title:'Lieber gleich sprechen?',
+  aside_desc:'Schicken Sie uns per WhatsApp ein Foto vom Garten — wir sagen Ihnen sofort die nächsten Schritte.',
+  aside_wa:'Auf WhatsApp schreiben',
+  aside_email:'E-Mail schreiben',
+  footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home · 4 Dienste',
+  footer_link_energia:'Energie',
+  svc_click_hint:'Mehr erfahren',
+  svc_modal_cta:'Beratung anfragen',
+  svc_gateway_eyebrow:'Was enthalten ist',
+  svc_gateway_detail:'Das Gateway ist das Herzstück des Systems. Es wird an einer einzigen Steckdose im Haus angeschlossen und kommuniziert kabellos mit allen Knoten im Garten — keine Gräben, keine verlegten Kabel. Typische Reichweite bis 100 m im Freien. Steuert bis zu 32 Bewässerungszonen. Die Ersteinrichtung macht unser Team; danach steuern Sie alles über die App.',
+  svc_nodes_eyebrow:'Was enthalten ist',
+  svc_nodes_detail:'Ein kabelloser Knoten pro Bewässerungsventil. Jeder Knoten hat ein eingebautes Solarpanel und einen Akku — keine Kabel oder Außensteckdosen nötig. Der Akku hält mehrere Wochen ohne direkte Sonne. Regen- und staubdicht (IP67). Unser Team installiert, kalibriert und koppelt jeden Knoten mit dem Gateway.',
+  svc_valves_eyebrow:'Was enthalten ist',
+  svc_valves_detail:'Bewässerungsventile, gesteuert von jedem Knoten. Sie öffnen und schließen nach dem Zeitplan in der App oder auf Ihren Fingertipp. Kompatibel mit den gängigsten Bewässerungssystemen (1 Zoll BSP). Sind bereits Ventile installiert, prüfen wir die Kompatibilität beim ersten Besuch.',
+  svc_todo_note:''
+},
+fr:{
+  nav_cta:'Demander une consultation',
+  hero_eyebrow:'Arrosage intelligent · Algarve',
+  hero_h1:'L’arrosage de toute votre propriété, <em>piloté depuis votre téléphone</em>.',
+  hero_sub:'Un système d’arrosage sans fil, installé sans tranchées et sans travaux. Chaque zone arrose selon son propre programme, continue de fonctionner même sans internet et s’agrandit avec votre jardin.',
+  hero_cta_form:'Demander une consultation et un devis',
+  hero_cta_how:'Voir comment ça marche',
+  hero_stat_1:'Sans travaux',
+  hero_stat_2:'Fonctionne hors ligne',
+  hero_stat_3:'Extensible zone par zone',
+  how_eyebrow:'Comment ça marche',
+  how_title:'De la première visite du jardin à l’arrosage qui se fait tout seul',
+  how_1_title:'Consultation',how_1_desc:'Nous examinons la propriété, définissons les zones d’arrosage et ce qui est déjà en place. Sans engagement.',
+  how_2_title:'Installation',how_2_desc:'Nous posons la passerelle et les modules sans fil sur vos vannes. Pas de tranchées, rien de cassé, généralement en une journée.',
+  how_3_title:'Pilotage depuis l’app',how_3_desc:'Programmes par zone, mise en marche et arrêt manuels, et l’état de chaque module sur votre téléphone.',
+  how_4_title:'Suivi',how_4_desc:'Nous suivons les premières semaines, ajustons les programmes à la saison et restons joignables quand vous en avez besoin.',
+  inc_eyebrow:'Ce qui est inclus',
+  inc_title:'Trois éléments, un seul système',
+  inc_lead:'Notre propre matériel, conçu pour de vrais jardins — pas des pièces de grande surface revendues.',
+  inc_1_name:'Passerelle',inc_1_desc:'Le boîtier qui relie le jardin à l’app. Il communique sans fil avec tous les modules depuis une seule prise de courant.',
+  inc_2_name:'Modules solaires sans fil',inc_2_desc:'Un petit module sur chaque vanne, alimenté par un panneau solaire et une batterie. Aucun câble à tirer dans le jardin.',
+  inc_3_name:'Vannes',inc_3_desc:'Vannes d’arrosage pilotées par le module. Elles ouvrent et ferment chaque zone selon le programme ou sur commande depuis l’app.',
+  app_eyebrow:'L’app',
+  app_title:'Tout le jardin en un coup d’œil',
+  app_lead:'Tout ce que vous faites au quotidien tient sur un seul écran.',
+  app_b1:'<b>Programme par zone</b> — chaque espace avec son heure et sa durée.',
+  app_b2:'<b>Allumer et éteindre les zones à la main</b> — un arrosage en plus ou une pause, sur le moment.',
+  app_b3:'<b>Batterie de chaque module</b> — charge et signal, toujours visibles.',
+  app_b4:'<b>Historique d’arrosage</b> — ce qui a tourné, quand et combien de temps.',
+  ph_zones:'Zones',
+  ph_z1:'Pelouse',ph_z2:'Massif de roses',ph_z3:'Potager',
+  ph_off:'arrêt',
+  ph_last:'Dernier arrosage : aujourd’hui, 06:30 · 12 min',
+  aud_eyebrow:'Pour qui',
+  aud_title:'Conçu pour les propriétés de l’Algarve',
+  aud_1_name:'Villas et jardins privés',aud_1_desc:'Pelouses, massifs, arbres et pots — chacun avec le bon arrosage, sans traîner de tuyaux.',
+  aud_2_name:'Espaces verts professionnels',aud_2_desc:'Copropriétés, hôtels et espaces verts avec de nombreuses zones à gérer depuis un seul endroit.',
+  aud_3_name:'Exploitation agricole',aud_3_desc:'Vergers, potagers et serres où arroser à l’heure et économiser l’eau se voit sur la facture.',
+  ben_eyebrow:'Pourquoi Aira Garden',
+  ben_title:'Ce que vous obtenez',
+  ben_1_title:'Économies d’eau',ben_1_desc:'Chaque zone reçoit juste ce qu’il lui faut, à l’heure la plus fraîche. On n’arrose ni l’allée ni en pleine chaleur.',
+  ben_2_title:'Ni tranchées ni câbles',ben_2_desc:'Installé sans creuser. Les modules communiquent sans fil et fonctionnent à l’énergie solaire.',
+  ben_3_title:'Fonctionne hors ligne',ben_3_desc:'Les programmes sont enregistrés dans chaque module. Si internet ou le courant tombe, l’arrosage continue.',
+  ben_4_title:'Évolue par étapes',ben_4_desc:'Commencez par une zone et ajoutez les autres quand vous voulez. Le système suit.',
+  req_eyebrow:'Demander une consultation',
+  form_heading:'Une consultation et un devis pour votre propriété',
+  form_desc:'Laissez vos coordonnées : nous vous appelons pour comprendre le jardin et vous faire un devis. Sans engagement.',
+  f_name:'Nom',f_name_ph:'Votre nom',
+  f_phone:'Téléphone / WhatsApp',f_phone_ph:'+351...',
+  f_location:'Lieu (paroisse / commune)',f_location_ph:'ex. Almancil, Loulé',
+  f_property_label:'Type de propriété (cochez ce qui s’applique)',
+  f_prop_villa:'Villa',f_prop_commercial:'Commercial',f_prop_agro:'Agricole',f_prop_other:'Autre',
+  f_zones_label:'Zones d’arrosage (env.)',
+  f_zones_none:'Je ne sais pas encore',
+  f_notes:'Remarques',f_notes_ph:'Parlez-nous du jardin, de ce qui est déjà installé, de ce que vous voulez résoudre…',
+  f_consent:'J’accepte qu’Aira Garden conserve et utilise ces informations pour me contacter au sujet de ma demande, conformément à la <a href="/home/privacy.html" target="_blank" rel="noopener">politique de confidentialité</a>.',
+  photo_drip_caption:'Ligne de goutte-à-goutte le long d’une plante.',
+  photo_valve_caption:'Arroseur dans la pelouse.',
+  f_submit:'Demander une consultation',
+  form_sending:'Envoi…',
+  form_ok:'Merci, nous vous recontactons. Si vous préférez, écrivez-nous dès maintenant sur WhatsApp ou à info@aira-ai.net.',
+  aside_title:'Vous préférez en parler maintenant ?',
+  aside_desc:'Envoyez-nous un WhatsApp avec une photo du jardin et nous vous indiquons tout de suite les prochaines étapes.',
+  aside_wa:'Écrire sur WhatsApp',
+  aside_email:'Écrire un e-mail',
+  footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home · 4 services',
+  footer_link_energia:'Énergie',
+  svc_click_hint:'En savoir plus',
+  svc_modal_cta:'Demander une consultation',
+  svc_gateway_eyebrow:'Ce qui est inclus',
+  svc_gateway_detail:'La passerelle est la pièce centrale du système. Elle se branche sur une seule prise dans la maison et communique sans fil avec tous les modules du jardin — sans tranchées, sans câbles enterrés. Portée typique jusqu’à 100 m en terrain dégagé. Gère jusqu’à 32 zones d’arrosage. La mise en service est faite par notre équipe ; ensuite vous pilotez tout depuis l’app.',
+  svc_nodes_eyebrow:'Ce qui est inclus',
+  svc_nodes_detail:'Un module sans fil par vanne d’arrosage. Chaque module a un panneau solaire et une batterie intégrés — pas de câbles ni de prises extérieures. La batterie tient plusieurs semaines sans soleil direct. Étanche à la pluie et à la poussière (IP67). Notre équipe installe, calibre et appaire chaque module à la passerelle.',
+  svc_valves_eyebrow:'Ce qui est inclus',
+  svc_valves_detail:'Vannes d’arrosage pilotées par chaque module. Elles s’ouvrent et se ferment selon le programme de l’app ou d’un simple geste. Compatibles avec les systèmes d’arrosage les plus courants (1 pouce BSP). Si vous avez déjà des vannes, nous vérifions la compatibilité lors de la première visite.',
+  svc_todo_note:''
 }
 };
 
 const WA_TEXT = {
   pt:'Olá, vim da página Aira Garden — quero uma consulta para rega inteligente na minha propriedade.',
-  en:'Hi, I came from the Aira Garden page — I’d like a consultation for smart irrigation on my property.'
+  en:'Hi, I came from the Aira Garden page — I’d like a consultation for smart irrigation on my property.',
+  de:'Hallo, ich komme von der Aira-Garden-Seite — ich hätte gern eine Beratung zur intelligenten Bewässerung meines Grundstücks.',
+  fr:'Bonjour, je viens de la page Aira Garden — je souhaite une consultation pour l’arrosage intelligent de ma propriété.'
 };
 
 let currentLang = 'pt';

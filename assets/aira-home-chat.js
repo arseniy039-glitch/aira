@@ -1,7 +1,9 @@
 /* Aira Home — shared chat widget for /home, /airahome, /energia, /garden, /construction.
    Usage: <script src="/assets/aira-home-chat.js" data-dir="energia" data-request="#request" defer></script>
-   Chat relays through n8n (aira-airahome-chat → Anthropic). A lead collected in chat goes to
-   aira-airahome-leads (Telegram), tagged with the direction. Phones/WhatsApp are fixed below. */
+   Chat relays through n8n (aira-airahome-chat → Anthropic). Contract: the browser sends ONLY
+   {messages, lang, page}; the system prompt, model and max_tokens live in n8n. A lead collected in chat
+   goes to aira-airahome-leads (Telegram) with direction; Alexandra calls back only for Airahome.
+   ?test=1 in the page URL marks leads as test (Telegram only, no call). */
 (function(){
   var script = document.currentScript;
   var DIR = (script && script.dataset.dir) || 'home';
@@ -52,30 +54,10 @@
 
   function lang(){ var l = (document.documentElement.lang || 'en').slice(0,2).toLowerCase(); return L[l] ? l : 'en'; }
 
-  function systemPrompt(){
-    var focus = {
-      home:'The visitor is on the Aira Home hub page and may need any of the four services — first find out which one.',
-      airahome:'The visitor is on the Airahome page (emergency repairs).',
-      energia:'The visitor is on the Aira Energia page (electricity bill and solar).',
-      garden:'The visitor is on the Aira Garden page (smart irrigation).',
-      construction:'The visitor is on the Aira Construction page (renovation).'
-    }[DIR];
-    return "You are the Aira Home assistant (Aira — AI concierge, Algarve), operated by Horizonte Solene Lda, Algarve, Portugal. "
-    + "Aira Home has FOUR services: "
-    + "1) Airahome — 24/7 emergency home-repair callout in the Algarve (Luz, Lagos, Portimão, Carvoeiro, Lagoa, Silves, Armação de Pêra, Albufeira, Vilamoura): plumbing, electrical, locks & keys, appliances, air conditioning, furniture, general repairs. Prices: Emergency (2–3 h) €300, Same day €150, Scheduled €50 — each covers the first hour incl. travel and diagnosis, then €35 per additional hour; price confirmed before anyone drives out. "
-    + "2) Aira Energia — free electricity bill check, tariff switching, solar panels, licensed electrician, Algarve. "
-    + "3) Aira Garden — wireless smart irrigation for properties in the Algarve: consultation and quote. "
-    + "4) Aira Construction — renovation and finishing works by our own crew in the Algarve and Lisbon: walls, floors, bathrooms, kitchens, electrics. Quote after a visit. "
-    + "Phone (all services): +351 308 800 687. WhatsApp: +351 936 800 000. Email: info@aira-ai.net. "
-    + focus + " "
-    + "Detect the visitor's language from their first message and reply in it (English, German, French, Portuguese). "
-    + "Be direct, calm and brief — 2–4 sentences, no marketing tone. Plain text only: no Markdown, no asterisks, no headings.Do not quote prices for Energia, Garden or Construction — say the team will give a quote. "
-    + "Your job: understand the request, then collect the address or area, a phone number, and how urgent it is (Now / Today / This week / Planning). Ask one question at a time. "
-    + "Once you have the request, the address/area, the phone and the urgency, tell the visitor the team will call back shortly, and on that same reply append on its own line exactly this machine-readable tag (hidden from the visitor): "
-    + "<<LEAD>>{\"name\":\"(their name if given, else empty string)\",\"service\":\"Airahome|Energia|Garden|Construction\",\"problem\":\"...\",\"address\":\"...\",\"phone\":\"...\",\"urgency\":\"Now|Today|This week|Planning\",\"language\":\"en|de|fr|pt\"}<<END>> "
-    + "Only emit the tag once, when you actually have all of them. Never invent details the visitor didn't give you.";
-  }
 
+  var MAX_LEN = 2000, MAX_HISTORY = 20;
+  var IS_TEST = /[?&]test=1(&|$)/.test(location.search);
+  var SERVICE_DIR = {airahome:'airahome', energia:'energia', garden:'garden', construction:'construction'};
   var history = [], busy = false, opened = false, leadSent = false;
   var btn, panel, msgs, input, send;
 
@@ -100,7 +82,7 @@
       + '<a class="ahw-act" href="' + REQUEST + '" data-ahw="req"></a>'
       + '</div>'
       + '<div class="ahw-msgs" aria-live="polite"></div>'
-      + '<form class="ahw-bar"><input class="ahw-input" type="text" autocomplete="off"><button type="submit" class="ahw-send" data-ahw="send"></button></form>';
+      + '<form class="ahw-bar"><input class="ahw-input" type="text" autocomplete="off" maxlength="' + MAX_LEN + '"><button type="submit" class="ahw-send" data-ahw="send"></button></form>';
     document.body.appendChild(btn);
     document.body.appendChild(panel);
     msgs = panel.querySelector('.ahw-msgs');
@@ -162,20 +144,21 @@
     if (leadSent) return;
     leadSent = true;
     var service = lead.service || NAMES[DIR];
+    var direction = SERVICE_DIR[String(lead.service || '').toLowerCase().replace(/^aira\s+/, '')] || (DIR === 'home' ? 'airahome' : DIR);
     fetch(LEADS_WEBHOOK, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         name: lead.name || '', phone: lead.phone || '', address: lead.address || '',
         problem: '[' + service + '] ' + (lead.problem || ''),
         urgency: lead.urgency || '', language: lead.language || lang(),
-        page: DIR, service: service, source: 'chat'
+        page: DIR, direction: direction, service: service, source: 'chat', test: IS_TEST
       })
     }).catch(function(){});
   }
 
   function sendMsg(){
     if (busy) return;
-    var text = input.value.trim();
+    var text = input.value.trim().slice(0, MAX_LEN);
     if (!text) return;
     input.value = '';
     addMsg('user', text);
@@ -183,7 +166,7 @@
     busy = true; send.disabled = true; typing(true);
     fetch(CHAT_WEBHOOK, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({system: systemPrompt(), messages: history.slice(-12)})
+      body: JSON.stringify({messages: history.slice(-MAX_HISTORY), lang: lang(), page: DIR})
     }).then(function(r){ return r.json(); }).then(function(data){
       typing(false);
       var raw = (data && data.content && data.content[0] && data.content[0].text) || L[lang()].err;

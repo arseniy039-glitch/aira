@@ -811,8 +811,10 @@ document.getElementById('calloutForm').addEventListener('submit', function(e){
     urgency: f.urgency.value,
     language: currentLang,
     page: 'airahome.pt',
+    direction: 'airahome',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
   fetch(LEADS_WEBHOOK, {
