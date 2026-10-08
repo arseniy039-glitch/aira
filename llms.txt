@@ -1,23 +1,33 @@
 # Aira
 
-> Aira is an AI voice and chat concierge platform for hotels, salons, and small businesses in Portugal. It answers calls and messages 24/7 in multiple languages, books appointments, and never loses a lead.
+> Aira — AI concierge, Algarve. Aira builds AI voice and chat concierges for hotels, salons and small businesses in Portugal (Aira Concierge, Aira Assistant, Aira Admin), and runs Aira Home — four local services for property owners in the Algarve, answered 24/7 by Aira's AI concierge and delivered by local crews.
 
 Aira is built and operated by Horizonte Solene Lda, based in Portimão, Algarve, Portugal.
 
-## Products
+## Aira Home — four services for property owners in the Algarve
+
+Hub: https://aira-ai.net/home/
+One phone for all four services: +351 308 800 687 (24/7). WhatsApp: +351 936 800 000. Email: info@aira-ai.net.
+Languages: English, German, French, Portuguese.
+Coverage: the Algarve — Luz, Lagos, Portimão, Carvoeiro, Lagoa, Silves, Armação de Pêra, Albufeira, Vilamoura. Aira Construction also works in Lisbon.
+
+- [Airahome](https://aira-ai.net/airahome): 24/7 emergency home-repair callout — plumbing, electrical, locks & keys, appliances, air conditioning, furniture, general repairs. Emergency (2–3 h) €300, same day €150, scheduled €50 — each covers the first hour incl. travel and diagnosis, then €35/h. Price confirmed before anyone drives out.
+- [Aira Energia](https://aira-ai.net/energia): free electricity bill check, savings calculator, tariff switching, solar panels and a licensed electrician in the Algarve.
+- [Aira Garden](https://aira-ai.net/garden): wireless smart irrigation for the whole property — no trenching, works offline; consultation and quote.
+- [Aira Construction](https://aira-ai.net/construction): renovation and finishing works by our own crew — demolition, walls, floors, bathrooms, kitchens, electrics, final cleaning. Algarve and Lisbon. Quote after a visit.
+
+How to request: call +351 308 800 687, message on WhatsApp, use the chat on any Aira Home page, or the request form on each service page.
+
+## Aira for businesses
 
 - [Aira Concierge](https://aira-ai.net/concierge): AI voice receptionist for hotels — answers guest calls, handles bookings and requests, in multiple languages, 24/7.
 - [Aira Assistant](https://aira-ai.net/assistant): AI executive/personal assistant agent handling calls, scheduling and messages.
-- [Airahome](https://aira-ai.net/airahome): 24/7 emergency home-repair callout dispatch for the Algarve (plumbing, electrical, locks, appliances, air conditioning).
-- [Energia](https://aira-ai.net/energia): AI voice agent for energy/utility-related service calls.
-- [Garden](https://aira-ai.net/garden): AI voice agent for garden and outdoor maintenance service calls.
-- [Construction](https://aira-ai.net/construction): AI voice agent for construction and renovation service calls.
+- [Aira Admin](https://aira-ai.net/admin): AI receptionist for beauty and wellness studios.
 
-## About
-
-Aira agents run on ElevenLabs conversational voice technology with custom automation (n8n) for booking, CRM updates, and follow-up. Aira is designed for small and mid-size hospitality and service businesses that cannot staff a 24/7 phone line.
+Aira agents run on ElevenLabs conversational voice technology with custom automation (n8n) for booking, CRM updates and follow-up.
 
 ## Contact
 
 - Website: https://aira-ai.net
+- Aira Home: https://aira-ai.net/home/ · +351 308 800 687 · info@aira-ai.net
 - Location: Portimão, Algarve, Portugal

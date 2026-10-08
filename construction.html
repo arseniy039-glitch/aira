@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23b87234'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='800' fill='%23fff' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Aira Construction","parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"description":"Renovation and finishing works by an own crew in the Algarve and Lisbon — demolition, plastering, floors, bathrooms, kitchens, electrics, post-work cleaning.","url":"https://aira-ai.net/construction","image":"https://aira-ai.net/assets/img/construction-hero-1600.jpg","email":"info@aira-ai.net","address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"areaServed":["Algarve","Lisboa"]}
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://aira-ai.net/home/#org","name":"Aira Home","alternateName":"Aira — AI concierge, Algarve","slogan":"Aira — AI concierge, Algarve","brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"url":"https://aira-ai.net/home/","email":"info@aira-ai.net","telephone":"+351308800687","areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"knowsLanguage":["en","de","fr","pt"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"subOrganization":[{"@id":"https://aira-ai.net/airahome#business"},{"@id":"https://aira-ai.net/energia#business"},{"@id":"https://aira-ai.net/garden#business"},{"@id":"https://aira-ai.net/construction#business"}]},{"@type":"LocalBusiness","@id":"https://aira-ai.net/construction#business","name":"Aira Construction","alternateName":"Aira Construction by Aira — AI concierge, Algarve","description":"Renovation and finishing works by an own crew in the Algarve and Lisbon — demolition, plastering, floors, bathrooms, kitchens, electrics, post-work cleaning.","url":"https://aira-ai.net/construction","image":"https://aira-ai.net/assets/img/construction-hero-1600.jpg","telephone":"+351308800687","email":"info@aira-ai.net","areaServed":[{"@type":"Place","name":"Algarve"},{"@type":"Place","name":"Lisboa"}],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"knowsLanguage":["en","de","fr","pt"],"brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@id":"https://aira-ai.net/home/#org"}},{"@type":"Service","@id":"https://aira-ai.net/construction#service","name":"Aira Construction","serviceType":"Renovation and finishing works","description":"Renovation and finishing works by an own crew in the Algarve and Lisbon — demolition, plastering, floors, bathrooms, kitchens, electrics, post-work cleaning.","url":"https://aira-ai.net/construction","provider":{"@id":"https://aira-ai.net/construction#business"},"areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://aira-ai.net/construction","servicePhone":{"@type":"ContactPoint","telephone":"+351308800687","contactType":"customer service","availableLanguage":["English","German","French","Portuguese"]}}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -234,6 +234,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   .card-modal.open{transform:translate(-50%,-50%);}
 }
 </style>
+<link rel="stylesheet" href="/assets/aira-home.css">
 </head>
 <body>
 
@@ -241,9 +242,6 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <nav>
   <a href="#hero" class="nav-logo">Aira<span>&nbsp;Construction</span></a>
   <div class="nav-mid">
-    <a class="nav-link" href="/airahome">Airahome</a>
-    <a class="nav-link" href="/energia">Energia</a>
-    <a class="nav-link" href="/garden">Garden</a>
     <div class="lang-badges">
       <span class="lang-badge">PT</span><span class="lang-badge">EN</span>
       <span class="lang-badge">DE</span><span class="lang-badge">FR</span>
@@ -256,9 +254,18 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
       <button class="lang-btn" onclick="setLang('de')">DE</button>
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
-    <a href="#request" class="nav-cta" data-i18n="nav_cta"></a>
+    <a href="#request" class="nav-cta" data-i18n="nav_cta">Pedir orçamento</a>
   </div>
 </nav>
+<!-- Aira Home: 4 directions (shared) -->
+<div class="ah-dirs" role="navigation" aria-label="Aira Home — 4 services">
+  <a class="ah-dirs-hub" href="/home/">Aira Home</a>
+  <a class="ah-dir" href="/airahome" title="Airahome"><span class="ah-dir-dot" style="background:#e2501c" aria-hidden="true"></span>Airahome</a>
+  <a class="ah-dir" href="/energia" title="Aira Energia"><span class="ah-dir-dot" style="background:#0f7a94" aria-hidden="true"></span>Energia</a>
+  <a class="ah-dir" href="/garden" title="Aira Garden"><span class="ah-dir-dot" style="background:#2f6b3c" aria-hidden="true"></span>Garden</a>
+  <a class="ah-dir" href="/construction" title="Aira Construction" aria-current="page"><span class="ah-dir-dot" style="background:#c9711f" aria-hidden="true"></span>Construction</a>
+</div>
+
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
@@ -275,12 +282,12 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <div class="section-inner">
     <div class="hero-wrap">
       <div class="hero-content">
-        <span class="hero-eyebrow" data-i18n="hero_eyebrow"></span>
-        <h1 class="hero-title" data-i18n="hero_h1"></h1>
-        <p class="hero-sub" data-i18n="hero_sub"></p>
+        <span class="hero-eyebrow" data-i18n="hero_eyebrow">Remodelação · Algarve & Lisboa</span>
+        <h1 class="hero-title" data-i18n="hero_h1">Obra de remodelação com <em>brigada própria</em>. Do início ao acabamento.</h1>
+        <p class="hero-sub" data-i18n="hero_sub">Executamos obras de remodelação interior com equipa própria, sem subcontratação. Demolição, paredes, pavimentos, casas de banho, cozinhas e limpeza final — num único operador, no Algarve e em Lisboa.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#request" data-i18n="hero_cta_form"></a>
-          <a class="btn btn-secondary" href="#how" data-i18n="hero_cta_how"></a>
+          <a class="btn btn-primary" href="#request" data-i18n="hero_cta_form">Pedir orçamento</a>
+          <a class="btn btn-secondary" href="#how" data-i18n="hero_cta_how">Ver como funciona</a>
         </div>
       </div>
       <!-- Minimal architectural schematic — floor plan suggestion -->
@@ -309,18 +316,18 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
     </div>
   </div>
   <div class="hero-stats">
-    <span class="hero-stat" data-i18n="hero_stat_1"></span>
-    <span class="hero-stat" data-i18n="hero_stat_2"></span>
-    <span class="hero-stat" data-i18n="hero_stat_3"></span>
+    <span class="hero-stat" data-i18n="hero_stat_1">Brigada própria</span>
+    <span class="hero-stat" data-i18n="hero_stat_2">Algarve & Lisboa</span>
+    <span class="hero-stat" data-i18n="hero_stat_3">PT · EN · DE · FR</span>
   </div>
 </section>
 
 <!-- ══════════════════════ SERVICES ══════════════════════ -->
 <section id="services" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="svc_eyebrow"></span>
-    <h2 data-i18n="svc_title"></h2>
-    <p class="section-lead" data-i18n="svc_lead"></p>
+    <span class="eyebrow" data-i18n="svc_eyebrow">O que fazemos</span>
+    <h2 data-i18n="svc_title">Remodelação completa, uma só equipa</h2>
+    <p class="section-lead" data-i18n="svc_lead">Todas as valências de uma obra de remodelação interior, executadas pela mesma brigada.</p>
     <div class="svc-grid-8" style="margin-top:2.5rem;">
 
       <!-- 1 demolition -->
@@ -329,9 +336,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <path d="M14.5 4h-5L7 7H4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-3L14.5 4Z"/>
           <path d="M12 12v8M9 16l3 4 3-4"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_1_name"></div>
-        <div class="svc-desc" data-i18n="svc_1_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_1_name">Demolição</div>
+        <div class="svc-desc" data-i18n="svc_1_desc">Remoção de revestimentos, pavimentos, divisórias e equipamentos antes da nova intervenção.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 2 walls / ceilings / moulding -->
@@ -340,9 +347,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <rect x="3" y="3" width="18" height="18" rx="2"/>
           <path d="M3 9h18M9 21V9"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_2_name"></div>
-        <div class="svc-desc" data-i18n="svc_2_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_2_name">Paredes, tetos e molduras</div>
+        <div class="svc-desc" data-i18n="svc_2_desc">Estuque, betuminoso, pintura interior e instalação de molduras decorativas de teto.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 3 floors -->
@@ -351,9 +358,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <path d="M2 22h20M2 17h20M2 12h20M2 7h20"/>
           <path d="M7 22V7M12 22V7M17 22V7"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_3_name"></div>
-        <div class="svc-desc" data-i18n="svc_3_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_3_name">Pavimentos</div>
+        <div class="svc-desc" data-i18n="svc_3_desc">Colocação de laminado e de cerâmica; regularização de base quando necessário.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 4 bathrooms -->
@@ -363,9 +370,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <line x1="10" y1="5" x2="8" y2="7"/>
           <path d="M2 12h20M7 19v2M17 19v2"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_4_name"></div>
-        <div class="svc-desc" data-i18n="svc_4_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_4_name">Casas de banho</div>
+        <div class="svc-desc" data-i18n="svc_4_desc">Revestimento a azulejo e microcimento, instalação de sanitários e acessórios.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 5 doors -->
@@ -374,9 +381,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/>
           <path d="M2 20h20M14 12v.01"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_5_name"></div>
-        <div class="svc-desc" data-i18n="svc_5_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_5_name">Portas</div>
+        <div class="svc-desc" data-i18n="svc_5_desc">Fornecimento e instalação de portas interiores, incluindo aro, batente e ferragens.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 6 kitchens -->
@@ -385,9 +392,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"/>
           <line x1="6" y1="17" x2="18" y2="17"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_6_name"></div>
-        <div class="svc-desc" data-i18n="svc_6_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_6_name">Cozinhas</div>
+        <div class="svc-desc" data-i18n="svc_6_desc">Montagem de móveis de cozinha flatpack e móveis modulares com ajuste ao espaço.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 7 electrical finishing -->
@@ -397,9 +404,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <circle cx="12" cy="12" r="1"/>
           <path d="M12 8v1M12 15v1M8 12H7M17 12h-1M9.5 9.5l-.7-.7M15.2 15.2l-.7-.7M15.2 9.5l-.7.7M9.5 14.5l-.7.7"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_7_name"></div>
-        <div class="svc-desc" data-i18n="svc_7_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_7_name">Eletricidade (acabamento)</div>
+        <div class="svc-desc" data-i18n="svc_7_desc">Instalação de tomadas, interruptores e luminárias. Não inclui quadro elétrico ou cablagem nova.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
       <!-- 8 post-work cleaning -->
@@ -409,9 +416,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <path d="M12 13v9M7 22h10"/>
           <path d="m8 16 4-3 4 3"/>
         </svg>
-        <div class="svc-name" data-i18n="svc_8_name"></div>
-        <div class="svc-desc" data-i18n="svc_8_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="svc_8_name">Limpeza de obra</div>
+        <div class="svc-desc" data-i18n="svc_8_desc">Limpeza geral após a obra: remoção de entulho e pó, limpeza de superfícies e envidraçados.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Toque para saber mais</div>
       </div>
 
     </div>
@@ -421,13 +428,13 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ HOW ══════════════════════ -->
 <section id="how" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="how_eyebrow"></span>
-    <h2 data-i18n="how_title"></h2>
+    <span class="eyebrow" data-i18n="how_eyebrow">Como funciona</span>
+    <h2 data-i18n="how_title">Da primeira visita à entrega do espaço</h2>
     <div class="how-grid">
-      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title"></div><div class="how-desc" data-i18n="how_1_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title"></div><div class="how-desc" data-i18n="how_2_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title"></div><div class="how-desc" data-i18n="how_3_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">04</div><div class="how-title" data-i18n="how_4_title"></div><div class="how-desc" data-i18n="how_4_desc"></div></div>
+      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title">Visita e orçamento</div><div class="how-desc" data-i18n="how_1_desc">Vemos o espaço, percebemos o âmbito da obra e entregamos um orçamento detalhado por escrito. Sem compromisso.</div></div>
+      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title">Planeamento</div><div class="how-desc" data-i18n="how_2_desc">Acordamos data de início, fases de trabalho e pontos de controlo para que possa acompanhar o progresso.</div></div>
+      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title">Execução</div><div class="how-desc" data-i18n="how_3_desc">A brigada trabalha no local de forma ordenada, com proteção das áreas não intervencionadas e informação regular sobre o estado da obra.</div></div>
+      <div class="how-step reveal"><div class="how-num">04</div><div class="how-title" data-i18n="how_4_title">Entrega</div><div class="how-desc" data-i18n="how_4_desc">Vistoria conjunta de todos os trabalhos executados, identificação de eventuais correções e limpeza final antes da entrega.</div></div>
     </div>
   </div>
 </section>
@@ -436,20 +443,20 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- TODO: confirmar com Arsénio quais formatos oferecer explicitamente e como comunicar preço -->
 <section id="model" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="model_eyebrow"></span>
-    <h2 data-i18n="model_title"></h2>
-    <p class="section-lead" data-i18n="model_lead"></p>
+    <span class="eyebrow" data-i18n="model_eyebrow">Como trabalhar connosco</span>
+    <h2 data-i18n="model_title">Dois formatos possíveis</h2>
+    <p class="section-lead" data-i18n="model_lead">Adaptamo-nos à situação do cliente. Fale connosco para perceber qual o modelo mais adequado para a sua obra.</p>
     <div class="model-grid">
       <div class="model-card reveal">
-        <span class="model-badge" data-i18n="model_a_badge"></span>
-        <div class="model-title" data-i18n="model_a_title"></div>
-        <div class="model-desc" data-i18n="model_a_desc"></div>
+        <span class="model-badge" data-i18n="model_a_badge">Opção A</span>
+        <div class="model-title" data-i18n="model_a_title">Mão de obra</div>
+        <div class="model-desc" data-i18n="model_a_desc">O cliente fornece todos os materiais (pavimento, azulejo, tinta, móveis). A Aira Construction entra com a equipa, as ferramentas e a execução.</div>
       </div>
       <div class="model-card accent reveal">
-        <span class="model-badge" data-i18n="model_b_badge"></span>
-        <div class="model-title" data-i18n="model_b_title"></div>
-        <div class="model-desc" data-i18n="model_b_desc"></div>
-        <div class="model-todo" data-i18n="model_b_todo"></div>
+        <span class="model-badge" data-i18n="model_b_badge">Opção B</span>
+        <div class="model-title" data-i18n="model_b_title">Chave na mão</div>
+        <div class="model-desc" data-i18n="model_b_desc">Materiais e mão de obra incluídos num único orçamento. Gerimos fornecedores, transporte e colocação.</div>
+        <div class="model-todo" data-i18n="model_b_todo">[A confirmar] As condições exatas do formato chave na mão estão a ser definidas. Contacte-nos para discutir a sua obra.</div>
       </div>
     </div>
   </div>
@@ -458,8 +465,8 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ DETAIL PHOTOS ══════════════════════ -->
 <section id="photos" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="photo_eyebrow"></span>
-    <h2 data-i18n="photo_title"></h2>
+    <span class="eyebrow" data-i18n="photo_eyebrow">A obra por dentro</span>
+    <h2 data-i18n="photo_title">Pormenor que faz a diferença</h2>
     <div class="photo-pair">
       <figure class="reveal">
         <div class="photo-frame">
@@ -469,7 +476,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           </picture>
           <div class="photo-veil"></div>
         </div>
-        <figcaption data-i18n="photo_1_caption"></figcaption>
+        <figcaption data-i18n="photo_1_caption">Aplicação de argamassa — base para um acabamento duradouro.</figcaption>
       </figure>
       <figure class="reveal">
         <div class="photo-frame">
@@ -479,7 +486,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           </picture>
           <div class="photo-veil"></div>
         </div>
-        <figcaption data-i18n="photo_2_caption"></figcaption>
+        <figcaption data-i18n="photo_2_caption">Colocação de pavimento — alinhamento e corte a rigor.</figcaption>
       </figure>
     </div>
   </div>
@@ -488,43 +495,42 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ REQUEST ══════════════════════ -->
 <section id="request">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="req_eyebrow"></span>
+    <span class="eyebrow" data-i18n="req_eyebrow">Pedir orçamento</span>
     <div class="request-wrap">
       <div class="form-panel reveal">
-        <h2 class="form-heading" data-i18n="form_heading"></h2>
-        <p class="form-desc" data-i18n="form_desc"></p>
+        <h2 class="form-heading" data-i18n="form_heading">Conte-nos sobre a sua obra</h2>
+        <p class="form-desc" data-i18n="form_desc">Deixe os seus contactos e descrevemos o que precisa. Ligamos para perceber o âmbito e enviar orçamento. Sem compromisso.</p>
         <form id="constructionForm">
           <div class="form-grid">
-            <div class="form-field"><label class="form-label" data-i18n="f_name"></label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required></div>
-            <div class="form-field"><label class="form-label" data-i18n="f_phone"></label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required></div>
-            <div class="form-field full"><label class="form-label" data-i18n="f_email"></label><input class="form-input" name="email" type="email" data-i18n-ph="f_email_ph" required></div>
-            <div class="form-field full"><label class="form-label" data-i18n="f_location"></label><input class="form-input" name="location" type="text" data-i18n-ph="f_location_ph" required></div>
+            <div class="form-field"><label class="form-label" data-i18n="f_name">Nome</label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required placeholder="O seu nome"></div>
+            <div class="form-field"><label class="form-label" data-i18n="f_phone">Telefone / WhatsApp</label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required placeholder="+351..."></div>
+            <div class="form-field full"><label class="form-label" data-i18n="f_email">Email</label><input class="form-input" name="email" type="email" data-i18n-ph="f_email_ph" required placeholder="o-seu@email.com"></div>
+            <div class="form-field full"><label class="form-label" data-i18n="f_location">Localização da obra</label><input class="form-input" name="location" type="text" data-i18n-ph="f_location_ph" required placeholder="ex.: Lisboa, Portimão, Albufeira…"></div>
             <div class="form-field full">
-              <label class="form-label" data-i18n="f_work_label"></label>
+              <label class="form-label" data-i18n="f_work_label">Tipo de trabalho (escolha o que se aplica)</label>
               <div class="interest-group">
-                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-walls" value="walls"><label class="interest-label" for="w-walls" data-i18n="f_w_walls"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-floors" value="floors"><label class="interest-label" for="w-floors" data-i18n="f_w_floors"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-bathroom" value="bathroom"><label class="interest-label" for="w-bathroom" data-i18n="f_w_bathroom"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-kitchen" value="kitchen"><label class="interest-label" for="w-kitchen" data-i18n="f_w_kitchen"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-other" value="other"><label class="interest-label" for="w-other" data-i18n="f_w_other"></label></div>
+                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-walls" value="walls"><label class="interest-label" for="w-walls" data-i18n="f_w_walls">Paredes / pintura</label></div>
+                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-floors" value="floors"><label class="interest-label" for="w-floors" data-i18n="f_w_floors">Pavimentos</label></div>
+                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-bathroom" value="bathroom"><label class="interest-label" for="w-bathroom" data-i18n="f_w_bathroom">Casa de banho</label></div>
+                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-kitchen" value="kitchen"><label class="interest-label" for="w-kitchen" data-i18n="f_w_kitchen">Cozinha</label></div>
+                <div class="interest-opt"><input type="checkbox" name="workTypes" id="w-other" value="other"><label class="interest-label" for="w-other" data-i18n="f_w_other">Outro</label></div>
               </div>
             </div>
-            <div class="form-field full"><label class="form-label" data-i18n="f_notes"></label><textarea class="form-input" name="notes" data-i18n-ph="f_notes_ph"></textarea></div>
+            <div class="form-field full"><label class="form-label" data-i18n="f_notes">Descrição da obra</label><textarea class="form-input" name="notes" data-i18n-ph="f_notes_ph" placeholder="Conte-nos o que pretende fazer, o estado atual do espaço, área aproximada…"></textarea></div>
             <div class="form-field full" style="flex-direction:row;align-items:flex-start;gap:0.6rem;">
               <input type="checkbox" id="consent" name="consent" required style="margin-top:0.25rem;width:16px;height:16px;flex-shrink:0;">
-              <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n="f_consent"></label>
+              <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n="f_consent">Aceito que a Aira Construction guarde e utilize estes dados para me contactar sobre o meu pedido, nos termos da <a href="/home/privacy.html" target="_blank" rel="noopener">política de privacidade</a>.</label>
             </div>
           </div>
-          <button type="submit" class="form-submit" data-i18n="f_submit"></button>
+          <button type="submit" class="form-submit" data-i18n="f_submit">Pedir orçamento</button>
           <div class="form-status" id="formStatus"></div>
         </form>
       </div>
       <aside class="contact-aside reveal">
-        <h3 data-i18n="aside_title"></h3>
-        <p data-i18n="aside_desc"></p>
-        <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="aside_wa"></a>
-        <!-- TODO: substituir pelo número real de WhatsApp da Aira Construction -->
-        <a class="btn btn-secondary" href="mailto:info@aira-ai.net?subject=Aira%20Construction" data-i18n="aside_email"></a>
+        <h3 data-i18n="aside_title">Prefere falar já?</h3>
+        <p data-i18n="aside_desc">Mande-nos mensagem por WhatsApp com fotos do espaço e dizemos-lhe o que é possível e quando podemos começar.</p>
+        <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="aside_wa">Falar por WhatsApp</a>
+        <a class="btn btn-secondary" href="mailto:info@aira-ai.net?subject=Aira%20Construction" data-i18n="aside_email">Escrever um email</a>
       </aside>
     </div>
   </div>
@@ -550,14 +556,16 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <div class="footer-inner">
     <div class="footer-left">
       <div class="footer-logo">Aira<span>&nbsp;Construction</span></div>
-      <div class="footer-legal" data-i18n="footer_legal"></div>
+      <div class="footer-legal" data-i18n="footer_legal">Aira Construction · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net</div>
     </div>
     <div class="footer-services">
-      <div class="footer-services-label" data-i18n="footer_services_label"></div>
-      <a href="/">Aira</a>
+      <div class="footer-services-label" data-i18n="footer_services_label">Aira Home · 4 serviços</div>
+      <a href="/home/">Aira Home</a>
       <a href="/airahome">Airahome</a>
-      <a href="/energia" data-i18n="footer_link_energia"></a>
-      <a href="/garden">Garden</a>
+      <a href="/energia">Aira Energia</a>
+      <a href="/garden">Aira Garden</a>
+      <a href="/construction">Aira Construction</a>
+      <a href="/">Aira</a>
     </div>
     <div class="footer-right">
       <div class="lang-switch">
@@ -574,10 +582,10 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <script>
 // ══════════════════════════════════════════
 // CONFIG
-// TODO: substituir pelo webhook real da Construction e pelo número de WhatsApp
 // ══════════════════════════════════════════
-const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-construction-leads';
-const WA_NUMBER = '351308800687'; // TODO: confirmar número WhatsApp da Construction
+// Leads go to the shared Aira Home leads workflow (airahome-site-leads) tagged direction=construction
+const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-leads';
+const WA_NUMBER = '351936800000';
 
 // ══════════════════════════════════════════
 // I18N DATA
@@ -643,11 +651,11 @@ pt:{
   aside_wa:'Falar por WhatsApp',
   aside_email:'Escrever um email',
   footer_legal:'Aira Construction · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Outros serviços Aira',
+  footer_services_label:'Aira Home · 4 serviços',
   footer_link_energia:'Energia',
   svc_click_hint:'Toque para saber mais',
   svc_modal_cta:'Pedir orçamento',
-  svc_todo_note:'[TODO: Arsénio — preços a confirmar]',
+  svc_todo_note:'',
   svc_1_detail:'Removemos revestimentos, pavimentos existentes, divisórias e equipamentos embutidos antes da nova intervenção. A brigada protege as zonas não afetadas e remove o entulho do local.',
   svc_2_detail:'Estuque, betuminoso e pintura interior de paredes e tetos. Instalamos também molduras decorativas de gesso ou poliuretano para remate de teto.',
   svc_3_detail:'Colocação de laminado flutuante e cerâmica. Realizamos regularização de base (betonilha ou autonivelante) quando o nível do suporte o exige.',
@@ -717,11 +725,11 @@ en:{
   aside_wa:'Message on WhatsApp',
   aside_email:'Write an email',
   footer_legal:'Aira Construction · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Other Aira services',
+  footer_services_label:'Aira Home · 4 services',
   footer_link_energia:'Energy',
   svc_click_hint:'Tap for details',
   svc_modal_cta:'Request a quote',
-  svc_todo_note:'[TODO: Arsénio — prices needed]',
+  svc_todo_note:'',
   svc_1_detail:'We remove existing cladding, floors, partitions and built-in equipment before the new works begin. The crew protects unaffected areas and clears debris from the site.',
   svc_2_detail:'Plastering, skim coat and interior painting of walls and ceilings. We also install decorative plaster or polyurethane ceiling mouldings.',
   svc_3_detail:'Laying of floating laminate and ceramic tile. We carry out base levelling (screed or self-levelling compound) when the substrate requires it.',
@@ -791,11 +799,11 @@ de:{
   aside_wa:'WhatsApp-Nachricht senden',
   aside_email:'E-Mail schreiben',
   footer_legal:'Aira Construction · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Weitere Aira-Dienste',
+  footer_services_label:'Aira Home · 4 Dienste',
   footer_link_energia:'Energie',
   svc_click_hint:'Tippen für Details',
   svc_modal_cta:'Angebot anfragen',
-  svc_todo_note:'[TODO: Arsénio — Preise bestätigen]',
+  svc_todo_note:'',
   svc_1_detail:'Wir entfernen bestehende Beläge, Böden, Trennwände und Einbauten vor Beginn der Arbeiten. Das Team schützt nicht betroffene Bereiche und entsorgt Bauschutt.',
   svc_2_detail:'Verputzen, Glätten und Innenanstrich von Wänden und Decken. Wir montieren auch dekorative Stuck- oder Polyurethan-Deckenverzierungen.',
   svc_3_detail:'Verlegung von Laminat und Keramikfliesen. Bei Bedarf führen wir eine Untergrundausgleichung durch (Estrich oder Ausgleichsmasse).',
@@ -865,11 +873,11 @@ fr:{
   aside_wa:'Message WhatsApp',
   aside_email:'Écrire un e-mail',
   footer_legal:'Aira Construction · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Autres services Aira',
+  footer_services_label:'Aira Home · 4 services',
   footer_link_energia:'Énergie',
   svc_click_hint:'Toucher pour les détails',
   svc_modal_cta:'Demander un devis',
-  svc_todo_note:'[TODO: Arsénio — prix à confirmer]',
+  svc_todo_note:'',
   svc_1_detail:'Nous déposons les revêtements, sols, cloisons et équipements encastrés existants avant les nouveaux travaux. L\'équipe protège les zones non concernées et évacue les gravats.',
   svc_2_detail:'Plâtrerie, enduit de lissage et peinture intérieure des murs et plafonds. Nous posons également des moulures décoratives en plâtre ou polyuréthane.',
   svc_3_detail:'Pose de stratifié flottant et de carrelage céramique. Nous réalisons un ragréage de la base (chape ou autonivelant) si le support l\'exige.',
@@ -931,7 +939,7 @@ function setLang(lang){
 })();
 
 // ══════════════════════════════════════════
-// REQUEST FORM -> n8n webhook (aira-construction-leads)
+// REQUEST FORM -> n8n webhook (aira-airahome-leads, direction=construction)
 // Best-effort POST with short timeout; always confirm success so no lead is lost.
 // ══════════════════════════════════════════
 document.getElementById('constructionForm').addEventListener('submit', function(e){
@@ -948,8 +956,10 @@ document.getElementById('constructionForm').addEventListener('submit', function(
     notes: f.notes.value.trim(),
     language: currentLang,
     page: 'construction',
+    direction: 'construction',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
 
@@ -1028,5 +1038,6 @@ document.getElementById('constructionForm').addEventListener('submit', function(
 setLang('pt');
 </script>
 
+<script src="/assets/aira-home-chat.js" data-dir="construction" data-request="#request" defer></script>
 </body>
 </html>

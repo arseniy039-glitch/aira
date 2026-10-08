@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232f6b3c'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='800' fill='%23fff' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Aira Garden","parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"description":"Wireless smart irrigation systems for properties in the Algarve — consultation and quote.","url":"https://aira-ai.net/garden","image":"https://aira-ai.net/assets/img/garden-hero-1600.jpg","email":"info@aira-ai.net","address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"}}
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://aira-ai.net/home/#org","name":"Aira Home","alternateName":"Aira — AI concierge, Algarve","slogan":"Aira — AI concierge, Algarve","brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"url":"https://aira-ai.net/home/","email":"info@aira-ai.net","telephone":"+351308800687","areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"knowsLanguage":["en","de","fr","pt"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"subOrganization":[{"@id":"https://aira-ai.net/airahome#business"},{"@id":"https://aira-ai.net/energia#business"},{"@id":"https://aira-ai.net/garden#business"},{"@id":"https://aira-ai.net/construction#business"}]},{"@type":"LocalBusiness","@id":"https://aira-ai.net/garden#business","name":"Aira Garden","alternateName":"Aira Garden by Aira — AI concierge, Algarve","description":"Wireless smart irrigation systems for properties in the Algarve — consultation and quote.","url":"https://aira-ai.net/garden","image":"https://aira-ai.net/assets/img/garden-hero-1600.jpg","telephone":"+351308800687","email":"info@aira-ai.net","areaServed":[{"@type":"Place","name":"Algarve"}],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"knowsLanguage":["en","de","fr","pt"],"brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@id":"https://aira-ai.net/home/#org"}},{"@type":"Service","@id":"https://aira-ai.net/garden#service","name":"Aira Garden","serviceType":"Smart irrigation installation","description":"Wireless smart irrigation systems for properties in the Algarve — consultation and quote.","url":"https://aira-ai.net/garden","provider":{"@id":"https://aira-ai.net/garden#business"},"areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://aira-ai.net/garden","servicePhone":{"@type":"ContactPoint","telephone":"+351308800687","contactType":"customer service","availableLanguage":["English","German","French","Portuguese"]}}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -264,6 +264,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 @keyframes gdDrop{0%{transform:translateY(-20px) translateX(0);opacity:0;}8%{opacity:1;}88%{opacity:0.45;}100%{transform:translateY(110vh) translateX(4px);opacity:0;}}
 @media(prefers-reduced-motion:reduce){#gd-rain{display:none;}}
 </style>
+<link rel="stylesheet" href="/assets/aira-home.css">
 </head>
 <body>
 
@@ -271,20 +272,29 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <nav>
   <a href="#hero" class="nav-logo">Aira<span>&nbsp;Garden</span></a>
   <div class="nav-mid">
-    <a class="nav-link" href="/airahome">Airahome</a>
-    <a class="nav-link" href="/energia">Energia</a>
     <div class="lang-badges">
-      <span class="lang-badge">PT</span><span class="lang-badge">EN</span>
+      <span class="lang-badge">PT</span><span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
     </div>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;">
     <div class="lang-switch">
       <button class="lang-btn active" onclick="setLang('pt')">PT</button>
       <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
-    <a href="#request" class="nav-cta" data-i18n="nav_cta"></a>
+    <a href="#request" class="nav-cta" data-i18n="nav_cta">Pedir consulta</a>
   </div>
 </nav>
+<!-- Aira Home: 4 directions (shared) -->
+<div class="ah-dirs" role="navigation" aria-label="Aira Home — 4 services">
+  <a class="ah-dirs-hub" href="/home/">Aira Home</a>
+  <a class="ah-dir" href="/airahome" title="Airahome"><span class="ah-dir-dot" style="background:#e2501c" aria-hidden="true"></span>Airahome</a>
+  <a class="ah-dir" href="/energia" title="Aira Energia"><span class="ah-dir-dot" style="background:#0f7a94" aria-hidden="true"></span>Energia</a>
+  <a class="ah-dir" href="/garden" title="Aira Garden" aria-current="page"><span class="ah-dir-dot" style="background:#2f6b3c" aria-hidden="true"></span>Garden</a>
+  <a class="ah-dir" href="/construction" title="Aira Construction"><span class="ah-dir-dot" style="background:#c9711f" aria-hidden="true"></span>Construction</a>
+</div>
+
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
@@ -297,12 +307,12 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <div class="section-inner">
     <div class="hero-wrap">
       <div class="hero-content">
-        <span class="hero-eyebrow" data-i18n="hero_eyebrow"></span>
-        <h1 class="hero-title" data-i18n="hero_h1"></h1>
-        <p class="hero-sub" data-i18n="hero_sub"></p>
+        <span class="hero-eyebrow" data-i18n="hero_eyebrow">Rega inteligente · Algarve</span>
+        <h1 class="hero-title" data-i18n="hero_h1">Toda a rega da sua propriedade, <em>controlada pelo telemóvel</em>.</h1>
+        <p class="hero-sub" data-i18n="hero_sub">Um sistema de rega sem fios que se instala sem obras nem valas. Cada zona rega no seu horário, funciona mesmo sem internet e cresce à medida do seu jardim.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#request" data-i18n="hero_cta_form"></a>
-          <a class="btn btn-secondary" href="#how" data-i18n="hero_cta_how"></a>
+          <a class="btn btn-primary" href="#request" data-i18n="hero_cta_form">Pedir consulta e orçamento</a>
+          <a class="btn btn-secondary" href="#how" data-i18n="hero_cta_how">Ver como funciona</a>
         </div>
       </div>
       <svg class="hero-svg" viewBox="0 0 460 380" fill="none" aria-hidden="true">
@@ -333,22 +343,22 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
     </div>
   </div>
   <div class="hero-stats">
-    <span class="hero-stat" data-i18n="hero_stat_1"></span>
-    <span class="hero-stat" data-i18n="hero_stat_2"></span>
-    <span class="hero-stat" data-i18n="hero_stat_3"></span>
+    <span class="hero-stat" data-i18n="hero_stat_1">Sem obras</span>
+    <span class="hero-stat" data-i18n="hero_stat_2">Funciona offline</span>
+    <span class="hero-stat" data-i18n="hero_stat_3">Expansível por zona</span>
   </div>
 </section>
 
 <!-- ══════════════════════ HOW ══════════════════════ -->
 <section id="how" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="how_eyebrow"></span>
-    <h2 data-i18n="how_title"></h2>
+    <span class="eyebrow" data-i18n="how_eyebrow">Como funciona</span>
+    <h2 data-i18n="how_title">Da primeira visita ao jardim a regar sozinho</h2>
     <div class="how-grid">
-      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title"></div><div class="how-desc" data-i18n="how_1_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title"></div><div class="how-desc" data-i18n="how_2_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title"></div><div class="how-desc" data-i18n="how_3_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">04</div><div class="how-title" data-i18n="how_4_title"></div><div class="how-desc" data-i18n="how_4_desc"></div></div>
+      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title">Consulta</div><div class="how-desc" data-i18n="how_1_desc">Vemos a propriedade, percebemos as zonas de rega e o que já existe. Sem compromisso.</div></div>
+      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title">Instalação</div><div class="how-desc" data-i18n="how_2_desc">Montamos o gateway e os nós sem fios nas válvulas. Sem valas, sem partir nada, num dia na maioria dos jardins.</div></div>
+      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title">Controlo pela app</div><div class="how-desc" data-i18n="how_3_desc">Define horários por zona, liga e desliga manualmente e vê o estado de cada nó no telemóvel.</div></div>
+      <div class="how-step reveal"><div class="how-num">04</div><div class="how-title" data-i18n="how_4_title">Suporte</div><div class="how-desc" data-i18n="how_4_desc">Acompanhamos o arranque, ajustamos os horários à estação e estamos disponíveis quando precisa.</div></div>
     </div>
   </div>
 </section>
@@ -356,27 +366,27 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ INCLUDED ══════════════════════ -->
 <section id="included" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="inc_eyebrow"></span>
-    <h2 data-i18n="inc_title"></h2>
-    <p class="section-lead" data-i18n="inc_lead"></p>
+    <span class="eyebrow" data-i18n="inc_eyebrow">O que está incluído</span>
+    <h2 data-i18n="inc_title">Três componentes, um sistema</h2>
+    <p class="section-lead" data-i18n="inc_lead">Equipamento próprio, pensado para jardins reais — não é revenda de material de loja.</p>
     <div class="svc-grid" style="margin-top:2.5rem;">
       <div class="svc-tile reveal" data-open-svc="gateway" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M12 20h.01"/></svg>
-        <div class="svc-name" data-i18n="inc_1_name"></div>
-        <div class="svc-desc" data-i18n="inc_1_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="inc_1_name">Gateway</div>
+        <div class="svc-desc" data-i18n="inc_1_desc">A central que liga o jardim à app. Comunica sem fios com todos os nós a partir de um único ponto com corrente.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Saber mais</div>
       </div>
       <div class="svc-tile reveal" data-open-svc="nodes" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.4-.8-2.3-2.3-3.2-4.2 2.7-.5 4.6-.3 5.7.8Z"/><path d="M14.1 6c-.9 1.2-1.2 2.5-1.1 4 1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.9-4.2-2.9-.1-4.1.3-5.1 1.6Z"/></svg>
-        <div class="svc-name" data-i18n="inc_2_name"></div>
-        <div class="svc-desc" data-i18n="inc_2_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="inc_2_name">Nós sem fios solares</div>
+        <div class="svc-desc" data-i18n="inc_2_desc">Um pequeno nó em cada válvula, alimentado por painel solar e bateria. Sem cabos a puxar pelo terreno.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Saber mais</div>
       </div>
       <div class="svc-tile reveal" data-open-svc="valves" role="button" tabindex="0" aria-haspopup="dialog">
         <svg class="svc-icon water" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 4.24 7 3.5c-.29.74-1.14 1.63-2.29 2.56S3 11.09 3 12.25c0 2.22 1.8 4.05 4 4.05Z"/><path d="M12.56 6.6A11 11 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a7 7 0 0 1-11.91 4.97"/></svg>
-        <div class="svc-name" data-i18n="inc_3_name"></div>
-        <div class="svc-desc" data-i18n="inc_3_desc"></div>
-        <div class="svc-click-hint" data-i18n="svc_click_hint"></div>
+        <div class="svc-name" data-i18n="inc_3_name">Válvulas</div>
+        <div class="svc-desc" data-i18n="inc_3_desc">Válvulas de rega comandadas pelo nó. Abrem e fecham cada zona conforme o horário ou a ordem que dá na app.</div>
+        <div class="svc-click-hint" data-i18n="svc_click_hint">Saber mais</div>
       </div>
     </div>
     <div class="photo-pair">
@@ -388,7 +398,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           </picture>
           <div class="photo-veil"></div>
         </div>
-        <figcaption data-i18n="photo_drip_caption"></figcaption>
+        <figcaption data-i18n="photo_drip_caption">Linha de rega gota-a-gota junto a uma planta.</figcaption>
       </figure>
       <figure class="reveal">
         <div class="photo-frame">
@@ -398,7 +408,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           </picture>
           <div class="photo-veil"></div>
         </div>
-        <figcaption data-i18n="photo_valve_caption"></figcaption>
+        <figcaption data-i18n="photo_valve_caption">Aspersor de rega na relva.</figcaption>
       </figure>
     </div>
   </div>
@@ -407,27 +417,27 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ APP ══════════════════════ -->
 <section id="app" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="app_eyebrow"></span>
+    <span class="eyebrow" data-i18n="app_eyebrow">A app</span>
     <div class="app-wrap">
       <div>
-        <h2 data-i18n="app_title"></h2>
-        <p class="section-lead" data-i18n="app_lead"></p>
+        <h2 data-i18n="app_title">O jardim inteiro numa só vista</h2>
+        <p class="section-lead" data-i18n="app_lead">Tudo o que precisa de fazer no dia a dia cabe num ecrã.</p>
         <ul class="app-bullets">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01"/></svg>
-            <span data-i18n="app_b1"></span>
+            <span data-i18n="app_b1"><b>Agendar por zona</b> — cada área com o seu horário e duração.</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
-            <span data-i18n="app_b2"></span>
+            <span data-i18n="app_b2"><b>Ligar e desligar manualmente</b> — uma rega extra ou uma pausa, na hora.</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6h4v4M21 6l-6.5 6.5-4-4L3 16"/></svg>
-            <span data-i18n="app_b3"></span>
+            <span data-i18n="app_b3"><b>Ver a bateria de cada nó</b> — estado de carga e sinal, sempre visível.</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.8L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg>
-            <span data-i18n="app_b4"></span>
+            <span data-i18n="app_b4"><b>Histórico de rega</b> — o que regou, quando e durante quanto tempo.</span>
           </li>
         </ul>
       </div>
@@ -436,26 +446,26 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
           <div class="phone-screen">
             <div class="phone-status"><b>Aira Garden</b><span>9:41 · 100%</span></div>
             <div class="phone-body">
-              <div class="phone-h" data-i18n="ph_zones"></div>
+              <div class="phone-h" data-i18n="ph_zones">Zonas</div>
               <div class="zone-row">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5 12 2.5C11.5 5 10 7.4 8 9.5 6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"/></svg>
-                <span class="zone-name" data-i18n="ph_z1"></span>
+                <span class="zone-name" data-i18n="ph_z1">Relvado</span>
                 <span class="zone-time">06:30</span>
                 <span class="zone-batt">92%</span>
               </div>
               <div class="zone-row">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5 12 2.5C11.5 5 10 7.4 8 9.5 6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"/></svg>
-                <span class="zone-name" data-i18n="ph_z2"></span>
+                <span class="zone-name" data-i18n="ph_z2">Roseiral</span>
                 <span class="zone-time">07:00</span>
                 <span class="zone-batt">78%</span>
               </div>
               <div class="zone-row">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5 12 2.5C11.5 5 10 7.4 8 9.5 6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"/></svg>
-                <span class="zone-name" data-i18n="ph_z3"></span>
-                <span class="zone-time mono" style="opacity:.5" data-i18n="ph_off"></span>
+                <span class="zone-name" data-i18n="ph_z3">Horta</span>
+                <span class="zone-time mono" style="opacity:.5" data-i18n="ph_off">desligada</span>
                 <span class="zone-batt">85%</span>
               </div>
-              <div class="phone-last" data-i18n="ph_last"></div>
+              <div class="phone-last" data-i18n="ph_last">Última rega: hoje, 06:30 · 12 min</div>
             </div>
             <div class="phone-nav">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
@@ -473,23 +483,23 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ AUDIENCE ══════════════════════ -->
 <section id="audience" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="aud_eyebrow"></span>
-    <h2 data-i18n="aud_title"></h2>
+    <span class="eyebrow" data-i18n="aud_eyebrow">Para quem é</span>
+    <h2 data-i18n="aud_title">Feito para propriedades no Algarve</h2>
     <div class="svc-grid" style="margin-top:2.5rem;">
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>
-        <div class="svc-name" data-i18n="aud_1_name"></div>
-        <div class="svc-desc" data-i18n="aud_1_desc"></div>
+        <div class="svc-name" data-i18n="aud_1_name">Vivendas e jardins privados</div>
+        <div class="svc-desc" data-i18n="aud_1_desc">Relvados, canteiros, árvores e vasos — cada um com a rega certa, sem andar a arrastar mangueiras.</div>
       </div>
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2M10 6h4M10 10h4M10 14h4M10 18h4"/></svg>
-        <div class="svc-name" data-i18n="aud_2_name"></div>
-        <div class="svc-desc" data-i18n="aud_2_desc"></div>
+        <div class="svc-name" data-i18n="aud_2_name">Paisagismo comercial</div>
+        <div class="svc-desc" data-i18n="aud_2_desc">Condomínios, hotéis e espaços verdes com várias zonas para gerir a partir de um só sítio.</div>
       </div>
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6M13 19v3M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/></svg>
-        <div class="svc-name" data-i18n="aud_3_name"></div>
-        <div class="svc-desc" data-i18n="aud_3_desc"></div>
+        <div class="svc-name" data-i18n="aud_3_name">Pequena agricultura</div>
+        <div class="svc-desc" data-i18n="aud_3_desc">Pomares, hortas e estufas onde regar à hora certa e poupar água faz diferença na conta.</div>
       </div>
     </div>
   </div>
@@ -498,28 +508,28 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ BENEFITS ══════════════════════ -->
 <section id="benefits" class="section">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="ben_eyebrow"></span>
-    <h2 data-i18n="ben_title"></h2>
+    <span class="eyebrow" data-i18n="ben_eyebrow">Porquê Aira Garden</span>
+    <h2 data-i18n="ben_title">O que ganha</h2>
     <div class="benefit-grid">
       <div class="benefit-card reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 5 12 2.5C11.5 5 10 7.4 8 9.5 6 11.1 5 13 5 15a7 7 0 0 0 7 7Z"/></svg>
-        <div class="benefit-title" data-i18n="ben_1_title"></div>
-        <div class="benefit-desc" data-i18n="ben_1_desc"></div>
+        <div class="benefit-title" data-i18n="ben_1_title">Poupança de água</div>
+        <div class="benefit-desc" data-i18n="ben_1_desc">Cada zona rega só o que precisa, no horário mais fresco. Nada de regar o passeio ou à hora de mais calor.</div>
       </div>
       <div class="benefit-card reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m19 5 3-3M2 22l3-3M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4ZM7.5 13.5 10 11M10.5 16.5 13 14M12 6l6 6 2.3-2.3a2.4 2.4 0 0 0 0-3.4l-2.6-2.6a2.4 2.4 0 0 0-3.4 0Z"/></svg>
-        <div class="benefit-title" data-i18n="ben_2_title"></div>
-        <div class="benefit-desc" data-i18n="ben_2_desc"></div>
+        <div class="benefit-title" data-i18n="ben_2_title">Sem obras nem cabos</div>
+        <div class="benefit-desc" data-i18n="ben_2_desc">Instalação sem valas. Os nós comunicam sem fios e alimentam-se com painel solar.</div>
       </div>
       <div class="benefit-card reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01M8.5 16.4a5 5 0 0 1 7 0M5 12.9a10 10 0 0 1 5.2-2.8M10.7 5.1a15 15 0 0 1 11.4 4.1M2 8.8a15 15 0 0 1 4.3-2.7M2 2l20 20"/></svg>
-        <div class="benefit-title" data-i18n="ben_3_title"></div>
-        <div class="benefit-desc" data-i18n="ben_3_desc"></div>
+        <div class="benefit-title" data-i18n="ben_3_title">Funciona offline</div>
+        <div class="benefit-desc" data-i18n="ben_3_desc">Os horários ficam guardados em cada nó. Se a internet ou a corrente falharem, a rega continua.</div>
       </div>
       <div class="benefit-card reveal">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 4.9-9 4.9-9-4.9 9-4.9ZM3 12.2l9 4.9 9-4.9M3 17.3l9 4.9 9-4.9"/></svg>
-        <div class="benefit-title" data-i18n="ben_4_title"></div>
-        <div class="benefit-desc" data-i18n="ben_4_desc"></div>
+        <div class="benefit-title" data-i18n="ben_4_title">Cresce por etapas</div>
+        <div class="benefit-desc" data-i18n="ben_4_desc">Comece com uma zona e acrescente as restantes quando quiser. O sistema acompanha.</div>
       </div>
     </div>
   </div>
@@ -528,49 +538,49 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ REQUEST ══════════════════════ -->
 <section id="request">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="req_eyebrow"></span>
+    <span class="eyebrow" data-i18n="req_eyebrow">Pedir consulta</span>
     <div class="request-wrap">
       <div class="form-panel reveal">
-        <h2 class="form-heading" data-i18n="form_heading"></h2>
-        <p class="form-desc" data-i18n="form_desc"></p>
+        <h2 class="form-heading" data-i18n="form_heading">Consulta e orçamento para a sua propriedade</h2>
+        <p class="form-desc" data-i18n="form_desc">Deixe os seus dados e ligamos-lhe para perceber o jardim e dar um orçamento. Sem compromisso.</p>
         <form id="gardenForm">
           <div class="form-grid">
-            <div class="form-field"><label class="form-label" data-i18n="f_name"></label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required></div>
-            <div class="form-field"><label class="form-label" data-i18n="f_phone"></label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required></div>
-            <div class="form-field full"><label class="form-label" data-i18n="f_location"></label><input class="form-input" name="location" type="text" data-i18n-ph="f_location_ph" required></div>
+            <div class="form-field"><label class="form-label" data-i18n="f_name">Nome</label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required placeholder="O seu nome"></div>
+            <div class="form-field"><label class="form-label" data-i18n="f_phone">Telefone / WhatsApp</label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required placeholder="+351..."></div>
+            <div class="form-field full"><label class="form-label" data-i18n="f_location">Localização (freguesia / concelho)</label><input class="form-input" name="location" type="text" data-i18n-ph="f_location_ph" required placeholder="ex.: Almancil, Loulé"></div>
             <div class="form-field full">
-              <label class="form-label" data-i18n="f_property_label"></label>
+              <label class="form-label" data-i18n="f_property_label">Tipo de propriedade (escolha o que se aplica)</label>
               <div class="interest-group">
-                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-villa" value="villa"><label class="interest-label" for="p-villa" data-i18n="f_prop_villa"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-commercial" value="commercial"><label class="interest-label" for="p-commercial" data-i18n="f_prop_commercial"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-agro" value="agro"><label class="interest-label" for="p-agro" data-i18n="f_prop_agro"></label></div>
-                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-other" value="other"><label class="interest-label" for="p-other" data-i18n="f_prop_other"></label></div>
+                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-villa" value="villa"><label class="interest-label" for="p-villa" data-i18n="f_prop_villa">Vivenda</label></div>
+                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-commercial" value="commercial"><label class="interest-label" for="p-commercial" data-i18n="f_prop_commercial">Comercial</label></div>
+                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-agro" value="agro"><label class="interest-label" for="p-agro" data-i18n="f_prop_agro">Agrícola</label></div>
+                <div class="interest-opt"><input type="checkbox" name="propertyType" id="p-other" value="other"><label class="interest-label" for="p-other" data-i18n="f_prop_other">Outro</label></div>
               </div>
             </div>
             <div class="form-field">
-              <label class="form-label" data-i18n="f_zones_label"></label>
+              <label class="form-label" data-i18n="f_zones_label">Zonas de rega (aproximado)</label>
               <select class="form-input" name="zones">
-                <option value="" data-i18n="f_zones_none"></option>
+                <option value="" data-i18n="f_zones_none">Não sei ainda</option>
                 <option value="1-3">1–3</option>
                 <option value="4-8">4–8</option>
                 <option value="9+">9+</option>
               </select>
             </div>
-            <div class="form-field full"><label class="form-label" data-i18n="f_notes"></label><textarea class="form-input" name="notes" data-i18n-ph="f_notes_ph"></textarea></div>
+            <div class="form-field full"><label class="form-label" data-i18n="f_notes">Notas</label><textarea class="form-input" name="notes" data-i18n-ph="f_notes_ph" placeholder="Conte-nos sobre o jardim, o que já tem instalado, o que quer resolver…"></textarea></div>
             <div class="form-field full" style="flex-direction:row;align-items:flex-start;gap:0.6rem;">
               <input type="checkbox" id="consent" name="consent" required style="margin-top:0.25rem;width:16px;height:16px;flex-shrink:0;">
-              <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n="f_consent"></label>
+              <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n="f_consent">Aceito que a Aira Garden guarde e utilize estes dados para me contactar sobre o meu pedido, nos termos da <a href="/home/privacy.html" target="_blank" rel="noopener">política de privacidade</a>.</label>
             </div>
           </div>
-          <button type="submit" class="form-submit" data-i18n="f_submit"></button>
+          <button type="submit" class="form-submit" data-i18n="f_submit">Pedir consulta</button>
           <div class="form-status" id="formStatus"></div>
         </form>
       </div>
       <aside class="contact-aside reveal">
-        <h3 data-i18n="aside_title"></h3>
-        <p data-i18n="aside_desc"></p>
-        <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="aside_wa"></a>
-        <a class="btn btn-secondary" href="mailto:info@aira-ai.net?subject=Aira%20Garden" data-i18n="aside_email"></a>
+        <h3 data-i18n="aside_title">Prefere falar já?</h3>
+        <p data-i18n="aside_desc">Mande-nos mensagem por WhatsApp com uma foto do jardim e dizemos-lhe logo os próximos passos.</p>
+        <a class="btn btn-wa" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="aside_wa">Falar por WhatsApp</a>
+        <a class="btn btn-secondary" href="mailto:info@aira-ai.net?subject=Aira%20Garden" data-i18n="aside_email">Escrever um email</a>
       </aside>
     </div>
   </div>
@@ -581,18 +591,23 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <div class="footer-inner">
     <div class="footer-left">
       <div class="footer-logo">Aira<span>&nbsp;Garden</span></div>
-      <div class="footer-legal" data-i18n="footer_legal"></div>
+      <div class="footer-legal" data-i18n="footer_legal">Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net</div>
     </div>
     <div class="footer-services">
-      <div class="footer-services-label" data-i18n="footer_services_label"></div>
-      <a href="/">Aira</a>
-      <a href="/energia" data-i18n="footer_link_energia"></a>
+      <div class="footer-services-label" data-i18n="footer_services_label">Aira Home · 4 serviços</div>
+      <a href="/home/">Aira Home</a>
       <a href="/airahome">Airahome</a>
+      <a href="/energia">Aira Energia</a>
+      <a href="/garden">Aira Garden</a>
+      <a href="/construction">Aira Construction</a>
+      <a href="/">Aira</a>
     </div>
     <div class="footer-right">
       <div class="lang-switch">
         <button class="lang-btn active" onclick="setLang('pt')">PT</button>
         <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('fr')">FR</button>
       </div>
       <div class="footer-powered">powered by Aira</div>
     </div>
@@ -691,7 +706,7 @@ pt:{
   aside_wa:'Falar por WhatsApp',
   aside_email:'Escrever um email',
   footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Outros serviços Aira',
+  footer_services_label:'Aira Home · 4 serviços',
   footer_link_energia:'Energia',
   svc_click_hint:'Saber mais',
   svc_modal_cta:'Pedir consulta',
@@ -701,7 +716,7 @@ pt:{
   svc_nodes_detail:'Um nó sem fios por cada válvula de rega. Cada nó tem painel solar e bateria incorporada — nunca precisa de cabos ou tomadas no jardim. A bateria aguenta várias semanas sem sol direto. Resistente a chuva e poeira (IP67). A nossa equipa instala, calibra e associa cada nó ao gateway.',
   svc_valves_eyebrow:'O que está incluído',
   svc_valves_detail:'Válvulas de rega comandadas por cada nó. Abrem e fecham de acordo com o horário programado na app ou com um toque manual. Compatíveis com os sistemas de rega mais comuns (1 polegada BSP). Se já tiver válvulas instaladas, avaliamos na visita inicial se são compatíveis.',
-  svc_todo_note:'[TODO: Arsénio — adicionar aqui preços ou pacotes de instalação, se aplicável]'
+  svc_todo_note:''
 },
 en:{
   nav_cta:'Request a consultation',
@@ -769,7 +784,7 @@ en:{
   aside_wa:'Message on WhatsApp',
   aside_email:'Write an email',
   footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Other Aira services',
+  footer_services_label:'Aira Home · 4 services',
   footer_link_energia:'Energy',
   svc_click_hint:'Learn more',
   svc_modal_cta:'Request a consultation',
@@ -779,13 +794,171 @@ en:{
   svc_nodes_detail:'One wireless node per irrigation valve. Each node has a built-in solar panel and battery — no cables or outdoor sockets needed. The battery lasts several weeks without direct sun. Rainproof and dust-proof (IP67). Our team installs, calibrates and pairs each node to the gateway.',
   svc_valves_eyebrow:'What\'s included',
   svc_valves_detail:'Irrigation valves controlled by each node. They open and close on the schedule set in the app or at your command with a tap. Compatible with the most common irrigation systems (1-inch BSP). If you already have valves installed, we assess compatibility during the initial visit.',
-  svc_todo_note:'[TODO: Arsénio — add pricing or installation packages here if applicable]'
+  svc_todo_note:''
+},
+de:{
+  nav_cta:'Beratung anfragen',
+  hero_eyebrow:'Intelligente Bewässerung · Algarve',
+  hero_h1:'Die Bewässerung Ihres ganzen Grundstücks, <em>gesteuert vom Handy</em>.',
+  hero_sub:'Ein kabelloses Bewässerungssystem, das ohne Gräben und ohne Bauarbeiten installiert wird. Jede Zone bewässert nach eigenem Zeitplan, läuft auch ohne Internet weiter und wächst mit Ihrem Garten.',
+  hero_cta_form:'Beratung & Angebot anfragen',
+  hero_cta_how:'So funktioniert es',
+  hero_stat_1:'Keine Bauarbeiten',
+  hero_stat_2:'Funktioniert offline',
+  hero_stat_3:'Zone für Zone erweitern',
+  how_eyebrow:'So funktioniert es',
+  how_title:'Vom ersten Gartenbesuch bis zur Bewässerung, die von selbst läuft',
+  how_1_title:'Beratung',how_1_desc:'Wir sehen uns das Grundstück an, legen die Bewässerungszonen fest und prüfen, was schon vorhanden ist. Unverbindlich.',
+  how_2_title:'Installation',how_2_desc:'Wir setzen das Gateway und die kabellosen Knoten an Ihre Ventile. Keine Gräben, nichts wird aufgerissen, meist an einem Tag.',
+  how_3_title:'Steuerung per App',how_3_desc:'Zeitpläne je Zone festlegen, Zonen von Hand ein- und ausschalten und den Zustand jedes Knotens auf dem Handy sehen.',
+  how_4_title:'Betreuung',how_4_desc:'Wir begleiten die ersten Wochen, passen die Zeitpläne an die Jahreszeit an und bleiben erreichbar, wenn Sie uns brauchen.',
+  inc_eyebrow:'Was enthalten ist',
+  inc_title:'Drei Teile, ein System',
+  inc_lead:'Eigene Ausrüstung, gebaut für echte Gärten — keine weiterverkauften Baumarktteile.',
+  inc_1_name:'Gateway',inc_1_desc:'Die Zentrale, die den Garten mit der App verbindet. Sie spricht kabellos mit allen Knoten, von einem einzigen Stromanschluss aus.',
+  inc_2_name:'Kabellose Solarknoten',inc_2_desc:'Ein kleiner Knoten an jedem Ventil, versorgt von Solarpanel und Akku. Keine Kabel quer durch den Garten.',
+  inc_3_name:'Ventile',inc_3_desc:'Bewässerungsventile, gesteuert vom Knoten. Sie öffnen und schließen jede Zone nach Zeitplan oder auf Befehl aus der App.',
+  app_eyebrow:'Die App',
+  app_title:'Der ganze Garten auf einen Blick',
+  app_lead:'Alles, was Sie im Alltag brauchen, passt auf einen Bildschirm.',
+  app_b1:'<b>Zeitplan je Zone</b> — jeder Bereich mit eigener Uhrzeit und Dauer.',
+  app_b2:'<b>Zonen von Hand ein- und ausschalten</b> — eine Extra-Bewässerung oder eine Pause, sofort.',
+  app_b3:'<b>Akku jedes Knotens sehen</b> — Ladung und Signal, immer sichtbar.',
+  app_b4:'<b>Bewässerungsverlauf</b> — was lief, wann und wie lange.',
+  ph_zones:'Zonen',
+  ph_z1:'Rasen',ph_z2:'Rosenbeet',ph_z3:'Gemüsebeet',
+  ph_off:'aus',
+  ph_last:'Letzte Bewässerung: heute, 06:30 · 12 Min.',
+  aud_eyebrow:'Für wen',
+  aud_title:'Gemacht für Grundstücke an der Algarve',
+  aud_1_name:'Villen & private Gärten',aud_1_desc:'Rasen, Beete, Bäume und Töpfe — jeweils richtig bewässert, ohne Schläuche herumzuziehen.',
+  aud_2_name:'Gewerbliche Grünanlagen',aud_2_desc:'Wohnanlagen, Hotels und Grünflächen mit vielen Zonen, gesteuert von einem Ort aus.',
+  aud_3_name:'Landwirtschaft',aud_3_desc:'Obstgärten, Gemüsefelder und Gewächshäuser, bei denen pünktliches Bewässern und Wassersparen sich auf der Rechnung zeigen.',
+  ben_eyebrow:'Warum Aira Garden',
+  ben_title:'Was Sie bekommen',
+  ben_1_title:'Wasser sparen',ben_1_desc:'Jede Zone bekommt nur, was sie braucht, zur kühlsten Stunde. Kein Bewässern des Weges, nicht in der Mittagshitze.',
+  ben_2_title:'Keine Gräben, keine Kabel',ben_2_desc:'Installation ohne Graben. Die Knoten kommunizieren kabellos und laufen mit Solarstrom.',
+  ben_3_title:'Funktioniert offline',ben_3_desc:'Die Zeitpläne sind in jedem Knoten gespeichert. Fallen Internet oder Strom aus, wird weiter bewässert.',
+  ben_4_title:'Wächst schrittweise',ben_4_desc:'Beginnen Sie mit einer Zone und fügen Sie den Rest hinzu, wann Sie wollen. Das System wächst mit.',
+  req_eyebrow:'Beratung anfragen',
+  form_heading:'Beratung und Angebot für Ihr Grundstück',
+  form_desc:'Hinterlassen Sie Ihre Daten — wir rufen an, um den Garten zu verstehen, und machen Ihnen ein Angebot. Unverbindlich.',
+  f_name:'Name',f_name_ph:'Ihr Name',
+  f_phone:'Telefon / WhatsApp',f_phone_ph:'+351...',
+  f_location:'Ort (Gemeinde / Kreis)',f_location_ph:'z. B. Almancil, Loulé',
+  f_property_label:'Art des Grundstücks (Zutreffendes wählen)',
+  f_prop_villa:'Villa',f_prop_commercial:'Gewerblich',f_prop_agro:'Landwirtschaftlich',f_prop_other:'Sonstiges',
+  f_zones_label:'Bewässerungszonen (ca.)',
+  f_zones_none:'Noch unklar',
+  f_notes:'Anmerkungen',f_notes_ph:'Erzählen Sie uns vom Garten, was schon installiert ist und was Sie lösen möchten…',
+  f_consent:'Ich bin einverstanden, dass Aira Garden diese Angaben speichert und nutzt, um mich zu meiner Anfrage zu kontaktieren, gemäß der <a href="/home/privacy.html" target="_blank" rel="noopener">Datenschutzerklärung</a>.',
+  photo_drip_caption:'Tropfbewässerungsleitung neben einer Pflanze.',
+  photo_valve_caption:'Rasensprenger im Rasen.',
+  f_submit:'Beratung anfragen',
+  form_sending:'Wird gesendet…',
+  form_ok:'Danke, wir melden uns. Wenn Sie möchten, schreiben Sie uns jetzt auf WhatsApp oder an info@aira-ai.net.',
+  aside_title:'Lieber gleich sprechen?',
+  aside_desc:'Schicken Sie uns per WhatsApp ein Foto vom Garten — wir sagen Ihnen sofort die nächsten Schritte.',
+  aside_wa:'Auf WhatsApp schreiben',
+  aside_email:'E-Mail schreiben',
+  footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home · 4 Dienste',
+  footer_link_energia:'Energie',
+  svc_click_hint:'Mehr erfahren',
+  svc_modal_cta:'Beratung anfragen',
+  svc_gateway_eyebrow:'Was enthalten ist',
+  svc_gateway_detail:'Das Gateway ist das Herzstück des Systems. Es wird an einer einzigen Steckdose im Haus angeschlossen und kommuniziert kabellos mit allen Knoten im Garten — keine Gräben, keine verlegten Kabel. Typische Reichweite bis 100 m im Freien. Steuert bis zu 32 Bewässerungszonen. Die Ersteinrichtung macht unser Team; danach steuern Sie alles über die App.',
+  svc_nodes_eyebrow:'Was enthalten ist',
+  svc_nodes_detail:'Ein kabelloser Knoten pro Bewässerungsventil. Jeder Knoten hat ein eingebautes Solarpanel und einen Akku — keine Kabel oder Außensteckdosen nötig. Der Akku hält mehrere Wochen ohne direkte Sonne. Regen- und staubdicht (IP67). Unser Team installiert, kalibriert und koppelt jeden Knoten mit dem Gateway.',
+  svc_valves_eyebrow:'Was enthalten ist',
+  svc_valves_detail:'Bewässerungsventile, gesteuert von jedem Knoten. Sie öffnen und schließen nach dem Zeitplan in der App oder auf Ihren Fingertipp. Kompatibel mit den gängigsten Bewässerungssystemen (1 Zoll BSP). Sind bereits Ventile installiert, prüfen wir die Kompatibilität beim ersten Besuch.',
+  svc_todo_note:''
+},
+fr:{
+  nav_cta:'Demander une consultation',
+  hero_eyebrow:'Arrosage intelligent · Algarve',
+  hero_h1:'L’arrosage de toute votre propriété, <em>piloté depuis votre téléphone</em>.',
+  hero_sub:'Un système d’arrosage sans fil, installé sans tranchées et sans travaux. Chaque zone arrose selon son propre programme, continue de fonctionner même sans internet et s’agrandit avec votre jardin.',
+  hero_cta_form:'Demander une consultation et un devis',
+  hero_cta_how:'Voir comment ça marche',
+  hero_stat_1:'Sans travaux',
+  hero_stat_2:'Fonctionne hors ligne',
+  hero_stat_3:'Extensible zone par zone',
+  how_eyebrow:'Comment ça marche',
+  how_title:'De la première visite du jardin à l’arrosage qui se fait tout seul',
+  how_1_title:'Consultation',how_1_desc:'Nous examinons la propriété, définissons les zones d’arrosage et ce qui est déjà en place. Sans engagement.',
+  how_2_title:'Installation',how_2_desc:'Nous posons la passerelle et les modules sans fil sur vos vannes. Pas de tranchées, rien de cassé, généralement en une journée.',
+  how_3_title:'Pilotage depuis l’app',how_3_desc:'Programmes par zone, mise en marche et arrêt manuels, et l’état de chaque module sur votre téléphone.',
+  how_4_title:'Suivi',how_4_desc:'Nous suivons les premières semaines, ajustons les programmes à la saison et restons joignables quand vous en avez besoin.',
+  inc_eyebrow:'Ce qui est inclus',
+  inc_title:'Trois éléments, un seul système',
+  inc_lead:'Notre propre matériel, conçu pour de vrais jardins — pas des pièces de grande surface revendues.',
+  inc_1_name:'Passerelle',inc_1_desc:'Le boîtier qui relie le jardin à l’app. Il communique sans fil avec tous les modules depuis une seule prise de courant.',
+  inc_2_name:'Modules solaires sans fil',inc_2_desc:'Un petit module sur chaque vanne, alimenté par un panneau solaire et une batterie. Aucun câble à tirer dans le jardin.',
+  inc_3_name:'Vannes',inc_3_desc:'Vannes d’arrosage pilotées par le module. Elles ouvrent et ferment chaque zone selon le programme ou sur commande depuis l’app.',
+  app_eyebrow:'L’app',
+  app_title:'Tout le jardin en un coup d’œil',
+  app_lead:'Tout ce que vous faites au quotidien tient sur un seul écran.',
+  app_b1:'<b>Programme par zone</b> — chaque espace avec son heure et sa durée.',
+  app_b2:'<b>Allumer et éteindre les zones à la main</b> — un arrosage en plus ou une pause, sur le moment.',
+  app_b3:'<b>Batterie de chaque module</b> — charge et signal, toujours visibles.',
+  app_b4:'<b>Historique d’arrosage</b> — ce qui a tourné, quand et combien de temps.',
+  ph_zones:'Zones',
+  ph_z1:'Pelouse',ph_z2:'Massif de roses',ph_z3:'Potager',
+  ph_off:'arrêt',
+  ph_last:'Dernier arrosage : aujourd’hui, 06:30 · 12 min',
+  aud_eyebrow:'Pour qui',
+  aud_title:'Conçu pour les propriétés de l’Algarve',
+  aud_1_name:'Villas et jardins privés',aud_1_desc:'Pelouses, massifs, arbres et pots — chacun avec le bon arrosage, sans traîner de tuyaux.',
+  aud_2_name:'Espaces verts professionnels',aud_2_desc:'Copropriétés, hôtels et espaces verts avec de nombreuses zones à gérer depuis un seul endroit.',
+  aud_3_name:'Exploitation agricole',aud_3_desc:'Vergers, potagers et serres où arroser à l’heure et économiser l’eau se voit sur la facture.',
+  ben_eyebrow:'Pourquoi Aira Garden',
+  ben_title:'Ce que vous obtenez',
+  ben_1_title:'Économies d’eau',ben_1_desc:'Chaque zone reçoit juste ce qu’il lui faut, à l’heure la plus fraîche. On n’arrose ni l’allée ni en pleine chaleur.',
+  ben_2_title:'Ni tranchées ni câbles',ben_2_desc:'Installé sans creuser. Les modules communiquent sans fil et fonctionnent à l’énergie solaire.',
+  ben_3_title:'Fonctionne hors ligne',ben_3_desc:'Les programmes sont enregistrés dans chaque module. Si internet ou le courant tombe, l’arrosage continue.',
+  ben_4_title:'Évolue par étapes',ben_4_desc:'Commencez par une zone et ajoutez les autres quand vous voulez. Le système suit.',
+  req_eyebrow:'Demander une consultation',
+  form_heading:'Une consultation et un devis pour votre propriété',
+  form_desc:'Laissez vos coordonnées : nous vous appelons pour comprendre le jardin et vous faire un devis. Sans engagement.',
+  f_name:'Nom',f_name_ph:'Votre nom',
+  f_phone:'Téléphone / WhatsApp',f_phone_ph:'+351...',
+  f_location:'Lieu (paroisse / commune)',f_location_ph:'ex. Almancil, Loulé',
+  f_property_label:'Type de propriété (cochez ce qui s’applique)',
+  f_prop_villa:'Villa',f_prop_commercial:'Commercial',f_prop_agro:'Agricole',f_prop_other:'Autre',
+  f_zones_label:'Zones d’arrosage (env.)',
+  f_zones_none:'Je ne sais pas encore',
+  f_notes:'Remarques',f_notes_ph:'Parlez-nous du jardin, de ce qui est déjà installé, de ce que vous voulez résoudre…',
+  f_consent:'J’accepte qu’Aira Garden conserve et utilise ces informations pour me contacter au sujet de ma demande, conformément à la <a href="/home/privacy.html" target="_blank" rel="noopener">politique de confidentialité</a>.',
+  photo_drip_caption:'Ligne de goutte-à-goutte le long d’une plante.',
+  photo_valve_caption:'Arroseur dans la pelouse.',
+  f_submit:'Demander une consultation',
+  form_sending:'Envoi…',
+  form_ok:'Merci, nous vous recontactons. Si vous préférez, écrivez-nous dès maintenant sur WhatsApp ou à info@aira-ai.net.',
+  aside_title:'Vous préférez en parler maintenant ?',
+  aside_desc:'Envoyez-nous un WhatsApp avec une photo du jardin et nous vous indiquons tout de suite les prochaines étapes.',
+  aside_wa:'Écrire sur WhatsApp',
+  aside_email:'Écrire un e-mail',
+  footer_legal:'Aira Garden · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
+  footer_services_label:'Aira Home · 4 services',
+  footer_link_energia:'Énergie',
+  svc_click_hint:'En savoir plus',
+  svc_modal_cta:'Demander une consultation',
+  svc_gateway_eyebrow:'Ce qui est inclus',
+  svc_gateway_detail:'La passerelle est la pièce centrale du système. Elle se branche sur une seule prise dans la maison et communique sans fil avec tous les modules du jardin — sans tranchées, sans câbles enterrés. Portée typique jusqu’à 100 m en terrain dégagé. Gère jusqu’à 32 zones d’arrosage. La mise en service est faite par notre équipe ; ensuite vous pilotez tout depuis l’app.',
+  svc_nodes_eyebrow:'Ce qui est inclus',
+  svc_nodes_detail:'Un module sans fil par vanne d’arrosage. Chaque module a un panneau solaire et une batterie intégrés — pas de câbles ni de prises extérieures. La batterie tient plusieurs semaines sans soleil direct. Étanche à la pluie et à la poussière (IP67). Notre équipe installe, calibre et appaire chaque module à la passerelle.',
+  svc_valves_eyebrow:'Ce qui est inclus',
+  svc_valves_detail:'Vannes d’arrosage pilotées par chaque module. Elles s’ouvrent et se ferment selon le programme de l’app ou d’un simple geste. Compatibles avec les systèmes d’arrosage les plus courants (1 pouce BSP). Si vous avez déjà des vannes, nous vérifions la compatibilité lors de la première visite.',
+  svc_todo_note:''
 }
 };
 
 const WA_TEXT = {
   pt:'Olá, vim da página Aira Garden — quero uma consulta para rega inteligente na minha propriedade.',
-  en:'Hi, I came from the Aira Garden page — I’d like a consultation for smart irrigation on my property.'
+  en:'Hi, I came from the Aira Garden page — I’d like a consultation for smart irrigation on my property.',
+  de:'Hallo, ich komme von der Aira-Garden-Seite — ich hätte gern eine Beratung zur intelligenten Bewässerung meines Grundstücks.',
+  fr:'Bonjour, je viens de la page Aira Garden — je souhaite une consultation pour l’arrosage intelligent de ma propriété.'
 };
 
 let currentLang = 'pt';
@@ -852,6 +1025,7 @@ document.getElementById('gardenForm').addEventListener('submit', function(e){
     page: 'garden',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
 
@@ -944,5 +1118,6 @@ document.getElementById('gardenForm').addEventListener('submit', function(e){
 setLang('pt');
 </script>
 
+<script src="/assets/aira-home-chat.js" data-dir="garden" data-request="#request" defer></script>
 </body>
 </html>

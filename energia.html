@@ -12,7 +12,7 @@
 <meta property="og:description" content="Verificação gratuita da sua fatura de eletricidade. Calculadora de poupança, mudança de tarifário, painéis solares e eletricista licenciado no Algarve.">
 <meta property="og:url" content="https://aira-ai.net/energia">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Aira Energia","description":"Verificação gratuita da fatura de eletricidade, calculadora de poupança, mudança de tarifário, painéis solares e eletricista licenciado no Algarve.","parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"areaServed":["Algarve","Portimão","Lagoa","Lagos","Silves","Albufeira"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"url":"https://aira-ai.net/energia"}
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://aira-ai.net/home/#org","name":"Aira Home","alternateName":"Aira — AI concierge, Algarve","slogan":"Aira — AI concierge, Algarve","brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"url":"https://aira-ai.net/home/","email":"info@aira-ai.net","telephone":"+351308800687","areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"knowsLanguage":["en","de","fr","pt"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"subOrganization":[{"@id":"https://aira-ai.net/airahome#business"},{"@id":"https://aira-ai.net/energia#business"},{"@id":"https://aira-ai.net/garden#business"},{"@id":"https://aira-ai.net/construction#business"}]},{"@type":"LocalBusiness","@id":"https://aira-ai.net/energia#business","name":"Aira Energia","alternateName":"Aira Energia by Aira — AI concierge, Algarve","description":"Free electricity bill check, savings calculator, tariff switching, solar panels and a licensed electrician in the Algarve.","url":"https://aira-ai.net/energia","image":"https://aira-ai.net/assets/img/energia-detail-panels-515.jpg","telephone":"+351308800687","email":"info@aira-ai.net","areaServed":[{"@type":"Place","name":"Algarve"},{"@type":"Place","name":"Portimão"},{"@type":"Place","name":"Lagoa"},{"@type":"Place","name":"Lagos"},{"@type":"Place","name":"Silves"},{"@type":"Place","name":"Albufeira"}],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"knowsLanguage":["en","de","fr","pt"],"brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@id":"https://aira-ai.net/home/#org"}},{"@type":"Service","@id":"https://aira-ai.net/energia#service","name":"Aira Energia","serviceType":"Electricity bill review, tariff switching and solar installation","description":"Free electricity bill check, savings calculator, tariff switching, solar panels and a licensed electrician in the Algarve.","url":"https://aira-ai.net/energia","provider":{"@id":"https://aira-ai.net/energia#business"},"areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://aira-ai.net/energia","servicePhone":{"@type":"ContactPoint","telephone":"+351308800687","contactType":"customer service","availableLanguage":["English","German","French","Portuguese"]}}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -298,6 +298,7 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 }
 @media(prefers-reduced-motion:reduce){.card-modal,.card-modal-overlay{transition:none!important;}}
 </style>
+<link rel="stylesheet" href="/assets/aira-home.css">
 </head>
 <body>
 
@@ -308,8 +309,6 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <nav>
   <a href="#hero" class="nav-logo">Aira<span>&nbsp;Energia</span></a>
   <div class="nav-mid">
-    <a class="nav-link" href="/airahome">Airahome</a>
-    <a class="nav-link" href="/garden">Garden</a>
     <div class="lang-badges">
       <span class="lang-badge">PT</span><span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
     </div>
@@ -321,9 +320,18 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
       <button class="lang-btn" onclick="setLang('de')">DE</button>
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
     </div>
-    <a href="#request" class="nav-cta" data-i18n="nav_cta"></a>
+    <a href="#request" class="nav-cta" data-i18n="nav_cta">Verificar a minha fatura</a>
   </div>
 </nav>
+<!-- Aira Home: 4 directions (shared) -->
+<div class="ah-dirs" role="navigation" aria-label="Aira Home — 4 services">
+  <a class="ah-dirs-hub" href="/home/">Aira Home</a>
+  <a class="ah-dir" href="/airahome" title="Airahome"><span class="ah-dir-dot" style="background:#e2501c" aria-hidden="true"></span>Airahome</a>
+  <a class="ah-dir" href="/energia" title="Aira Energia" aria-current="page"><span class="ah-dir-dot" style="background:#0f7a94" aria-hidden="true"></span>Energia</a>
+  <a class="ah-dir" href="/garden" title="Aira Garden"><span class="ah-dir-dot" style="background:#2f6b3c" aria-hidden="true"></span>Garden</a>
+  <a class="ah-dir" href="/construction" title="Aira Construction"><span class="ah-dir-dot" style="background:#c9711f" aria-hidden="true"></span>Construction</a>
+</div>
+
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
@@ -335,31 +343,31 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <canvas id="bolt" aria-hidden="true"></canvas>
 
   <div class="hero-pin hero-pin--a" aria-hidden="true">
-    <span class="hero-pin__label" data-i18n="hero_badge_a"></span>
+    <span class="hero-pin__label" data-i18n="hero_badge_a">Análise gratuita da fatura</span>
     <span class="hero-pin__line"></span>
     <span class="hero-pin__dot"></span>
   </div>
   <div class="hero-pin hero-pin--b" aria-hidden="true">
-    <span class="hero-pin__label" data-i18n="hero_badge_b"></span>
+    <span class="hero-pin__label" data-i18n="hero_badge_b">Sem compromisso</span>
     <span class="hero-pin__line"></span>
     <span class="hero-pin__dot"></span>
   </div>
 
   <div class="section-inner">
     <div class="hero-content">
-      <span class="hero-eyebrow" data-i18n="hero_eyebrow"></span>
-      <h1 class="hero-title" data-i18n="hero_h1"></h1>
-      <p class="hero-sub" data-i18n="hero_sub"></p>
+      <span class="hero-eyebrow" data-i18n="hero_eyebrow">Energia · Algarve</span>
+      <h1 class="hero-title" data-i18n="hero_h1">Está a pagar demasiado à EDP?</h1>
+      <p class="hero-sub" data-i18n="hero_sub">Verificação gratuita da sua fatura de eletricidade no Algarve. Vemos se está no tarifário certo, se os painéis solares compensam e ligamos-lhe um eletricista licenciado quando precisa.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" id="heroCta" href="#calc" data-i18n="hero_cta_calc"></a>
-        <a class="btn btn-secondary" href="#request" data-i18n="hero_cta_form"></a>
+        <a class="btn btn-primary" id="heroCta" href="#calc" data-i18n="hero_cta_calc">Calcular a minha poupança</a>
+        <a class="btn btn-secondary" href="#request" data-i18n="hero_cta_form">Pedir análise gratuita</a>
       </div>
     </div>
   </div>
 
   <div class="hero-stats">
-    <span class="hero-stat" data-i18n="hero_stat_coverage"></span>
-    <span class="hero-stat" data-i18n="hero_stat_licensed"></span>
+    <span class="hero-stat" data-i18n="hero_stat_coverage">Cobertura: todo o Algarve</span>
+    <span class="hero-stat" data-i18n="hero_stat_licensed">Eletricistas licenciados</span>
     <span class="hero-stat">PT · EN · DE · FR</span>
   </div>
 </section>
@@ -367,33 +375,33 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ CALCULATOR ══════════════════════ -->
 <section id="calc">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="calc_eyebrow"></span>
+    <span class="eyebrow" data-i18n="calc_eyebrow">Calculadora de poupança</span>
     <div class="calc-panel reveal">
-      <h2 class="calc-title" data-i18n="calc_title"></h2>
+      <h2 class="calc-title" data-i18n="calc_title">Quanto pode poupar por mês?</h2>
       <div class="calc-modes">
-        <button type="button" class="calc-mode active" id="mode-bill" onclick="setCalcMode('bill')" data-i18n="calc_mode_bill"></button>
-        <button type="button" class="calc-mode" id="mode-kwh" onclick="setCalcMode('kwh')" data-i18n="calc_mode_kwh"></button>
+        <button type="button" class="calc-mode active" id="mode-bill" onclick="setCalcMode('bill')" data-i18n="calc_mode_bill">€ / mês</button>
+        <button type="button" class="calc-mode" id="mode-kwh" onclick="setCalcMode('kwh')" data-i18n="calc_mode_kwh">kWh / mês</button>
       </div>
       <div class="calc-inrow">
         <div class="calc-field">
-          <label class="calc-label" id="calc-input-label" data-i18n="calc_input_label_bill"></label>
-          <input class="calc-input" id="calc-input" type="number" min="0" step="1" inputmode="decimal" data-i18n-ph="calc_input_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();runCalc();}">
+          <label class="calc-label" id="calc-input-label" data-i18n="calc_input_label_bill">Conta mensal atual (€)</label>
+          <input class="calc-input" id="calc-input" type="number" min="0" step="1" inputmode="decimal" data-i18n-ph="calc_input_ph" onkeydown="if(event.key==='Enter'){event.preventDefault();runCalc();}" placeholder="ex.: 90">
         </div>
-        <button type="button" class="calc-btn" onclick="runCalc()" data-i18n="calc_btn"></button>
+        <button type="button" class="calc-btn" onclick="runCalc()" data-i18n="calc_btn">Calcular</button>
       </div>
       <div class="calc-results">
         <div class="calc-res" id="res-tariff">
-          <div class="calc-res-label" data-i18n="calc_res_tariff_label"></div>
+          <div class="calc-res-label" data-i18n="calc_res_tariff_label">Poupança com mudança de tarifário</div>
           <div class="calc-res-val mono" id="res-tariff-val">—</div>
-          <div class="calc-res-hint" data-i18n="calc_res_tariff_hint"></div>
+          <div class="calc-res-hint" data-i18n="calc_res_tariff_hint">aprox. 10–30% da fatura</div>
         </div>
         <div class="calc-res" id="res-solar">
-          <div class="calc-res-label" data-i18n="calc_res_solar_label"></div>
+          <div class="calc-res-label" data-i18n="calc_res_solar_label">Poupança estimada com painéis solares</div>
           <div class="calc-res-val mono" id="res-solar-val">—</div>
-          <div class="calc-res-hint" data-i18n="calc_res_solar_hint"></div>
+          <div class="calc-res-hint" data-i18n="calc_res_solar_hint">estimativa orientativa</div>
         </div>
       </div>
-      <p class="calc-disclaimer" data-i18n="calc_disclaimer"></p>
+      <p class="calc-disclaimer" data-i18n="calc_disclaimer">Estimativa indicativa, não vinculativa. O valor real depende de uma avaliação no local e da análise da sua fatura.</p>
     </div>
   </div>
 </section>
@@ -402,25 +410,25 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <section id="services">
   <div class="section-inner">
     <div class="svc-head">
-      <span class="eyebrow" data-i18n="svc_eyebrow"></span>
-      <h2 style="font-size:clamp(1.5rem,3vw,2rem);" data-i18n="svc_title"></h2>
-      <p class="svc-sub" data-i18n="svc_sub"></p>
+      <span class="eyebrow" data-i18n="svc_eyebrow">Serviços</span>
+      <h2 style="font-size:clamp(1.5rem,3vw,2rem);" data-i18n="svc_title">Três formas de baixar a sua conta</h2>
+      <p class="svc-sub" data-i18n="svc_sub">Não estamos presos a nenhum fornecedor. A análise é gratuita e sem compromisso.</p>
     </div>
     <div class="svc-grid">
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15h6l-1 6 11-13h-6l1-6L4 15Z"/></svg>
-        <div class="svc-name" data-i18n="svc_1_name"></div>
-        <div class="svc-desc" data-i18n="svc_1_desc"></div>
+        <div class="svc-name" data-i18n="svc_1_name">Revisão e mudança de tarifário</div>
+        <div class="svc-desc" data-i18n="svc_1_desc">Analisamos a sua fatura — energia, potência contratada e impostos — e tratamos da mudança para o melhor tarifário do mercado livre.</div>
       </div>
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18 12h3M16.3 7.7l2.1-2.1M8 14a4 4 0 1 1 8 0c0 1.7-1 2.6-1.5 3.5-.3.6-.5 1.2-.5 2.5h-4c0-1.3-.2-1.9-.5-2.5C8.5 16.6 8 15.7 8 14Z"/><path d="M10 22h4"/></svg>
-        <div class="svc-name" data-i18n="svc_2_name"></div>
-        <div class="svc-desc" data-i18n="svc_2_desc"></div>
+        <div class="svc-name" data-i18n="svc_2_name">Painéis solares</div>
+        <div class="svc-desc" data-i18n="svc_2_desc">Consulta e instalação através de parceiros licenciados. Dimensionamento ao seu consumo real, sem sobredimensionar.</div>
       </div>
       <div class="svc-tile reveal">
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3 3 14l3.5 3.5L17.5 6.5 21 3l-4 0Z"/><path d="M8 17l-3 4M3 21l1.5-4.5"/></svg>
-        <div class="svc-name" data-i18n="svc_3_name"></div>
-        <div class="svc-desc" data-i18n="svc_3_desc"></div>
+        <div class="svc-name" data-i18n="svc_3_name">Eletricista licenciado</div>
+        <div class="svc-desc" data-i18n="svc_3_desc">Reparações e emergências: quadros, tomadas, iluminação, avarias. Técnicos licenciados no Algarve.</div>
       </div>
     </div>
   </div>
@@ -429,45 +437,45 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ PRICING ══════════════════════ -->
 <section id="pricing">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="price_eyebrow"></span>
+    <span class="eyebrow" data-i18n="price_eyebrow">Eletricista — preços de referência</span>
     <div class="pricing-grid">
       <div class="plan featured reveal" data-open-plan="1" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_1_name"></div>
-        <div class="plan-sub" data-i18n="price_1_sub"></div>
+        <div class="plan-name" data-i18n="price_1_name">Emergência</div>
+        <div class="plan-sub" data-i18n="price_1_sub">2–3 horas</div>
         <div class="plan-price">€300</div>
-        <div class="plan-period" data-i18n="price_period"></div>
-        <div class="plan-desc" data-i18n="price_1_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_period">1ª hora, depois €35/h</div>
+        <div class="plan-desc" data-i18n="price_1_desc">Faísca, cheiro a queimado, falta de energia — o que não pode esperar.</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">Ver detalhes</div>
       </div>
       <div class="plan reveal" data-open-plan="2" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_2_name"></div>
-        <div class="plan-sub" data-i18n="price_2_sub"></div>
+        <div class="plan-name" data-i18n="price_2_name">No mesmo dia</div>
+        <div class="plan-sub" data-i18n="price_2_sub">hoje</div>
         <div class="plan-price">€150</div>
-        <div class="plan-period" data-i18n="price_period"></div>
-        <div class="plan-desc" data-i18n="price_2_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_period">1ª hora, depois €35/h</div>
+        <div class="plan-desc" data-i18n="price_2_desc">Avarias que precisam de atenção hoje, sem ser crítico.</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">Ver detalhes</div>
       </div>
       <div class="plan reveal" data-open-plan="3" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_3_name"></div>
-        <div class="plan-sub" data-i18n="price_3_sub"></div>
+        <div class="plan-name" data-i18n="price_3_name">Agendado</div>
+        <div class="plan-sub" data-i18n="price_3_sub">esta semana</div>
         <div class="plan-price">€50</div>
-        <div class="plan-period" data-i18n="price_period"></div>
-        <div class="plan-desc" data-i18n="price_3_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_period">1ª hora, depois €35/h</div>
+        <div class="plan-desc" data-i18n="price_3_desc">Instalações e reparações planeadas, marcadas quando lhe for conveniente.</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">Ver detalhes</div>
       </div>
     </div>
-    <p class="pricing-note" data-i18n="pricing_note"></p>
+    <p class="pricing-note" data-i18n="pricing_note">A primeira hora cobre a deslocação e o diagnóstico. Cada hora adicional é €35. Preço confirmado antes de iniciar o trabalho. Painéis solares e mudança de tarifário são orçamentados à parte, após avaliação.</p>
   </div>
 </section>
 
 <!-- ══════════════════════ HOW ══════════════════════ -->
 <section id="how">
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="how_eyebrow"></span>
+    <span class="eyebrow" data-i18n="how_eyebrow">Como funciona</span>
     <div class="how-grid">
-      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title"></div><div class="how-desc" data-i18n="how_1_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title"></div><div class="how-desc" data-i18n="how_2_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title"></div><div class="how-desc" data-i18n="how_3_desc"></div></div>
+      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title">Calculadora grátis</div><div class="how-desc" data-i18n="how_1_desc">Uma estimativa rápida, aqui na página, a partir da sua conta ou consumo.</div></div>
+      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title">Avaliação no local</div><div class="how-desc" data-i18n="how_2_desc">Analisamos a fatura e, se fizer sentido, um técnico faz uma visita.</div></div>
+      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title">Proposta sem compromisso</div><div class="how-desc" data-i18n="how_3_desc">Recebe um plano claro de poupança. Decide sem pressão.</div></div>
     </div>
   </div>
 </section>
@@ -476,12 +484,12 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <section id="elektra">
   <div class="section-inner">
     <div class="elektra-panel reveal">
-      <span class="eyebrow" data-i18n="elektra_eyebrow"></span>
-      <h2 class="elektra-title" data-i18n="elektra_title"></h2>
-      <p class="elektra-desc" data-i18n="elektra_desc"></p>
+      <span class="eyebrow" data-i18n="elektra_eyebrow">Assistente de voz</span>
+      <h2 class="elektra-title" data-i18n="elektra_title">Falar com a Elektra agora</h2>
+      <p class="elektra-desc" data-i18n="elektra_desc">A Elektra é a assistente de voz da Aira Energia. Conte-lhe o que precisa — tarifário, painéis solares ou um eletricista — e a equipa liga-lhe de volta. Fala português, inglês, alemão e francês.</p>
       <div class="elektra-ctas">
-        <button type="button" class="btn btn-primary" onclick="openElektra()" data-i18n="elektra_btn"></button>
-        <a class="btn btn-secondary" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="elektra_wa"></a>
+        <button type="button" class="btn btn-primary" onclick="openElektra()" data-i18n="elektra_btn">Falar com a Elektra</button>
+        <a class="btn btn-secondary" id="wa-link" href="#" target="_blank" rel="noopener" data-i18n="elektra_wa">WhatsApp</a>
       </div>
     </div>
   </div>
@@ -491,25 +499,25 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <section id="request">
   <div class="section-inner">
     <div class="form-panel reveal">
-      <h2 class="form-heading" data-i18n="form_heading"></h2>
-      <p class="form-desc" data-i18n="form_desc"></p>
+      <h2 class="form-heading" data-i18n="form_heading">Pedir análise gratuita</h2>
+      <p class="form-desc" data-i18n="form_desc">Deixe os seus dados e ligamos-lhe de volta. Sem compromisso.</p>
       <form id="energiaForm">
         <div class="form-grid">
-          <div class="form-field"><label class="form-label" data-i18n="f_name"></label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required></div>
-          <div class="form-field"><label class="form-label" data-i18n="f_phone"></label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required></div>
-          <div class="form-field"><label class="form-label" data-i18n="f_freguesia"></label><input class="form-input" name="freguesia" type="text" data-i18n-ph="f_freguesia_ph" required></div>
-          <div class="form-field"><label class="form-label" data-i18n="f_bill"></label><input class="form-input" name="bill" type="number" min="0" step="1" inputmode="decimal" data-i18n-ph="f_bill_ph"></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_name">Nome</label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required placeholder="O seu nome"></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_phone">Telefone / WhatsApp</label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required placeholder="+351..."></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_freguesia">Freguesia / localidade</label><input class="form-input" name="freguesia" type="text" data-i18n-ph="f_freguesia_ph" required placeholder="ex.: Portimão"></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_bill">Conta mensal atual (€)</label><input class="form-input" name="bill" type="number" min="0" step="1" inputmode="decimal" data-i18n-ph="f_bill_ph" placeholder="ex.: 90"></div>
           <div class="form-field full">
-            <label class="form-label" data-i18n="f_interest_label"></label>
+            <label class="form-label" data-i18n="f_interest_label">Interesse (escolha o que se aplica)</label>
             <div class="interest-group">
-              <div class="interest-opt"><input type="checkbox" name="interest" id="i-tarifario" value="tarifario"><label class="interest-label" for="i-tarifario" data-i18n="f_int_tarifario"></label></div>
-              <div class="interest-opt"><input type="checkbox" name="interest" id="i-solar" value="solar"><label class="interest-label" for="i-solar" data-i18n="f_int_solar"></label></div>
-              <div class="interest-opt"><input type="checkbox" name="interest" id="i-reparacao" value="reparacao"><label class="interest-label" for="i-reparacao" data-i18n="f_int_reparacao"></label></div>
-              <div class="interest-opt"><input type="checkbox" name="interest" id="i-urgencia" value="urgencia"><label class="interest-label" for="i-urgencia" data-i18n="f_int_urgencia"></label></div>
+              <div class="interest-opt"><input type="checkbox" name="interest" id="i-tarifario" value="tarifario"><label class="interest-label" for="i-tarifario" data-i18n="f_int_tarifario">Tarifário</label></div>
+              <div class="interest-opt"><input type="checkbox" name="interest" id="i-solar" value="solar"><label class="interest-label" for="i-solar" data-i18n="f_int_solar">Painéis solares</label></div>
+              <div class="interest-opt"><input type="checkbox" name="interest" id="i-reparacao" value="reparacao"><label class="interest-label" for="i-reparacao" data-i18n="f_int_reparacao">Reparação</label></div>
+              <div class="interest-opt"><input type="checkbox" name="interest" id="i-urgencia" value="urgencia"><label class="interest-label" for="i-urgencia" data-i18n="f_int_urgencia">Urgência</label></div>
             </div>
           </div>
         </div>
-        <button type="submit" class="form-submit" data-i18n="f_submit"></button>
+        <button type="submit" class="form-submit" data-i18n="f_submit">Pedir análise gratuita</button>
         <div class="form-status" id="formStatus"></div>
       </form>
     </div>
@@ -519,9 +527,9 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
 <!-- ══════════════════════ COVERAGE ══════════════════════ -->
 <section id="coverage">
   <div class="section-inner reveal">
-    <span class="eyebrow" data-i18n="cov_eyebrow"></span>
+    <span class="eyebrow" data-i18n="cov_eyebrow">Onde atuamos</span>
     <div class="coverage-cities">Portimão · Lagos · Luz · Carvoeiro · Lagoa · Silves · Armação de Pêra · Albufeira · Vilamoura · Loulé</div>
-    <p class="coverage-note" data-i18n="cov_note"></p>
+    <p class="coverage-note" data-i18n="cov_note">Algarve. Atualmente em expansão por todo o distrito de Faro.</p>
   </div>
 </section>
 
@@ -530,14 +538,16 @@ footer{padding:3rem 1.75rem 2.5rem;border-top:1px solid var(--line);background:v
   <div class="footer-inner">
     <div class="footer-left">
       <div class="footer-logo">Aira<span>&nbsp;Energia</span></div>
-      <div class="footer-legal" data-i18n="footer_legal"></div>
+      <div class="footer-legal" data-i18n="footer_legal">Aira Energia · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net</div>
     </div>
     <div class="footer-services">
-      <div class="footer-services-label" data-i18n="footer_services_label"></div>
-      <a href="/">Aira</a>
+      <div class="footer-services-label" data-i18n="footer_services_label">Aira Home · 4 serviços</div>
+      <a href="/home/">Aira Home</a>
       <a href="/airahome">Airahome</a>
-      <a href="/garden" data-i18n="footer_link_garden"></a>
-      <a href="/energia" data-i18n="footer_link_energia"></a>
+      <a href="/energia">Aira Energia</a>
+      <a href="/garden">Aira Garden</a>
+      <a href="/construction">Aira Construction</a>
+      <a href="/">Aira</a>
       <a href="/concierge">Aira Concierge</a>
       <a href="/assistant">Aira Assistant</a>
       <a href="/admin">Aira Admin</a>
@@ -658,7 +668,7 @@ pt:{
   cov_eyebrow:'Onde atuamos',
   cov_note:'Algarve. Atualmente em expansão por todo o distrito de Faro.',
   footer_legal:'Aira Energia · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Outros serviços Aira',
+  footer_services_label:'Aira Home · 4 serviços',
   footer_link_energia:'Energia',
   footer_link_garden:'Garden',
   plan_click_hint:'Ver detalhes',
@@ -732,7 +742,7 @@ en:{
   cov_eyebrow:'Where we cover',
   cov_note:'Algarve. Currently expanding across the Faro district.',
   footer_legal:'Aira Energia · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Other Aira services',
+  footer_services_label:'Aira Home · 4 services',
   footer_link_energia:'Energy',
   footer_link_garden:'Garden',
   plan_click_hint:'See what\'s included',
@@ -806,7 +816,7 @@ de:{
   cov_eyebrow:'Unser Einsatzgebiet',
   cov_note:'Algarve. Wir erweitern derzeit über den gesamten Bezirk Faro.',
   footer_legal:'Aira Energia · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Weitere Aira-Dienste',
+  footer_services_label:'Aira Home · 4 Dienste',
   footer_link_energia:'Energie',
   footer_link_garden:'Garden',
   plan_click_hint:'Details ansehen',
@@ -880,7 +890,7 @@ fr:{
   cov_eyebrow:'Notre zone',
   cov_note:'Algarve. Actuellement en expansion sur tout le district de Faro.',
   footer_legal:'Aira Energia · Horizonte Solene Lda · Algarve, Portugal · info@aira-ai.net',
-  footer_services_label:'Autres services Aira',
+  footer_services_label:'Aira Home · 4 services',
   footer_link_energia:'Énergie',
   footer_link_garden:'Garden',
   plan_click_hint:'Voir le détail',
@@ -1019,6 +1029,7 @@ document.getElementById('energiaForm').addEventListener('submit', function(e){
     page: 'energia',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
   fetch(LEADS_WEBHOOK, {
@@ -1255,5 +1266,6 @@ document.getElementById('energiaForm').addEventListener('submit', function(e){
 setLang('pt');
 </script>
 
+<script src="/assets/aira-home-chat.js" data-dir="energia" data-request="#request" defer></script>
 </body>
 </html>

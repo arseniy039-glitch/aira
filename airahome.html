@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23e2501c'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='800' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Airahome","parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"description":"24/7 emergency home-repair callout service for the Algarve: plumbing, electrical, locks, appliances, air conditioning.","telephone":"+351308800687","url":"https://aira-ai.net/airahome","image":"https://aira-ai.net/assets/img/airahome-hero-1600.jpg","areaServed":["Luz","Lagos","Portimão","Carvoeiro","Lagoa","Silves","Armação de Pêra","Albufeira","Vilamoura"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"}}
+{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://aira-ai.net/home/#org","name":"Aira Home","alternateName":"Aira — AI concierge, Algarve","slogan":"Aira — AI concierge, Algarve","brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@type":"Organization","name":"Horizonte Solene Lda"},"url":"https://aira-ai.net/home/","email":"info@aira-ai.net","telephone":"+351308800687","areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"knowsLanguage":["en","de","fr","pt"],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"subOrganization":[{"@id":"https://aira-ai.net/airahome#business"},{"@id":"https://aira-ai.net/energia#business"},{"@id":"https://aira-ai.net/garden#business"},{"@id":"https://aira-ai.net/construction#business"}]},{"@type":"LocalBusiness","@id":"https://aira-ai.net/airahome#business","name":"Airahome","alternateName":"Airahome by Aira — AI concierge, Algarve","description":"24/7 emergency home-repair callout service for the Algarve: plumbing, electrical, locks, appliances, air conditioning.","url":"https://aira-ai.net/airahome","image":"https://aira-ai.net/assets/img/airahome-hero-1600.jpg","telephone":"+351308800687","email":"info@aira-ai.net","areaServed":[{"@type":"Place","name":"Algarve"},{"@type":"Place","name":"Luz"},{"@type":"Place","name":"Lagos"},{"@type":"Place","name":"Portimão"},{"@type":"Place","name":"Carvoeiro"},{"@type":"Place","name":"Lagoa"},{"@type":"Place","name":"Silves"},{"@type":"Place","name":"Armação de Pêra"},{"@type":"Place","name":"Albufeira"},{"@type":"Place","name":"Vilamoura"}],"address":{"@type":"PostalAddress","addressRegion":"Algarve","addressCountry":"PT"},"knowsLanguage":["en","de","fr","pt"],"brand":{"@type":"Brand","name":"Aira","slogan":"Aira — AI concierge, Algarve"},"parentOrganization":{"@id":"https://aira-ai.net/home/#org"},"openingHours":"Mo-Su 00:00-23:59"},{"@type":"Service","@id":"https://aira-ai.net/airahome#service","name":"Airahome","serviceType":"Emergency home repair callout (24/7)","description":"24/7 emergency home-repair callout service for the Algarve: plumbing, electrical, locks, appliances, air conditioning.","url":"https://aira-ai.net/airahome","provider":{"@id":"https://aira-ai.net/airahome#business"},"areaServed":{"@type":"AdministrativeArea","name":"Algarve"},"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://aira-ai.net/airahome","servicePhone":{"@type":"ContactPoint","telephone":"+351308800687","contactType":"customer service","availableLanguage":["English","German","French","Portuguese"]}}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,39 +183,6 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
 .reveal.in{opacity:1;transform:none;}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}.reveal{opacity:1;transform:none;}}
 
-/* ── CHAT WIDGET ── */
-#ah-chat-btn{position:fixed;bottom:1.6rem;right:1.6rem;z-index:1000;width:58px;height:58px;border-radius:50%;background:var(--ink);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(20,24,28,0.28);transition:transform 0.2s;}
-#ah-chat-btn:hover{transform:scale(1.06);}
-#ah-chat-btn svg{pointer-events:none;}
-.ah-chat-tip{position:fixed;bottom:2rem;right:5.4rem;z-index:999;background:var(--ink);color:#fff;font-size:0.78rem;font-weight:500;padding:0.55rem 0.9rem;border-radius:var(--radius);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;}
-#ah-chat-btn:hover + .ah-chat-tip{opacity:1;}
-@media(max-width:640px){.ah-chat-tip{display:none;}}
-
-#ah-chat-panel{position:fixed;bottom:5.6rem;right:1.6rem;z-index:1000;width:360px;max-height:min(70vh,540px);background:var(--surface);border:1px solid var(--line-strong);border-radius:calc(var(--radius)*1.5);box-shadow:0 20px 60px rgba(20,24,28,0.2);display:flex;flex-direction:column;overflow:hidden;transform:translateY(16px) scale(0.98);opacity:0;pointer-events:none;transition:transform 0.25s ease,opacity 0.25s ease;}
-#ah-chat-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}
-.ah-header{display:flex;align-items:center;gap:0.7rem;padding:0.9rem 1rem;border-bottom:1px solid var(--line);background:var(--bg);}
-.ah-avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;flex-shrink:0;}
-.ah-info{flex:1;}
-.ah-name{font-weight:600;font-size:0.9rem;}
-.ah-status{font-size:0.7rem;color:var(--ink-muted);display:flex;align-items:center;gap:0.35rem;}
-.ah-dot{width:6px;height:6px;border-radius:50%;background:#2fa84f;}
-.ah-close{background:none;border:none;color:var(--ink-muted);font-size:1.1rem;cursor:pointer;padding:0.2rem 0.4rem;}
-.ah-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.65rem;}
-.ah-msg{max-width:85%;padding:0.6rem 0.85rem;border-radius:12px;font-size:0.85rem;line-height:1.5;}
-.ah-msg.bot{background:var(--bg);border-bottom-left-radius:4px;align-self:flex-start;}
-.ah-msg.user{background:var(--ink);color:#fff;border-bottom-right-radius:4px;align-self:flex-end;}
-.ah-typing{align-self:flex-start;background:var(--bg);border-radius:12px;border-bottom-left-radius:4px;padding:0.6rem 0.9rem;display:flex;gap:4px;}
-.ah-typing span{width:5px;height:5px;border-radius:50%;background:var(--ink-muted);animation:ahBounce 1.2s infinite;}
-.ah-typing span:nth-child(2){animation-delay:.2s}
-.ah-typing span:nth-child(3){animation-delay:.4s}
-@keyframes ahBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
-.ah-input-bar{padding:0.7rem;border-top:1px solid var(--line);display:flex;gap:0.5rem;}
-.ah-input{flex:1;background:var(--bg);border:1px solid var(--line-strong);border-radius:var(--radius-pill);padding:0.55rem 0.9rem;font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;color:var(--ink);}
-.ah-input:focus{border-color:var(--accent);}
-.ah-send{width:34px;height:34px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform 0.15s;}
-.ah-send:hover{transform:scale(1.06);}
-@media(max-width:480px){#ah-chat-panel{left:1rem;right:1rem;width:auto;bottom:5.2rem;}}
-
 /* ── PLAN CARDS — clickable ── */
 .plan[data-open-plan]{cursor:pointer;transition:border-color 0.2s,box-shadow 0.2s,transform 0.15s;}
 .plan[data-open-plan]:hover{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft-strong);transform:translateY(-3px);}
@@ -257,6 +224,7 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
 }
 @media(prefers-reduced-motion:reduce){.card-modal,.card-modal-overlay{transition:none!important;}}
 </style>
+<link rel="stylesheet" href="/assets/aira-home.css">
 </head>
 <body>
 
@@ -271,7 +239,6 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
     <div class="lang-badges">
       <span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
     </div>
-    <a class="nav-phone" href="/energia" style="text-decoration:none;gap:0.35rem;font-weight:600;font-size:0.85rem;" aria-label="Aira Energia">⚡&nbsp;Energia</a>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;">
     <div class="lang-switch">
@@ -280,9 +247,18 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
       <button class="lang-btn" onclick="setLang('fr')">FR</button>
       <button class="lang-btn" onclick="setLang('pt')">PT</button>
     </div>
-    <a href="#request" class="nav-cta" data-i18n="nav_cta"></a>
+    <a href="#request" class="nav-cta" data-i18n="nav_cta">Request a callout</a>
   </div>
 </nav>
+<!-- Aira Home: 4 directions (shared) -->
+<div class="ah-dirs" role="navigation" aria-label="Aira Home — 4 services">
+  <a class="ah-dirs-hub" href="/home/">Aira Home</a>
+  <a class="ah-dir" href="/airahome" title="Airahome" aria-current="page"><span class="ah-dir-dot" style="background:#e2501c" aria-hidden="true"></span>Airahome</a>
+  <a class="ah-dir" href="/energia" title="Aira Energia"><span class="ah-dir-dot" style="background:#0f7a94" aria-hidden="true"></span>Energia</a>
+  <a class="ah-dir" href="/garden" title="Aira Garden"><span class="ah-dir-dot" style="background:#2f6b3c" aria-hidden="true"></span>Garden</a>
+  <a class="ah-dir" href="/construction" title="Aira Construction"><span class="ah-dir-dot" style="background:#c9711f" aria-hidden="true"></span>Construction</a>
+</div>
+
 
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <section id="hero">
@@ -298,15 +274,15 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </div>
   <div class="section-inner">
     <div class="hero-grid">
-      <h1 class="hero-title" data-i18n="hero_h1"></h1>
-      <p class="hero-sub" data-i18n="hero_h2"></p>
+      <h1 class="hero-title" data-i18n="hero_h1">Something broke at your Algarve home?</h1>
+      <p class="hero-sub" data-i18n="hero_h2">We answer in your language, quote you a price on the spot, and have someone at your door in 2–3 hours.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="tel:+351308800687"><span data-i18n="hero_cta_call"></span>&nbsp;<span class="num mono">+351 308 800 687</span></a>
-        <a class="btn btn-secondary" href="https://wa.me/351936800000?text=Hi%2C%20I%20found%20you%20via%20Airahome%20-%20I%20need%20help" target="_blank" rel="noopener" data-i18n="hero_cta_wa"></a>
+        <a class="btn btn-primary" href="tel:+351308800687"><span data-i18n="hero_cta_call">Call now —</span>&nbsp;<span class="num mono">+351 308 800 687</span></a>
+        <a class="btn btn-secondary" href="https://wa.me/351936800000?text=Hi%2C%20I%20found%20you%20via%20Airahome%20-%20I%20need%20help" target="_blank" rel="noopener" data-i18n="hero_cta_wa">WhatsApp us</a>
       </div>
       <div class="hero-langs">
         <span class="lang-badge">EN</span><span class="lang-badge">DE</span><span class="lang-badge">FR</span>
-        <span class="hero-micro" data-i18n="hero_micro"></span>
+        <span class="hero-micro" data-i18n="hero_micro">English · Deutsch · Français · answered by a real team, not a call centre</span>
       </div>
     </div>
   </div>
@@ -316,28 +292,28 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
 <section id="request">
   <div class="section-inner">
     <div class="form-panel reveal">
-      <h2 class="form-heading" data-i18n="form_heading"></h2>
-      <p class="form-desc" data-i18n="form_desc"></p>
+      <h2 class="form-heading" data-i18n="form_heading">Request a callout</h2>
+      <p class="form-desc" data-i18n="form_desc">Tell us what's going on — we'll confirm the price and timing before anyone drives out.</p>
       <form id="calloutForm">
         <div class="form-grid">
-          <div class="form-field"><label class="form-label" data-i18n="f_name"></label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required></div>
-          <div class="form-field"><label class="form-label" data-i18n="f_phone"></label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required></div>
-          <div class="form-field full"><label class="form-label" data-i18n="f_address"></label><input class="form-input" name="address" type="text" data-i18n-ph="f_address_ph" required></div>
-          <div class="form-field full"><label class="form-label" data-i18n="f_problem"></label><textarea class="form-input" name="problem" data-i18n-ph="f_problem_ph" required></textarea></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_name">Name</label><input class="form-input" name="name" type="text" data-i18n-ph="f_name_ph" required placeholder="Your name"></div>
+          <div class="form-field"><label class="form-label" data-i18n="f_phone">Phone / WhatsApp</label><input class="form-input" name="phone" type="tel" data-i18n-ph="f_phone_ph" required placeholder="+351..."></div>
+          <div class="form-field full"><label class="form-label" data-i18n="f_address">Address</label><input class="form-input" name="address" type="text" data-i18n-ph="f_address_ph" required placeholder="Street, town"></div>
+          <div class="form-field full"><label class="form-label" data-i18n="f_problem">What's wrong?</label><textarea class="form-input" name="problem" data-i18n-ph="f_problem_ph" required placeholder="Describe the problem…"></textarea></div>
           <div class="form-field full">
-            <label class="form-label" data-i18n="f_urgency"></label>
+            <label class="form-label" data-i18n="f_urgency">How urgent?</label>
             <div class="urgency-group">
-              <div class="urgency-opt"><input type="radio" name="urgency" id="u-now" value="Now" checked><label class="urgency-label" for="u-now" data-i18n="f_urgency_now"></label></div>
-              <div class="urgency-opt"><input type="radio" name="urgency" id="u-today" value="Today"><label class="urgency-label" for="u-today" data-i18n="f_urgency_today"></label></div>
-              <div class="urgency-opt"><input type="radio" name="urgency" id="u-week" value="This week"><label class="urgency-label" for="u-week" data-i18n="f_urgency_week"></label></div>
+              <div class="urgency-opt"><input type="radio" name="urgency" id="u-now" value="Now" checked><label class="urgency-label" for="u-now" data-i18n="f_urgency_now">Now</label></div>
+              <div class="urgency-opt"><input type="radio" name="urgency" id="u-today" value="Today"><label class="urgency-label" for="u-today" data-i18n="f_urgency_today">Today</label></div>
+              <div class="urgency-opt"><input type="radio" name="urgency" id="u-week" value="This week"><label class="urgency-label" for="u-week" data-i18n="f_urgency_week">This week</label></div>
             </div>
           </div>
         </div>
         <div class="form-field full" style="flex-direction:row;align-items:flex-start;gap:0.6rem;margin-top:0.9rem;">
           <input type="checkbox" id="consent" name="consent" required style="margin-top:0.25rem;width:16px;height:16px;flex-shrink:0;">
-          <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n-html="f_consent"></label>
+          <label for="consent" style="font-size:0.8rem;color:var(--ink-dim);font-weight:400;line-height:1.5;" data-i18n-html="f_consent">I agree that Airahome may store and use this information to contact me about my request, in line with the <a href="/home/privacy.html" target="_blank" rel="noopener">privacy policy</a>.</label>
         </div>
-        <button type="submit" class="form-submit" data-i18n="f_submit"></button>
+        <button type="submit" class="form-submit" data-i18n="f_submit">Request a callout</button>
         <div class="form-status" id="formStatus"></div>
       </form>
     </div>
@@ -352,11 +328,11 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </picture>
   <div class="section-veil"></div>
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="sec_how"></span>
+    <span class="eyebrow" data-i18n="sec_how">How it works</span>
     <div class="how-grid">
-      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title"></div><div class="how-desc" data-i18n="how_1_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title"></div><div class="how-desc" data-i18n="how_2_desc"></div></div>
-      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title"></div><div class="how-desc" data-i18n="how_3_desc"></div></div>
+      <div class="how-step reveal"><div class="how-num">01</div><div class="how-title" data-i18n="how_1_title">Call or message</div><div class="how-desc" data-i18n="how_1_desc">Speak in your own language. No translation apps, no guessing.</div></div>
+      <div class="how-step reveal"><div class="how-num">02</div><div class="how-title" data-i18n="how_2_title">Get a clear price</div><div class="how-desc" data-i18n="how_2_desc">We tell you the cost before anyone drives out. No surprises after.</div></div>
+      <div class="how-step reveal"><div class="how-num">03</div><div class="how-title" data-i18n="how_3_title">We show up</div><div class="how-desc" data-i18n="how_3_desc">Local craftsmen, on the road within the hour for emergencies.</div></div>
     </div>
   </div>
 </section>
@@ -365,44 +341,44 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
 <section id="fix">
   <div class="section-inner">
     <div class="fix-head">
-      <span class="eyebrow" data-i18n="sec_fix"></span>
-      <p class="fix-sub" data-i18n="fix_sub"></p>
+      <span class="eyebrow" data-i18n="sec_fix">What we fix</span>
+      <p class="fix-sub" data-i18n="fix_sub">One team, every trade — no need to find six different contractors.</p>
     </div>
     <div class="fix-grid">
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.5 0 6-2.6 6-5.8 0-3.4-4-8-6-10.2C10 7.2 6 11.8 6 15.2 6 18.4 8.5 21 12 21Z"/></svg>
-        <div class="fix-name" data-i18n="fix_1_name"></div>
-        <div class="fix-desc" data-i18n="fix_1_desc"></div>
+        <div class="fix-name" data-i18n="fix_1_name">Plumbing</div>
+        <div class="fix-desc" data-i18n="fix_1_desc">Leaks, blocked drains, water heaters</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg>
-        <div class="fix-name" data-i18n="fix_2_name"></div>
-        <div class="fix-desc" data-i18n="fix_2_desc"></div>
+        <div class="fix-name" data-i18n="fix_2_name">Electrical</div>
+        <div class="fix-desc" data-i18n="fix_2_desc">Power outages, faulty wiring, fixtures</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 5l2 2M19 2l2 2"/></svg>
-        <div class="fix-name" data-i18n="fix_3_name"></div>
-        <div class="fix-desc" data-i18n="fix_3_desc"></div>
+        <div class="fix-name" data-i18n="fix_3_name">Locks &amp; Keys</div>
+        <div class="fix-desc" data-i18n="fix_3_desc">Lockouts, broken locks, security</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M4 11h16v4H4z"/><path d="M5 15v4M19 15v4"/></svg>
-        <div class="fix-name" data-i18n="fix_4_name"></div>
-        <div class="fix-desc" data-i18n="fix_4_desc"></div>
+        <div class="fix-name" data-i18n="fix_4_name">Furniture</div>
+        <div class="fix-desc" data-i18n="fix_4_desc">Assembly, repairs, mounting</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3 3 14l3.5 3.5L17.5 6.5 21 3l-4 0Z"/><path d="M8 17l-3 4M3 21l1.5-4.5"/></svg>
-        <div class="fix-name" data-i18n="fix_5_name"></div>
-        <div class="fix-desc" data-i18n="fix_5_desc"></div>
+        <div class="fix-name" data-i18n="fix_5_name">General Repairs</div>
+        <div class="fix-desc" data-i18n="fix_5_desc">Doors, windows, small fixes</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M9 15h.01M13 15h.01"/></svg>
-        <div class="fix-name" data-i18n="fix_6_name"></div>
-        <div class="fix-desc" data-i18n="fix_6_desc"></div>
+        <div class="fix-name" data-i18n="fix_6_name">Appliances</div>
+        <div class="fix-desc" data-i18n="fix_6_desc">Washing machines, fridges, ovens</div>
       </div>
       <div class="fix-tile reveal">
         <svg class="fix-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="7" rx="2"/><path d="M4 8h16M6 12v3M10 12v5M14 12v3M18 12v5"/></svg>
-        <div class="fix-name" data-i18n="fix_7_name"></div>
-        <div class="fix-desc" data-i18n="fix_7_desc"></div>
+        <div class="fix-name" data-i18n="fix_7_name">Air Conditioning</div>
+        <div class="fix-desc" data-i18n="fix_7_desc">Installation, repair, troubleshooting</div>
       </div>
     </div>
   </div>
@@ -416,34 +392,34 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </picture>
   <div class="section-veil"></div>
   <div class="section-inner">
-    <span class="eyebrow" data-i18n="sec_pricing"></span>
+    <span class="eyebrow" data-i18n="sec_pricing">Pricing</span>
     <div class="pricing-grid">
       <div class="plan featured reveal" data-open-plan="1" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_1_name"></div>
-        <div class="plan-sub" data-i18n="price_1_sub"></div>
+        <div class="plan-name" data-i18n="price_1_name">Emergency</div>
+        <div class="plan-sub" data-i18n="price_1_sub">2–3 hours</div>
         <div class="plan-price">€300</div>
-        <div class="plan-period" data-i18n="price_1_period"></div>
-        <div class="plan-desc" data-i18n="price_1_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_1_period">1st hour, then €35/h</div>
+        <div class="plan-desc" data-i18n="price_1_desc">For leaks, lockouts, no power — anything that can't wait</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">See what's included</div>
       </div>
       <div class="plan reveal" data-open-plan="2" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_2_name"></div>
-        <div class="plan-sub" data-i18n="price_2_sub"></div>
+        <div class="plan-name" data-i18n="price_2_name">Same day</div>
+        <div class="plan-sub" data-i18n="price_2_sub">today</div>
         <div class="plan-price">€150</div>
-        <div class="plan-period" data-i18n="price_2_period"></div>
-        <div class="plan-desc" data-i18n="price_2_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_2_period">1st hour, then €35/h</div>
+        <div class="plan-desc" data-i18n="price_2_desc">For issues that need attention today, not urgently</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">See what's included</div>
       </div>
       <div class="plan reveal" data-open-plan="3" role="button" tabindex="0" aria-haspopup="dialog">
-        <div class="plan-name" data-i18n="price_3_name"></div>
-        <div class="plan-sub" data-i18n="price_3_sub"></div>
+        <div class="plan-name" data-i18n="price_3_name">Scheduled</div>
+        <div class="plan-sub" data-i18n="price_3_sub">your convenience</div>
         <div class="plan-price">€50</div>
-        <div class="plan-period" data-i18n="price_3_period"></div>
-        <div class="plan-desc" data-i18n="price_3_desc"></div>
-        <div class="plan-click-hint" data-i18n="plan_click_hint"></div>
+        <div class="plan-period" data-i18n="price_3_period">1st hour, then €35/h</div>
+        <div class="plan-desc" data-i18n="price_3_desc">Planned repairs and maintenance, booked at your convenience</div>
+        <div class="plan-click-hint" data-i18n="plan_click_hint">See what's included</div>
       </div>
     </div>
-    <p class="pricing-note" data-i18n="pricing_note"></p>
+    <p class="pricing-note" data-i18n="pricing_note">The first hour covers the visit and diagnosis. Every additional hour is €35. Price confirmed before work begins.</p>
   </div>
 </section>
 
@@ -452,9 +428,9 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   <div class="section-inner">
     <div class="coverage-inner">
       <div class="reveal">
-        <span class="eyebrow" data-i18n="sec_coverage"></span>
+        <span class="eyebrow" data-i18n="sec_coverage">Where we cover</span>
         <div class="coverage-cities">Luz · Lagos · Portimão · Carvoeiro · Lagoa · Silves · Armação de Pêra · Albufeira · Vilamoura</div>
-        <p class="coverage-note" data-i18n="coverage_note"></p>
+        <p class="coverage-note" data-i18n="coverage_note">Currently expanding across the Algarve.</p>
       </div>
       <svg class="coverage-map reveal" viewBox="0 0 800 220" fill="none">
         <path d="M40 130 C 75 148, 100 150, 130 150 C 160 150, 185 125, 215 125 C 245 125, 270 148, 300 148 C 330 148, 355 118, 385 118 C 410 118, 445 100, 470 100 C 500 100, 545 135, 575 135 C 605 135, 635 110, 665 110 C 695 110, 720 95, 750 95" stroke="var(--line-strong)" stroke-width="2" fill="none"/>
@@ -498,23 +474,23 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </picture>
   <div class="section-veil"></div>
   <div class="section-inner">
-    <h2 style="font-size:clamp(1.5rem,3vw,2rem);" data-i18n="trust_title"></h2>
+    <h2 style="font-size:clamp(1.5rem,3vw,2rem);" data-i18n="trust_title">Why call us</h2>
     <div class="trust-list">
       <div class="trust-item reveal">
         <svg class="trust-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        <div><div class="trust-title" data-i18n="trust_1_title"></div><div class="trust-desc" data-i18n="trust_1_desc"></div></div>
+        <div><div class="trust-title" data-i18n="trust_1_title">Speak your language</div><div class="trust-desc" data-i18n="trust_1_desc">English, German, French — a real person who understands you.</div></div>
       </div>
       <div class="trust-item reveal">
         <svg class="trust-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        <div><div class="trust-title" data-i18n="trust_2_title"></div><div class="trust-desc" data-i18n="trust_2_desc"></div></div>
+        <div><div class="trust-title" data-i18n="trust_2_title">Price before we arrive</div><div class="trust-desc" data-i18n="trust_2_desc">No surprises, no haggling on-site.</div></div>
       </div>
       <div class="trust-item reveal">
         <svg class="trust-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        <div><div class="trust-title" data-i18n="trust_3_title"></div><div class="trust-desc" data-i18n="trust_3_desc"></div></div>
+        <div><div class="trust-title" data-i18n="trust_3_title">Local craftsmen</div><div class="trust-desc" data-i18n="trust_3_desc">Same team behind Artech Portugalia's window installations.</div></div>
       </div>
       <div class="trust-item reveal">
         <svg class="trust-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-        <div><div class="trust-title" data-i18n="trust_4_title"></div><div class="trust-desc" data-i18n="trust_4_desc"></div></div>
+        <div><div class="trust-title" data-i18n="trust_4_title">Guaranteed work</div><div class="trust-desc" data-i18n="trust_4_desc">We stand behind every callout.</div></div>
       </div>
     </div>
   </div>
@@ -530,10 +506,13 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
     </div>
   </div>
   <div class="footer-services">
-    <div class="footer-services-label" data-i18n="footer_services_label"></div>
+    <div class="footer-services-label" data-i18n="footer_services_label">Aira Home · 4 services</div>
+    <a href="/home/">Aira Home</a>
+    <a href="/airahome">Airahome</a>
+    <a href="/energia">Aira Energia</a>
+    <a href="/garden">Aira Garden</a>
+    <a href="/construction">Aira Construction</a>
     <a href="/">Aira</a>
-    <a href="/energia" data-i18n="footer_link_energia"></a>
-    <a href="/garden" data-i18n="footer_link_garden"></a>
   </div>
   <div class="footer-right">
     <div class="lang-switch">
@@ -562,42 +541,12 @@ footer{padding:2.5rem 1.75rem;border-top:1px solid var(--line);display:flex;flex
   </div>
 </div>
 
-<!-- ══════════════════════ CHAT WIDGET ══════════════════════ -->
-<button id="ah-chat-btn" onclick="ahToggle()" aria-label="Open chat">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path d="M12 2C6.48 2 2 6.03 2 11c0 2.4.96 4.58 2.53 6.2L3 21l4.2-1.35A10.1 10.1 0 0 0 12 20c5.52 0 10-4.03 10-9s-4.48-9-10-9z" fill="#fff"/>
-    <circle cx="8.5" cy="11" r="1.2" fill="#14181c"/>
-    <circle cx="12" cy="11" r="1.2" fill="#14181c"/>
-    <circle cx="15.5" cy="11" r="1.2" fill="#14181c"/>
-  </svg>
-</button>
-<div class="ah-chat-tip" data-i18n="chat_tooltip"></div>
-
-<div id="ah-chat-panel">
-  <div class="ah-header">
-    <div class="ah-avatar">A</div>
-    <div class="ah-info">
-      <div class="ah-name">Airahome</div>
-      <div class="ah-status"><span class="ah-dot"></span><span data-i18n="chat_online"></span></div>
-    </div>
-    <button class="ah-close" onclick="ahToggle()">✕</button>
-  </div>
-  <div class="ah-messages" id="ah-messages"></div>
-  <div class="ah-input-bar">
-    <input class="ah-input" id="ah-input" data-i18n-ph="chat_placeholder"
-           onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();ahSend()}">
-    <button class="ah-send" onclick="ahSend()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z" fill="#fff"/></svg>
-    </button>
-  </div>
-</div>
 
 <script>
 // ══════════════════════════════════════════
 // CONFIG — TODO: replace placeholder contact details before going live
 // ══════════════════════════════════════════
 const LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-leads';
-const CHAT_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-chat';
 
 // ══════════════════════════════════════════
 // I18N DATA
@@ -648,7 +597,7 @@ en:{
   trust_2_title:'Price before we arrive',trust_2_desc:'No surprises, no haggling on-site.',
   trust_3_title:'Local craftsmen',trust_3_desc:"Same team behind Artech Portugalia's window installations.",
   trust_4_title:'Guaranteed work',trust_4_desc:'We stand behind every callout.',
-  footer_services_label:'Other Aira services',footer_link_energia:'Energy',footer_link_garden:'Garden',
+  footer_services_label:'Aira Home · 4 services',footer_link_energia:'Energy',footer_link_garden:'Garden',
   plan_click_hint:'See what\'s included',
   modal_cta:'Request a callout',
   modal_1_detail:'The brigade arrives within 2–3 hours of your call. The €300 call-out fee covers the first hour end-to-end: travel, tools, and the work itself. Every additional hour is €35, agreed with you before it starts. For leaks, lockouts, power failures, appliance or A/C breakdown — anything that genuinely cannot wait.',
@@ -700,7 +649,7 @@ de:{
   trust_2_title:'Preis vor unserer Ankunft',trust_2_desc:'Keine Überraschungen, kein Feilschen vor Ort.',
   trust_3_title:'Lokale Handwerker',trust_3_desc:'Dasselbe Team, das die Fensterinstallationen von Artech Portugalia durchführt.',
   trust_4_title:'Garantierte Arbeit',trust_4_desc:'Wir stehen hinter jedem Einsatz.',
-  footer_services_label:'Weitere Aira-Dienste',footer_link_energia:'Energie',footer_link_garden:'Garden',
+  footer_services_label:'Aira Home · 4 Dienste',footer_link_energia:'Energie',footer_link_garden:'Garden',
   plan_click_hint:'Details ansehen',
   modal_cta:'Einsatz anfragen',
   modal_1_detail:'Die Mannschaft trifft innerhalb von 2–3 Stunden nach Ihrem Anruf ein. Die Einsatzpauschale von €300 deckt die erste Stunde vollständig ab: Anfahrt, Werkzeug und Arbeit. Jede weitere Stunde kostet €35, vorab mit Ihnen vereinbart. Für Lecks, Aussperrungen, Stromausfälle oder Klimaanlagen — alles, was nicht warten kann.',
@@ -752,7 +701,7 @@ fr:{
   trust_2_title:'Prix avant notre arrivée',trust_2_desc:'Aucune surprise, aucune négociation sur place.',
   trust_3_title:'Artisans locaux',trust_3_desc:'La même équipe qui installe les fenêtres d\'Artech Portugalia.',
   trust_4_title:'Travail garanti',trust_4_desc:'Nous sommes responsables de chaque intervention.',
-  footer_services_label:'Autres services Aira',footer_link_energia:'Énergie',footer_link_garden:'Garden',
+  footer_services_label:'Aira Home · 4 services',footer_link_energia:'Énergie',footer_link_garden:'Garden',
   plan_click_hint:'Voir le détail',
   modal_cta:'Demander une intervention',
   modal_1_detail:'L\'équipe arrive dans les 2 à 3 heures suivant votre appel. Le forfait de €300 couvre la première heure dans son intégralité : déplacement, outillage et travaux. Chaque heure supplémentaire est de €35, convenue avec vous avant le début. Pour les fuites, les portes claquées, les coupures de courant, les pannes d\'électroménager ou de climatisation — tout ce qui ne peut pas attendre.',
@@ -804,7 +753,7 @@ pt:{
   trust_2_title:'Preço antes de chegarmos',trust_2_desc:'Sem surpresas, sem negociação no local.',
   trust_3_title:'Profissionais locais',trust_3_desc:'A mesma equipa por trás das instalações de janelas da Artech Portugalia.',
   trust_4_title:'Trabalho garantido',trust_4_desc:'Respondemos por cada intervenção.',
-  footer_services_label:'Outros serviços Aira',footer_link_energia:'Energia',footer_link_garden:'Garden',
+  footer_services_label:'Aira Home · 4 serviços',footer_link_energia:'Energia',footer_link_garden:'Garden',
   plan_click_hint:'Ver detalhes',
   modal_cta:'Pedir intervenção',
   modal_1_detail:'A equipa chega em 2 a 3 horas após o seu contacto. A taxa de €300 cobre a primeira hora na íntegra: deslocação, ferramentas e trabalho. Cada hora adicional é €35, acordada consigo antes de começar. Para fugas, portas fechadas por fora, falhas de energia, avarias de eletrodomésticos ou ar condicionado — o que não pode esperar.',
@@ -862,8 +811,10 @@ document.getElementById('calloutForm').addEventListener('submit', function(e){
     urgency: f.urgency.value,
     language: currentLang,
     page: 'airahome.pt',
+    direction: 'airahome',
     source: 'form'
   };
+  if (/[?&]test=1(&|$)/.test(location.search)) data.test = true;
   btn.disabled = true;
   st.className = 'form-status'; st.textContent = t.form_sending;
   fetch(LEADS_WEBHOOK, {
@@ -877,122 +828,6 @@ document.getElementById('calloutForm').addEventListener('submit', function(e){
     btn.disabled = false;
   });
 });
-
-// ══════════════════════════════════════════
-// CHAT WIDGET -> n8n webhook (airahome-chat, relay to Anthropic)
-// Autocall to Alexandra/Katerina is NOT wired here — collected leads
-// only reach Telegram via the airahome-site-leads webhook below.
-// ══════════════════════════════════════════
-(function(){
-  const history = [];
-  let busy = false, opened = false, leadSent = false;
-
-  function systemPrompt(){
-    return "You are the Airahome assistant — a 24/7 emergency callout service for homeowners in the Algarve (Luz, Lagos, Portimão, Carvoeiro, Lagoa, Silves, Armação de Pêra, Albufeira, Vilamoura). "
-    + "Detect the visitor's language from their first message and reply in that language for the rest of the conversation (support English, German, French; if they write in Portuguese, reply in Portuguese too). "
-    + "Be direct, calm, and brief — 2-4 sentences per reply, no marketing tone. "
-    + "Categories we fix: Plumbing (leaks, blocked drains, water heaters), Electrical (outages, wiring, fixtures), Locks & Keys (lockouts, broken locks), Furniture (assembly, repairs, mounting), General Repairs (doors, windows, small fixes), Appliances (washing machines, fridges, ovens), Air Conditioning (installation, repair, troubleshooting). "
-    + "Pricing: Emergency 2-3h callout €250 fixed. Same-day callout €135 fixed. Scheduled work €30/hour. Price covers the visit and diagnosis; parts and extended labour are quoted separately. "
-    + "Your job: find out what's broken, get the address, get a phone number, and how urgent it is (Now / Today / This week). Ask one question at a time, don't interrogate. "
-    + "Once you have all four (problem, address, phone, urgency), tell the visitor clearly that the team will call them back shortly to confirm the price and timing, then on that same reply append on its own line exactly this machine-readable tag (it will be hidden from the visitor): "
-    + "<<LEAD>>{\"name\":\"(their name if given, else empty string)\",\"problem\":\"...\",\"address\":\"...\",\"phone\":\"...\",\"urgency\":\"Now|Today|This week\",\"language\":\"en|de|fr|pt\"}<<END>> "
-    + "Only emit the tag once, when you actually have all four fields. Never invent details the visitor didn't give you.";
-  }
-
-  function ahAddMsg(role, text){
-    const box = document.getElementById('ah-messages');
-    const d = document.createElement('div');
-    d.className = 'ah-msg ' + role;
-    d.textContent = text;
-    box.appendChild(d);
-    box.scrollTop = box.scrollHeight;
-  }
-  function ahShowTyping(){
-    const box = document.getElementById('ah-messages');
-    const d = document.createElement('div');
-    d.className = 'ah-typing'; d.id = 'ah-typing';
-    d.innerHTML = '<span></span><span></span><span></span>';
-    box.appendChild(d); box.scrollTop = box.scrollHeight;
-  }
-  function ahHideTyping(){ const e = document.getElementById('ah-typing'); if(e) e.remove(); }
-
-  function extractLead(text){
-    const m = text.match(/<<LEAD>>([\s\S]*?)<<END>>/);
-    if(!m) return {clean:text, lead:null};
-    let lead = null;
-    try{ lead = JSON.parse(m[1]); }catch(err){ lead = null; }
-    return {clean: text.replace(m[0], '').trim(), lead};
-  }
-
-  function sendLeadToTelegram(lead){
-    if(leadSent) return;
-    leadSent = true;
-    fetch(LEADS_WEBHOOK, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        name: lead.name || '',
-        phone: lead.phone || '',
-        address: lead.address || '',
-        problem: lead.problem || '',
-        urgency: lead.urgency || '',
-        language: lead.language || currentLang,
-        page: 'airahome.pt',
-        source: 'chat'
-      })
-    }).catch(()=>{});
-  }
-
-  async function ahSend(){
-    if(busy) return;
-    const inp = document.getElementById('ah-input');
-    const text = inp.value.trim();
-    if(!text) return;
-    inp.value = '';
-    ahAddMsg('user', text);
-    history.push({role:'user', content:text});
-    busy = true;
-    ahShowTyping();
-    try{
-      const res = await fetch(CHAT_WEBHOOK, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ system: systemPrompt(), messages: history.slice(-12) })
-      });
-      const data = await res.json();
-      ahHideTyping();
-      const raw = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text
-        : 'Sorry, something went wrong. Please call us directly.';
-      const {clean, lead} = extractLead(raw);
-      ahAddMsg('bot', clean);
-      history.push({role:'assistant', content:raw});
-      if(lead && lead.phone) sendLeadToTelegram(lead);
-    }catch(e){
-      ahHideTyping();
-      ahAddMsg('bot', 'Connection error. Please call us directly.');
-    }
-    busy = false;
-  }
-  window.ahSend = ahSend;
-
-  window.ahToggle = function(){
-    const panel = document.getElementById('ah-chat-panel');
-    panel.classList.toggle('open');
-    if(panel.classList.contains('open')){
-      if(!opened){
-        setTimeout(()=>{
-          const greet = {
-            en:"Hi — what's happened at your place? I'll get the details and have someone call you back.",
-            de:'Hallo — was ist bei Ihnen passiert? Ich nehme die Details auf und wir rufen Sie zurück.',
-            fr:"Bonjour — qu'est-ce qui se passe chez vous ? Je note les détails et nous vous rappelons.",
-            pt:'Olá — o que se passou na sua casa? Vou registar os detalhes e ligamos-lhe de volta.'
-          };
-          ahAddMsg('bot', greet[currentLang] || greet.en);
-        }, 300);
-        opened = true;
-      }
-      setTimeout(()=>document.getElementById('ah-input').focus(), 100);
-    }
-  };
-})();
 
 // ══════════════════════════════════════════
 // PLAN MODAL
@@ -1049,5 +884,6 @@ document.getElementById('calloutForm').addEventListener('submit', function(e){
 setLang('en');
 </script>
 
+<script src="/assets/aira-home-chat.js" data-dir="airahome" data-request="#request" defer></script>
 </body>
 </html>
