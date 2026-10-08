@@ -1,4 +1,4 @@
-# Аудит кликабельности Aira Home — 08.10.2026
+# Аудит кликабельности Aira Home — 08.10.2026 (обновлено после раунда 2)
 
 Ветка `fix/airahome-4-directions`. Playwright (Chromium) обошёл 5 страниц × 4 языка (EN/DE/FR/PT; язык — через `setLang`).
 По каждому `<a>`/`<button>`: href, HTTP-статус (внутренние и внешние), наличие якоря, формат `tel:` / `wa.me` / `mailto:`,
@@ -7,17 +7,27 @@
 
 ## Итог
 
-| | Прод `aira-ai.net` (до) | Ветка (после) |
-|---|---|---|
-| Битые ссылки (4xx/5xx, нет якоря) | 0 | 0 |
-| Кнопки без действия | 0 | 0 |
-| Кнопки/ссылки без текста (с JS) | 1 (`.ah-send` в чате /airahome) | 0 |
-| Кнопки/ссылки без текста (без JS) | почти все `data-i18n`-кнопки и ссылки на 5 страницах (текст подставлялся только JS) | 0 |
-| Неверный `tel:` / `wa.me` / `mailto:` | 0 по формату | 0 по формату |
-| Языки: нет переключателя | /garden: DE, FR | /garden: DE, FR (не исправлялось, см. ниже) |
-| JS-ошибки в консоли | — | 0 (один 404 — `/favicon.ico` локального сервера; на проде 200) |
+| | Прод `aira-ai.net` (до) | Ветка, раунд 1 | Ветка, раунд 2 — превью CF Pages |
+|---|---|---|---|
+| Битые ссылки (4xx/5xx, нет якоря) | 0 | 0 | 0 |
+| Кнопки без действия | 0 | 0 | 0 |
+| Кнопки/ссылки без текста (с JS) | 1 (`.ah-send` в чате /airahome) | 0 | 0 |
+| Кнопки/ссылки без текста (без JS) | почти все `data-i18n`-кнопки и ссылки на 5 страницах (текст подставлялся только JS) | 0 | 0 |
+| Неверный `tel:` / `wa.me` / `mailto:` | 0 по формату (но /construction WhatsApp → линия Zadarma) | 0 по формату | 0; везде один `wa.me/351936800000` и один `tel:+351308800687` |
+| Языки: нет переключателя | /garden: DE, FR | /garden: DE, FR | нет — все 5 страниц × EN/DE/FR/PT |
+| JS-ошибки в консоли | — | 0 (один 404 — `/favicon.ico` локального сервера; на проде 200) | 0 |
 
-Порог стоп-крана (>20 битых) не достигнут — битых 0.
+Порог стоп-крана (>20 битых) не достигнут — битых 0. Раунд 2: 728 проверок элементов (5 страниц × 4 языка), превью `https://fix-airahome-4-directions.aira-370.pages.dev`.
+
+## Формы и заявки (раунд 2, тест `?test=1` на превью)
+
+| Страница | Куда шлёт | HTTP | Telegram (n8n exec → message_id) | Звонок Alexandra |
+|---|---|---|---|---|
+| /airahome (форма) | `aira-airahome-leads`, direction=airahome | 200 | exec 42075 → 2138, «🧪 ТЕСТ · 🔧 Airahome» | нет (test) |
+| /construction (форма) | `aira-airahome-leads`, direction=construction | 200 | exec 42076 → 2139, «🧪 ТЕСТ · 🏗 Aira Construction» | нет (только airahome) |
+| /energia (форма) | `aira-energia-leads` | 200 | exec 42077 → 2140, «🔌 Aira Energia» | — |
+| /garden (форма) | `aira-garden-leads` | 200 | exec 42078 → 2141, «🌿 Aira Garden» | — |
+| /home (чат-виджет, лид из диалога) | `aira-airahome-leads`, direction=construction | 200 | exec 42080 → 2142, «🧪 ТЕСТ · 🏗 Aira Construction (chat)» | нет |
 
 ## Ссылки по страницам (ветка, после правок)
 
@@ -80,8 +90,7 @@
 | `/home/`, `/airahome`, `/energia`, `/garden`, `/construction` | панель направлений + футер | 200 |
 | `#request` | Request a quote / Pedir orçamento / Angebot anfragen / Demander un devis · 📝 | якорь ok |
 | `#how` | See how it works / Wie es funktioniert / … | якорь ok |
-| `https://wa.me/351308800687` | Message on WhatsApp (4 языка) — **номер страницы, не бот Sofia** | wa ok (формат) |
-| `https://wa.me/351936800000` | 💬 WhatsApp (виджет) | wa ok |
+| `https://wa.me/351936800000` | Message on WhatsApp (4 языка) · 💬 WhatsApp (виджет) | wa ok (Sofia; раньше тут была линия Zadarma 351308800687) |
 | `mailto:info@aira-ai.net?subject=Aira%20Construction` | Write an email / … | mailto ok |
 | `tel:+351308800687` | 📞 Call … (виджет) | tel ok |
 | `/home/privacy.html`, `/` | футер | 200 |
@@ -91,7 +100,8 @@
 - `.ah-send` (кнопка отправки в чате) — заменена виджетом с видимым текстом «Send/Senden/Envoyer/Enviar» и `aria-label`.
 - sitemap.xml: убраны несуществующие `/home/home.html`, `/home/garden.html`; добавлен `/construction`.
 
-## Не битое по формату, но требует решения (не трогал — номера не менять)
-- /construction: WhatsApp `wa.me/351308800687` (в коде `TODO: confirmar número WhatsApp da Construction`), на остальных страницах — `351936800000` (Sofia).
-- Форма /construction шлёт в `https://n8n.aira-ai.net/webhook/aira-construction-leads` — **вебхук не зарегистрирован в n8n (404)**: заявки с этой формы теряются.
-- /garden — только PT/EN, переключателей DE/FR нет вообще.
+## Раунд 2 — закрыто
+- /construction: WhatsApp → `wa.me/351936800000` (Sofia); `351308800687` остался только как `tel:`.
+- Форма /construction: была на несуществующий `aira-construction-leads` (404, заявки терялись молча — форма всегда показывала «отправлено») → теперь `aira-airahome-leads` с `direction=construction`.
+- /garden: добавлены DE и FR (99 ключей) + переключатели в шапке и футере.
+- Видимые посетителям строки «[TODO: Arsénio — …]» в модалках услуг /garden и /construction скрыты.
