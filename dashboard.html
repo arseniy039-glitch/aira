@@ -59,7 +59,7 @@
         <div class="label">Техстатус <span class="go">›</span></div><div class="value">—</div><div class="sub">загрузка…</div>
       </a>
       <a class="tile" id="tScout" href="https://stats.aira-ai.net/scout" target="_blank" rel="noopener">
-        <div class="label">Scout · MacroDroid <span class="go">↗</span></div><div class="value">—</div><div class="sub">загрузка…</div>
+        <div class="label">Scout <span class="go">↗</span></div><div class="value">—</div><div class="sub">загрузка…</div>
       </a>
     </div>
   </section>
@@ -112,10 +112,12 @@ async function loadLeads(){
     const cs = d.competitors_summary || {};
     const top = Object.entries(cs.by_category || {})[0];
     tile('tComp', cs.total ?? '—', `<span>${top ? 'больше всего: ' + esc(top[0]) + ' (' + top[1] + ')' : 'профилей мастеров'}</span>`);
-    const md = d.scout_last_macrodroid_run, h = hoursSince(md);
+    const sr = d.scout_last_runs || {}, md = sr.any || d.scout_last_macrodroid_run;
+    const bad = sr.desktop ? (hoursSince(sr.desktop) > 30 || hoursSince(sr.http) > 2) : hoursSince(md) > 48;
     tile('tScout', md ? fmtDate(md) : '—',
-      md ? `<span class="${h > 48 ? 'bad-t' : ''}">последний прогон MacroDroid · ${ago(md)}${h > 48 ? ' — молчит больше 48 ч' : ''}</span>` : noData('нет поля в API'),
-      h > 48);
+      md ? `<span class="${bad ? 'bad-t' : ''}">последний прогон · ${ago(md)}${bad ? ' — есть источник, который молчит' : ''}</span>`
+           + (sr.desktop ? `<span>Desktop ${ago(sr.desktop)} · HTTP ${ago(sr.http)}</span>` : '') : noData('нет поля в API'),
+      bad);
   } catch (e) {
     tile('tLeads', '—', noData(e.message)); $('leadsSrc').innerHTML = '';
     tile('tScout', '—', noData(e.message));

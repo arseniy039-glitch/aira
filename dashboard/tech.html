@@ -47,6 +47,7 @@ async function load(){
     ['Ошибки n8n 24 ч', errs, errs ? 'bad-t' : ''], ['Диск', esc(t.disk_pct || '—'), disk >= 85 ? 'bad-t' : ''], ['Load 1 мин', esc(t.load1 || '—'), '']]
     .map(([l, v, c]) => `<div class="kpi"><b class="${c}">${v}</b><span>${l}</span></div>`).join('');
   const md = scout && scout.scout_last_macrodroid_run, h = hoursSince(md);
+  const sr = (scout && scout.scout_last_runs) || {};
   const lr = scout && scout.last_run;
   $('main').innerHTML =
     block('Сервер VPS', row('ok', 'VPS отвечает (dashboard-data)', ago(d.generated_at))
@@ -58,7 +59,8 @@ async function load(){
         (c.found ? (c.running ? 'работает' : 'остановлен') : 'не найден') + (c.restarts ? ` · рестартов ${c.restarts}` : '') + (c.oomkilled ? ' · OOM' : ''))).join('') || row('', 'нет данных', ''))
     + block('Голос и сбор лидов',
         row('', 'ElevenLabs', 'нет данных — dashboard-data его не проверяет')
-      + row(md ? (h > 48 ? 'err' : 'ok') : '', 'Scout · MacroDroid', md ? `${fmtDate(md)} · ${ago(md)}${h > 48 ? ' — молчит больше 48 ч' : ''}` : 'нет данных')
+      + row(sr.desktop ? (hoursSince(sr.desktop) > 30 ? 'err' : 'ok') : '', 'Scout Desktop (ноут)', sr.desktop ? `${fmtDate(sr.desktop)} · ${ago(sr.desktop)}${hoursSince(sr.desktop) > 30 ? ' — не отработал больше 30 ч' : ''}` : 'нет данных')
+      + row(sr.http ? (hoursSince(sr.http) > 2 ? 'err' : 'ok') : '', 'Scout HTTP (VPS)', sr.http ? `${fmtDate(sr.http)} · ${ago(sr.http)}${hoursSince(sr.http) > 2 ? ' — молчит больше 2 ч' : ''}` : 'нет данных')
       + row(lr ? (lr.errors ? 'wait' : 'ok') : '', 'Сборщик лидов Fixando', lr ? `${esc(lr.region || '')} · ${ago(lr.finished_at)} · новых ${lr.new_leads} · ошибок ${lr.errors}` : 'нет данных'));
 }
 $('refresh').onclick = load;
