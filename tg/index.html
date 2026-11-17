@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Aira — голосовое демо</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #0f1115);
+    --bg2: var(--tg-theme-secondary-bg-color, #181b22);
+    --text: var(--tg-theme-text-color, #f2f3f5);
+    --hint: var(--tg-theme-hint-color, #8b919c);
+    --accent: var(--tg-theme-button-color, #6c5ce7);
+    --accent-text: var(--tg-theme-button-text-color, #ffffff);
+    --danger: var(--tg-theme-destructive-text-color, #ff5a5f);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 16px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    overflow: hidden; user-select: none; -webkit-user-select: none;
+  }
+  header { text-align: center; margin-top: 4px; }
+  header h1 { font-size: 22px; margin: 0 0 4px; font-weight: 700; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--hint); font-size: 14px; max-width: 320px; }
+  main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 22px; }
+  .stage { position: relative; width: 240px; height: 240px; display: grid; place-items: center; }
+  .ring { position: absolute; inset: 30px; border-radius: 50%; background: var(--accent); opacity: 0; transform: scale(1); transition: transform .08s linear, opacity .3s; }
+  .ring.r2 { inset: 30px; }
+  .live .ring { opacity: .18; }
+  .live .ring.r2 { opacity: .10; }
+  .connecting .ring { opacity: .15; animation: pulse 1.2s ease-in-out infinite; }
+  .connecting .ring.r2 { animation-delay: .4s; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+  #mic {
+    position: relative; z-index: 2; width: 150px; height: 150px; border-radius: 50%; border: 0; cursor: pointer;
+    background: var(--accent); color: var(--accent-text);
+    display: grid; place-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); transition: transform .15s;
+  }
+  #mic:active { transform: scale(.96); }
+  #mic:disabled { opacity: .6; }
+  #mic svg { width: 58px; height: 58px; }
+  .speaking #mic { box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 30%, transparent), 0 10px 30px rgba(0,0,0,.25); }
+  .wave { display: flex; gap: 4px; align-items: center; height: 28px; }
+  .wave i { display: block; width: 4px; height: 6px; border-radius: 2px; background: var(--accent); opacity: .35; transition: height .08s linear, opacity .2s; }
+  .live .wave i { opacity: .9; }
+  #status { font-size: 18px; font-weight: 600; min-height: 26px; text-align: center; }
+  #timer { font-variant-numeric: tabular-nums; color: var(--hint); font-size: 15px; min-height: 20px; }
+  #timer.low { color: var(--danger); font-weight: 600; }
+  .btn {
+    appearance: none; border: 0; border-radius: 12px; padding: 14px 18px; font: inherit; font-weight: 600; cursor: pointer;
+    width: 100%; max-width: 340px; background: var(--bg2); color: var(--text);
+  }
+  .btn.primary { background: var(--accent); color: var(--accent-text); }
+  .btn[hidden] { display: none; }
+  .panel {
+    width: 100%; max-width: 360px; background: var(--bg2); border-radius: 14px; padding: 16px; font-size: 15px;
+  }
+  .panel[hidden] { display: none; }
+  .panel h2 { font-size: 17px; margin: 0 0 8px; }
+  .panel ol { margin: 8px 0 0; padding-left: 20px; }
+  .panel li { margin: 4px 0; }
+  .muted { color: var(--hint); font-size: 13px; text-align: center; max-width: 320px; }
+  footer { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 data-i18n="title">Айра — ИИ-агент</h1>
+  <p data-i18n="subtitle">Спросите, что она умеет, или попросите сыграть ресепшен вашего отеля</p>
+</header>
+
+<main id="main">
+  <div class="stage" id="stage">
+    <div class="ring r2" id="ring2"></div>
+    <div class="ring" id="ring1"></div>
+    <button id="mic" aria-label="mic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><path d="M12 18v4"/><path d="M8 22h8"/>
+      </svg>
+    </button>
+  </div>
+  <div class="wave" id="wave"></div>
+  <div id="status" data-i18n="idle">Нажмите, чтобы поговорить</div>
+  <div id="timer">3:00</div>
+
+  <div class="panel" id="panel" hidden></div>
+</main>
+
+<footer>
+  <button class="btn" id="endBtn" hidden data-i18n="end">Закончить</button>
+  <button class="btn primary" id="leadBtn" hidden data-i18n="lead">Оставить заявку</button>
+  <div class="muted" id="note" data-i18n="note">Демо — 3 минуты. Разговор обрабатывается ИИ.</div>
+</footer>
+
+<script type="module">
+import { Conversation } from 'https://cdn.jsdelivr.net/npm/@elevenlabs/client@1.33.0/+esm';
+
+const API = 'https://n8n.aira-ai.net/webhook/tg-demo-session';
+const BOT = 'https://t.me/aira_voice_demo_bot';
+const LIMIT = 180, WARN_AT = 20;
+const tg = window.Telegram && window.Telegram.WebApp;
+
+const I18N = {
+  ru: { title: 'Айра — ИИ-агент', subtitle: 'Спросите, что она умеет, или попросите сыграть ресепшен вашего отеля',
+    idle: 'Нажмите, чтобы поговорить', connecting: 'Подключаюсь…', listening: 'Слушаю', speaking: 'Говорит', ended: 'Разговор завершён',
+    end: 'Закончить', lead: 'Оставить заявку', again: 'Поговорить ещё раз', close: 'Закрыть',
+    note: 'Демо — 3 минуты. Разговор обрабатывается ИИ.',
+    thanks: 'Спасибо за разговор! Сейчас пришлём сообщение в чат — там можно попросить Арсения связаться с вами.',
+    micTitle: 'Нужен доступ к микрофону',
+    micIos: ['Откройте «Настройки» iPhone → Telegram', 'Включите «Микрофон»', 'Вернитесь сюда и нажмите кнопку ещё раз'],
+    micAndroid: ['Настройки телефона → Приложения → Telegram → Разрешения', 'Разрешите «Микрофон»', 'Вернитесь сюда и нажмите кнопку ещё раз'],
+    daily: 'Демо на сегодня закончилось. Оставьте заявку — Арсений свяжется с вами и покажет агента для вашего бизнеса.',
+    off: 'Демо сейчас недоступно. Оставьте заявку — Арсений свяжется с вами.',
+    upstream: 'Не удалось подключиться. Попробуйте ещё раз через минуту.',
+    auth: 'Сессия устарела. Закройте и откройте мини-приложение заново.',
+    leadOk: 'Готово! Арсений свяжется с вами в ближайшее время.',
+    outside: 'Это демо работает внутри Telegram. Откройте бота:', openBot: 'Открыть @aira_voice_demo_bot',
+    ctx: 'До конца демо осталось 20 секунд. Коротко закончи мысль и скажи: «Время демо заканчивается — нажмите кнопку под чатом, и Арсений свяжется с вами».' },
+  pt: { title: 'Aira — agente de IA', subtitle: 'Pergunte o que sabe fazer ou peça-lhe para fazer de receção do seu hotel',
+    idle: 'Toque para falar', connecting: 'A ligar…', listening: 'A ouvir', speaking: 'A falar', ended: 'Conversa terminada',
+    end: 'Terminar', lead: 'Deixar pedido', again: 'Falar outra vez', close: 'Fechar',
+    note: 'Demo de 3 minutos. A conversa é processada por IA.',
+    thanks: 'Obrigado! Vamos enviar-lhe uma mensagem no chat — lá pode pedir ao Arseniy que o contacte.',
+    micTitle: 'É preciso acesso ao microfone',
+    micIos: ['Abra Definições do iPhone → Telegram', 'Ative «Microfone»', 'Volte aqui e toque novamente'],
+    micAndroid: ['Definições → Aplicações → Telegram → Permissões', 'Permita «Microfone»', 'Volte aqui e toque novamente'],
+    daily: 'A demo de hoje terminou. Deixe um pedido — o Arseniy entra em contacto consigo.',
+    off: 'A demo não está disponível agora. Deixe um pedido — o Arseniy entra em contacto consigo.',
+    upstream: 'Não foi possível ligar. Tente novamente daqui a um minuto.',
+    auth: 'Sessão expirada. Feche e abra a mini-app novamente.',
+    leadOk: 'Feito! O Arseniy vai contactá-lo em breve.',
+    outside: 'Esta demo funciona dentro do Telegram. Abra o bot:', openBot: 'Abrir @aira_voice_demo_bot' },
+  de: { title: 'Aira — KI-Agentin', subtitle: 'Fragen Sie, was sie kann, oder lassen Sie sie Ihre Hotelrezeption spielen',
+    idle: 'Tippen zum Sprechen', connecting: 'Verbinde…', listening: 'Hört zu', speaking: 'Spricht', ended: 'Gespräch beendet',
+    end: 'Beenden', lead: 'Anfrage senden', again: 'Nochmal sprechen', close: 'Schließen',
+    note: 'Demo: 3 Minuten. Das Gespräch wird von KI verarbeitet.',
+    thanks: 'Danke! Wir schicken Ihnen gleich eine Nachricht im Chat — dort können Sie um einen Rückruf bitten.',
+    micTitle: 'Mikrofonzugriff erforderlich',
+    micIos: ['iPhone-Einstellungen → Telegram öffnen', '„Mikrofon" aktivieren', 'Zurückkehren und erneut tippen'],
+    micAndroid: ['Einstellungen → Apps → Telegram → Berechtigungen', '„Mikrofon" erlauben', 'Zurückkehren und erneut tippen'],
+    daily: 'Die Demo für heute ist vorbei. Senden Sie eine Anfrage — Arseniy meldet sich bei Ihnen.',
+    off: 'Die Demo ist gerade nicht verfügbar. Senden Sie eine Anfrage — Arseniy meldet sich.',
+    upstream: 'Verbindung fehlgeschlagen. Bitte in einer Minute erneut versuchen.',
+    auth: 'Sitzung abgelaufen. Mini-App schließen und neu öffnen.',
+    leadOk: 'Erledigt! Arseniy meldet sich in Kürze.',
+    outside: 'Diese Demo läuft in Telegram. Öffnen Sie den Bot:', openBot: '@aira_voice_demo_bot öffnen' },
+  en: { title: 'Aira — AI agent', subtitle: 'Ask what she can do, or have her play your hotel front desk',
+    idle: 'Tap to talk', connecting: 'Connecting…', listening: 'Listening', speaking: 'Speaking', ended: 'Conversation ended',
+    end: 'End', lead: 'Leave a request', again: 'Talk again', close: 'Close',
+    note: 'The demo lasts 3 minutes. The conversation is processed by AI.',
+    thanks: "Thanks! We'll send you a message in the chat — you can ask Arseniy to contact you there.",
+    micTitle: 'Microphone access needed',
+    micIos: ['Open iPhone Settings → Telegram', 'Turn on "Microphone"', 'Come back and tap again'],
+    micAndroid: ['Phone Settings → Apps → Telegram → Permissions', 'Allow "Microphone"', 'Come back and tap again'],
+    daily: "Today's demo is over. Leave a request — Arseniy will get in touch.",
+    off: 'The demo is unavailable right now. Leave a request — Arseniy will get in touch.',
+    upstream: "Couldn't connect. Please try again in a minute.",
+    auth: 'Session expired. Close and reopen the mini app.',
+    leadOk: 'Done! Arseniy will contact you shortly.',
+    outside: 'This demo runs inside Telegram. Open the bot:', openBot: 'Open @aira_voice_demo_bot' },
+};
+const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
+const code = String((user && user.language_code) || navigator.language || 'ru').slice(0, 2);
+const lang = I18N[code] ? code : (user ? 'en' : 'ru');
+const t = (k) => (I18N[lang][k] !== undefined ? I18N[lang][k] : I18N.ru[k]);
+document.documentElement.lang = lang;
+document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+
+const $ = (id) => document.getElementById(id);
+const stage = $('stage'), mic = $('mic'), statusEl = $('status'), timerEl = $('timer'), panel = $('panel');
+const endBtn = $('endBtn'), leadBtn = $('leadBtn'), note = $('note'), wave = $('wave');
+const BARS = 9; for (let i = 0; i < BARS; i++) wave.appendChild(document.createElement('i'));
+const bars = [...wave.children];
+
+let conv = null, state = 'idle', startedAt = 0, tick = null, raf = null, warned = false, ending = false;
+
+if (tg) {
+  tg.ready(); tg.expand();
+  try { tg.setHeaderColor('bg_color'); tg.setBackgroundColor('bg_color'); } catch (e) {}
+}
+const haptic = (kind) => { try { tg && tg.HapticFeedback && (kind === 'ok' ? tg.HapticFeedback.notificationOccurred('success') : tg.HapticFeedback.impactOccurred(kind || 'medium')); } catch (e) {} };
+
+function setState(s) {
+  state = s;
+  stage.className = 'stage' + (s === 'connecting' ? ' connecting' : '') + (s === 'listening' || s === 'speaking' ? ' live' : '') + (s === 'speaking' ? ' speaking' : '');
+  document.body.classList.toggle('live', s === 'listening' || s === 'speaking');
+  statusEl.textContent = t(s === 'error' ? 'ended' : s);
+  endBtn.hidden = !(s === 'connecting' || s === 'listening' || s === 'speaking');
+  mic.disabled = s === 'connecting';
+}
+function showPanel(html) { panel.innerHTML = html; panel.hidden = !html; }
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.max(0, s) % 60).padStart(2, '0');
+
+function micHelp() {
+  const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (tg && tg.platform === 'ios');
+  const steps = t(ios ? 'micIos' : 'micAndroid');
+  showPanel('<h2>🎙 ' + esc(t('micTitle')) + '</h2><ol>' + steps.map(s => '<li>' + esc(s) + '</li>').join('') + '</ol>');
+}
+
+async function post(body) {
+  const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(Object.assign({ initData: tg.initData }, body || {})) });
+  let j = {}; try { j = await r.json(); } catch (e) {}
+  if (r.status === 403) j.reason = j.reason || 'auth';
+  return j;
+}
+
+function limitScreen(reason) {
+  setState('idle'); statusEl.textContent = '';
+  showPanel('<p style="margin:0">' + esc(t(reason === 'daily_limit' ? 'daily' : 'off')) + '</p>');
+  leadBtn.hidden = false; mic.disabled = true; timerEl.textContent = '';
+}
+
+async function start() {
+  if (state !== 'idle' && state !== 'ended') return;
+  haptic('medium'); showPanel(''); leadBtn.hidden = true; warned = false; ending = false;
+  setState('connecting');
+  // 1. Микрофон — до запроса сессии, чтобы не сжечь лимит
+  try {
+    const s = await navigator.mediaDevices.getUserMedia({ audio: true });
+    s.getTracks().forEach(tr => tr.stop());
+  } catch (e) { setState('idle'); micHelp(); return; }
+  // 2. Токен с бэкенда (ключ ElevenLabs остаётся на сервере)
+  let sess;
+  try { sess = await post(); } catch (e) { sess = { reason: 'upstream_error' }; }
+  if (!sess.ok) {
+    if (sess.reason === 'daily_limit' || sess.reason === 'month_limit' || sess.reason === 'demo_off') return limitScreen(sess.reason);
+    setState('idle'); showPanel('<p style="margin:0">' + esc(t(sess.reason === 'auth' || /signature|stale|init/.test(sess.reason || '') ? 'auth' : 'upstream')) + '</p>');
+    return;
+  }
+  // 3. WebRTC-сессия
+  try {
+    conv = await Conversation.startSession({
+      conversationToken: sess.conversationToken,
+      connectionType: 'webrtc',
+      dynamicVariables: sess.dynamicVariables,
+      onConnect: () => { startedAt = Date.now(); runTimer(); setState('listening'); try { tg.enableClosingConfirmation(); } catch (e) {} },
+      onModeChange: ({ mode }) => { if (state !== 'ended') setState(mode === 'speaking' ? 'speaking' : 'listening'); },
+      onDisconnect: () => finish(),
+      onError: (msg) => { console.warn('conv error', msg); },
+    });
+    loop();
+  } catch (e) {
+    console.warn(e);
+    conv = null;
+    if (e && /permission|notallowed|denied/i.test(String(e.name || e.message || e))) { setState('idle'); micHelp(); }
+    else { setState('idle'); showPanel('<p style="margin:0">' + esc(t('upstream')) + '</p>'); }
+  }
+}
+
+function runTimer() {
+  clearInterval(tick);
+  const upd = () => {
+    const left = LIMIT - Math.floor((Date.now() - startedAt) / 1000);
+    timerEl.textContent = fmt(left);
+    timerEl.classList.toggle('low', left <= WARN_AT);
+    if (left <= WARN_AT && !warned && conv) { warned = true; try { conv.sendContextualUpdate(I18N.ru.ctx); } catch (e) {} haptic('light'); }
+    if (left <= -5) stop();   // страховка: сервер обрывает на 180 с, даём агенту договорить фразу
+  };
+  upd(); tick = setInterval(upd, 500);
+}
+
+function loop() {
+  cancelAnimationFrame(raf);
+  const r1 = $('ring1'), r2 = $('ring2');
+  const step = () => {
+    if (!conv) return;
+    let v = 0;
+    try { v = state === 'speaking' ? conv.getOutputVolume() : conv.getInputVolume(); } catch (e) {}
+    v = Math.min(1, Math.max(0, v * 2.2));
+    r1.style.transform = 'scale(' + (1 + v * 0.35) + ')';
+    r2.style.transform = 'scale(' + (1 + v * 0.6) + ')';
+    const now = performance.now() / 180;
+    bars.forEach((b, i) => { const k = 0.45 + 0.55 * Math.abs(Math.sin(now + i * 0.9)); b.style.height = (6 + v * 26 * k) + 'px'; });
+    raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+async function stop() {
+  if (!conv || ending) return;
+  ending = true; haptic('light');
+  try { await conv.endSession(); } catch (e) {}
+  finish();
+}
+
+function finish() {
+  if (state === 'ended') return;
+  clearInterval(tick); cancelAnimationFrame(raf); conv = null;
+  bars.forEach(b => { b.style.height = '6px'; });
+  try { tg.disableClosingConfirmation(); } catch (e) {}
+  setState('ended'); haptic('ok');
+  timerEl.textContent = ''; timerEl.classList.remove('low');
+  showPanel('<p style="margin:0">' + esc(t('thanks')) + '</p>');
+  mic.disabled = false;
+  if (tg && tg.MainButton) { tg.MainButton.setText(t('close')); tg.MainButton.show(); }
+}
+
+mic.addEventListener('click', () => { (state === 'listening' || state === 'speaking') ? stop() : start(); });
+endBtn.addEventListener('click', stop);
+leadBtn.addEventListener('click', async () => {
+  leadBtn.disabled = true; haptic('medium');
+  let r = {}; try { r = await post({ action: 'contact' }); } catch (e) {}
+  if (r.ok) { leadBtn.hidden = true; showPanel('<p style="margin:0">✅ ' + esc(t('leadOk')) + '</p>'); haptic('ok'); }
+  else { leadBtn.disabled = false; showPanel('<p style="margin:0">' + esc(t('upstream')) + '</p>'); }
+});
+if (tg && tg.MainButton) tg.MainButton.onClick(() => tg.close());
+
+// Открыто вне Telegram — подписи initData нет, сессию не получить
+if (!tg || !tg.initData) {
+  mic.disabled = true; statusEl.textContent = ''; timerEl.textContent = '';
+  showPanel('<p style="margin:0 0 12px">' + esc(t('outside')) + '</p><a class="btn primary" style="display:block;text-align:center;text-decoration:none" href="' + BOT + '">' + esc(t('openBot')) + '</a>');
+}
+</script>
+</body>
+</html>
