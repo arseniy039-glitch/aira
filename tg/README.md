@@ -40,7 +40,7 @@ Post-call **поллингом**, а не вебхуком: у API-ключей 
 | Агент ElevenLabs | Aira Demo `agent_1101kt9d092cens96j5nkd0zmm84` (enable_auth=true, 180 с) |
 | Бэкап агента до изменений | VPS `/root/backups/elevenlabs/aira_demo_20261117-1622.json` |
 | n8n tg-demo-session | `TgDemoSession001`: `POST /webhook/tg-demo-session` |
-| n8n tg-demo-postcall | `TgDemoPostcall01`: расписание каждые 2 мин |
+| Post-call демо (с 19.11) | VPS `/root/demo-postcall/postcall.py`, cron `1-59/2` через `flock -n /tmp/demo-postcall.lock timeout 120` → n8n `tg-demo-record` (`7XQgQtir6vQ6dAui`). n8n `TgDemoPostcall01` выключен: зависал в n8n 2.37.11, не включать |
 | n8n tg-demo-bot | `TgDemoBotWebhk01`: `POST /webhook/tg-demo-bot` (вебхук бота, проверка `X-Telegram-Bot-Api-Secret-Token`) |
 | Data table: выданные сессии | `tg_demo_tokens` `R1kJKXeAqazUcP2E` |
 | Data table: разговоры и минуты | `tg_demo_calls` `1XS4ZkNpXf1FUXxs` |
@@ -88,7 +88,7 @@ Post-call **поллингом**, а не вебхуком: у API-ключей 
   `?startapp=tutor` не работает, пока у бота не задан Main Mini App в BotFather (`has_main_web_app=false`).
 - **Агент:** «Aira Demo — English Tutor» `agent_1901m7szkkk2f4dsr61tbe14b875` — claude-haiku-5-5, eleven_v4_turbo, голос Jessica `cgSgspJ2msm6clMCkdW9`, language ru, enable_auth, `max_duration_seconds=300`. Объясняет по-русски, практика по-английски; уровень A1–B2, кафе / аэропорт / собеседование / свободный разговор.
 - **n8n:** `TgTutorSession01` (`POST /webhook/tg-tutor-session`, initData HMAC → лимиты → токен EL), `jOVr3vohDTDyYmIt` tg-tutor-record (`POST /webhook/tg-tutor-record`, заголовок `x-aira-secret` = `N8N_WEBHOOK_SECRET` → строка в `tg_tutor_calls`). В `tg-demo-bot` добавлена только ветка `/start tutor`.
-- **Голосовые итоги — вне n8n:** VPS `/root/tutor-postcall/postcall.py`, cron `*/2` (лог `postcall.log`, обработанные id — `state.json`): завершённые уроки → Claude Haiku (tool_use, thinking off) → TTS тем же голосом → `sendVoice` в чат + сводка Арсению → tg-tutor-record. `--dry` — без отправки. n8n-версия `TgTutorPostcal01` выключена: Code-нода в schedule-режиме вешала n8n (19.11).
+- **Голосовые итоги — вне n8n:** VPS `/root/tutor-postcall/postcall.py`, cron `*/2` (лог `postcall.log`, обработанные id — `state.json`): завершённые уроки → Claude Haiku (tool_use, thinking off) → TTS тем же голосом → `sendVoice` в чат + сводка Арсению → tg-tutor-record. `--dry` — без отправки. n8n-версия `TgTutorPostcal01` выключена: Code-нода в schedule-режиме вешала n8n (19.11). Cron: `*/2 … flock -n /tmp/tutor-postcall.lock timeout 120`, ≤2 урока за прогон.
 - **Data tables:** `tg_tutor_tokens` `pPpLhb3fbcxsjFFO`, `tg_tutor_calls` `C7gZj36UV4nP0aEi`.
 - **Лимиты** (константы в «Код: лимиты и токен»): сессия 300 с (агент), 15 мин/сутки на user_id (Europe/Lisbon; выданный токен резервирует свои секунды на 8 мин, пока поллер не запишет разговор), остаток < 60 с → `daily_limit`; не больше 2 уроков одновременно → `busy`; 300 tutor-минут в месяц → `month_limit`. Флаг `/demo_off` выключает и tutor. Арсений без дневного лимита.
 - **Ответы:** `{ok:true, conversationToken, dynamicVariables, maxSeconds, secondsLeftToday}` или `{ok:false, reason: daily_limit|busy|month_limit|demo_off|upstream_error}`, подпись — 403.
