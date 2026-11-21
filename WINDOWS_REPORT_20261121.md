@@ -161,3 +161,39 @@ a6bff7a fix: hub grid 3+2 centered desktop, email Artech→info@aira-ai.net
 - Финальный хэш: `3ed505d`
 
 **Готово к push feat/aira-windows**
+
+---
+
+## Правки ревью (21.11.2026 вечер)
+
+### 1. Грамматика PT — toda Portugal (windows.html)
+- `meta description`: `em toda Portugal` → `em todo o país`
+- `h1` (HTML + PT i18n): `em toda Portugal` → `em todo o país`
+- `geo_title` (HTML + PT i18n): `Trabalhamos em toda Portugal` → `Trabalhamos em todo o Portugal`
+- Итого 5 правок, все в `windows.html`
+- Коммит: `301dd82`
+
+### 2. Удаление бренд-дисклеймера из prod_lead (windows.html)
+Убрана фраза «Sem referências de marcas...» и её аналоги во всех 4 языках (PT/EN/DE/FR) — и из HTML, и из i18n-словарей.
+- Коммит: `5740cb5`
+
+### 3. Один переключатель языка в шапке (windows.html)
+Удалён `lang-badges` из `nav-mid` (декоративные статичные теги PT/EN/DE/FR по центру навбара), а также мёртвые CSS-правила `.nav-mid`, `.lang-badges`, `.lang-badge` и `@media`-правило для них. Оставлен интерактивный `lang-switch` справа.
+- **Замечание**: construction.html имеет идентичную структуру с теми же `lang-badges`. Если нужно убрать там тоже — подтверди отдельно.
+- Коммит: `d40ba6e`
+
+### 4. home/index.html — географическая точность
+**Изменено:**
+- `<title>`, `og:title`, `twitter:title`: «Five services for your property in Portugal» → «Five services for the Algarve, plus windows & doors across Portugal»
+- `<meta description>`: уточнено — 4 сервиса Algarve, Windows по всей Португалии
+- `og:description`, `twitter:description`: обновлены аналогично
+- JSON-LD: Organization's `areaServed` добавлен Country Portugal (рядом с Algarve)
+- HTML `<h1>` и все 4 i18n (EN/DE/FR/PT): добавлено упоминание Algarve и всей Португалии для Windows
+- PT `door_5_desc`: `em toda Portugal` → `em todo o Portugal`
+- `llms.txt`: заголовок секции и строка Coverage обновлены
+- Коммит: `550b893`
+
+### 5. Тесты
+- `tests/windows.spec.js`: **40/40 ✓**
+- `tests/pixel-lead.spec.js`: **9/9 ✓**
+- Последний хэш: `550b893`
