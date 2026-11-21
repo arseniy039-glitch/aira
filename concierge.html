@@ -420,6 +420,7 @@ document.getElementById('pilotForm').addEventListener('submit', function(e){
   }).then(function(r){
     if (!r.ok) throw new Error();
     st.className = 'status ok';
+    window.airaPixelLead();
     st.textContent = 'Reserved. We will reply within one business day.';
     f.reset();
   }).catch(function(){

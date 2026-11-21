@@ -4,6 +4,9 @@
   var KEY = 'aira-pixel-consent';
   var PRIVACY_URL = '/home/privacy.html';
 
+  // No-op until consent; replaced with real fbq call inside loadPixel()
+  window.airaPixelLead = function(){};
+
   var MSGS = {
     pt: {text:'Usamos cookies de análise para melhorar o site.', privacy:'Política de privacidade', accept:'Aceitar', decline:'Recusar'},
     en: {text:'We use analytics cookies to improve our site.',   privacy:'Privacy policy',           accept:'Accept',   decline:'Decline'},
@@ -20,6 +23,8 @@
   function saveConsent(v){ try{ localStorage.setItem(KEY,v); }catch(e){} }
 
   function loadPixel(){
+    // Set real Lead caller before early-return so test stubs of fbq also work
+    window.airaPixelLead = function(){ fbq('track','Lead'); };
     if(window.fbq) return;
     /* ponytail: standard Meta Pixel snippet — do not simplify, format mandated by Meta */
     !function(f,b,e,v,n,t,s){
@@ -39,11 +44,7 @@
       if(a.href.indexOf('tel:') === 0 || a.href.indexOf('wa.me') !== -1) fbq('track','Contact');
     }, true);
 
-    // Lead: form submission success (#formStatus gains class 'ok')
-    var fs = document.getElementById('formStatus');
-    if(fs) new MutationObserver(function(muts){
-      muts.forEach(function(m){ if(m.attributeName==='class' && fs.classList.contains('ok')) fbq('track','Lead'); });
-    }).observe(fs, {attributes:true});
+    // Lead is fired explicitly by form success handlers via window.airaPixelLead()
   }
 
   function showBanner(){

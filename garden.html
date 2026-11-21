@@ -1034,6 +1034,7 @@ document.getElementById('gardenForm').addEventListener('submit', function(e){
   const done = () => {
     clearTimeout(timer);
     st.className = 'form-status ok';
+    window.airaPixelLead();
     st.innerHTML = t.form_ok.replace('info@aira-ai.net', '<a href="mailto:info@aira-ai.net?subject=Aira%20Garden">info@aira-ai.net</a>');
     f.reset(); btn.disabled = false;
   };
