@@ -131,6 +131,42 @@ test('windows form: 500 → 0 Leads, confirmation shown', async ({ page }) => {
   expect(await page.evaluate(() => window._fbqLeads)).toBe(0);
 });
 
+// ── Chat widget: title, greeting, mock backend ────────────────────────────
+
+for (const lang of ['pt', 'en']) {
+  test(`windows chat: title 'Aira Windows' and greeting in ${lang}`, async ({ page }) => {
+    await setupFbqMock(page);
+    await page.route('**/webhook/**', r =>
+      r.fulfill({ status: 200, contentType: 'application/json', body: '{"content":[{"text":"ok"}]}' }));
+    await page.goto('/windows.html');
+    await page.click(`button.lang-btn[onclick="setLang('${lang}')"]`);
+    await page.waitForTimeout(100);
+
+    await page.click('button.ahw-btn');
+    await page.waitForSelector('.ahw-panel.open');
+
+    const title = await page.locator('.ahw-name').textContent();
+    expect(title).toBe('Aira Windows');
+
+    const greeting = await page.locator('.ahw-msgs .ahw-msg.bot').first().textContent();
+    expect(greeting).toBeTruthy();
+    expect(greeting.length).toBeGreaterThan(10);
+  });
+}
+
+test('construction chat: not broken after windows changes', async ({ page }) => {
+  await setupFbqMock(page);
+  await page.route('**/webhook/**', r =>
+    r.fulfill({ status: 200, contentType: 'application/json', body: '{"content":[{"text":"ok"}]}' }));
+  await page.goto('/construction.html');
+
+  await page.click('button.ahw-btn');
+  await page.waitForSelector('.ahw-panel.open');
+
+  const title = await page.locator('.ahw-name').textContent();
+  expect(title).toBe('Aira Construction');
+});
+
 // ── Screenshots ───────────────────────────────────────────────────────────
 
 for (const [route, label] of [['/windows.html', 'windows'], ['/home/', 'home']]) {

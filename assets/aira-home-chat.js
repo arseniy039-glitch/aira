@@ -1,19 +1,21 @@
-/* Aira Home — shared chat widget for /home, /airahome, /energia, /garden, /construction.
-   Usage: <script src="/assets/aira-home-chat.js" data-dir="energia" data-request="#request" defer></script>
+/* Aira Home — shared chat widget for /home, /airahome, /energia, /garden, /construction, /windows.
+   Usage: <script src="/assets/aira-home-chat.js" data-dir="windows" data-request="#request" defer></script>
    Chat relays through n8n (aira-airahome-chat → Anthropic). Contract: the browser sends ONLY
    {messages, lang, page}; the system prompt, model and max_tokens live in n8n. A lead collected in chat
    goes to aira-airahome-leads (Telegram) with direction; Alexandra calls back only for Airahome.
-   ?test=1 in the page URL marks leads as test (Telegram only, no call). */
+   ?test=1 in the page URL marks leads as test (Telegram only, no call).
+   Unknown data-dir falls back to 'home' so NAMES[DIR] and greet[DIR] are never undefined. */
 (function(){
   var script = document.currentScript;
-  var DIR = (script && script.dataset.dir) || 'home';
+  var KNOWN_DIRS = {home:1, airahome:1, energia:1, garden:1, construction:1, windows:1};
+  var DIR = (script && script.dataset.dir && KNOWN_DIRS[script.dataset.dir]) ? script.dataset.dir : 'home';
   var REQUEST = (script && script.dataset.request) || '#request';
   var CHAT_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-chat';
   var LEADS_WEBHOOK = 'https://n8n.aira-ai.net/webhook/aira-airahome-leads';
   var TEL = '+351308800687';
   var WA = '351936800000';
 
-  var NAMES = {home:'Aira Home', airahome:'Airahome', energia:'Aira Energia', garden:'Aira Garden', construction:'Aira Construction'};
+  var NAMES = {home:'Aira Home', airahome:'Airahome', energia:'Aira Energia', garden:'Aira Garden', construction:'Aira Construction', windows:'Aira Windows'};
 
   var L = {
     en:{open:'Open chat — call, WhatsApp or request', close:'Close', online:'online · replies in seconds', call:'Call', wa:'WhatsApp', req:'Leave a request',
@@ -22,28 +24,32 @@
                airahome:"Hi — what's happened at your place? I'll get the details and have someone call you back.",
                energia:'Hi — want to check your electricity bill or look into solar? Tell me roughly what you pay per month.',
                garden:'Hi — tell me about your garden: roughly how big, and how is it watered today?',
-               construction:'Hi — what are you planning to renovate, and where is the property?'}},
+               construction:'Hi — what are you planning to renovate, and where is the property?',
+               windows:'Hi — which windows or doors are you looking to replace or fit, roughly how many, and where is the property?'}},
     de:{open:'Chat öffnen — Anruf, WhatsApp oder Anfrage', close:'Schließen', online:'online · antwortet sofort', call:'Anrufen', wa:'WhatsApp', req:'Anfrage senden',
         ph:'Nachricht schreiben…', send:'Senden', sendAria:'Nachricht senden', err:'Verbindungsfehler. Bitte rufen Sie uns an: +351 308 800 687.',
         greet:{home:'Hallo — welchen Dienst brauchen Sie: eine Notfallreparatur, Ihre Stromrechnung, den Garten oder eine Renovierung? Erzählen Sie kurz, worum es geht.',
                airahome:'Hallo — was ist bei Ihnen passiert? Ich nehme die Details auf und wir rufen Sie zurück.',
                energia:'Hallo — möchten Sie Ihre Stromrechnung prüfen oder sich über Solar informieren? Wie viel zahlen Sie ungefähr im Monat?',
                garden:'Hallo — erzählen Sie mir von Ihrem Garten: ungefähr wie groß, und wie wird er heute bewässert?',
-               construction:'Hallo — was möchten Sie renovieren, und wo liegt die Immobilie?'}},
+               construction:'Hallo — was möchten Sie renovieren, und wo liegt die Immobilie?',
+               windows:'Hallo — welche Fenster oder Türen möchten Sie ersetzen oder einbauen lassen, ungefähr wie viele, und wo liegt das Objekt?'}},
     fr:{open:'Ouvrir le chat — appel, WhatsApp ou demande', close:'Fermer', online:'en ligne · répond tout de suite', call:'Appeler', wa:'WhatsApp', req:'Faire une demande',
         ph:'Écrivez un message…', send:'Envoyer', sendAria:'Envoyer le message', err:'Erreur de connexion. Appelez-nous : +351 308 800 687.',
         greet:{home:'Bonjour — de quel service avez-vous besoin : une réparation urgente, votre facture d’électricité, le jardin ou une rénovation ? Dites-moi ce qui se passe.',
                airahome:"Bonjour — qu'est-ce qui se passe chez vous ? Je note les détails et nous vous rappelons.",
                energia:'Bonjour — vous voulez vérifier votre facture d’électricité ou étudier le solaire ? Combien payez-vous environ par mois ?',
                garden:'Bonjour — parlez-moi de votre jardin : quelle taille environ, et comment est-il arrosé aujourd’hui ?',
-               construction:'Bonjour — que souhaitez-vous rénover, et où se trouve le bien ?'}},
+               construction:'Bonjour — que souhaitez-vous rénover, et où se trouve le bien ?',
+               windows:'Bonjour — quelles fenêtres ou portes souhaitez-vous remplacer ou faire poser, en quelle quantité environ, et où se trouve le bien ?'}},
     pt:{open:'Abrir chat — ligar, WhatsApp ou pedido', close:'Fechar', online:'online · responde de imediato', call:'Ligar', wa:'WhatsApp', req:'Deixar pedido',
         ph:'Escreva uma mensagem…', send:'Enviar', sendAria:'Enviar mensagem', err:'Erro de ligação. Ligue-nos: +351 308 800 687.',
         greet:{home:'Olá — de que serviço precisa: uma reparação urgente, a fatura da luz, o jardim ou uma remodelação? Diga-me o que se passa.',
                airahome:'Olá — o que se passou na sua casa? Vou registar os detalhes e ligamos-lhe de volta.',
                energia:'Olá — quer verificar a fatura da luz ou saber mais sobre painéis solares? Quanto paga mais ou menos por mês?',
                garden:'Olá — fale-me do seu jardim: mais ou menos que tamanho, e como é regado hoje?',
-               construction:'Olá — o que pretende remodelar e onde fica o imóvel?'}}
+               construction:'Olá — o que pretende remodelar e onde fica o imóvel?',
+               windows:'Olá — que janelas ou portas pretende substituir ou instalar, quantas aproximadamente, e onde fica o imóvel?'}}
   };
   var WA_TEXT = {
     en:'Hi, I came from the ' + NAMES[DIR] + ' page — I need help.',
@@ -57,7 +63,7 @@
 
   var MAX_LEN = 2000, MAX_HISTORY = 20;
   var IS_TEST = /[?&]test=1(&|$)/.test(location.search);
-  var SERVICE_DIR = {airahome:'airahome', energia:'energia', garden:'garden', construction:'construction'};
+  var SERVICE_DIR = {airahome:'airahome', energia:'energia', garden:'garden', construction:'construction', windows:'windows'};
   var history = [], busy = false, opened = false, leadSent = false;
   var btn, panel, msgs, input, send;
 
