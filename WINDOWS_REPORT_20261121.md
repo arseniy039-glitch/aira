@@ -99,3 +99,65 @@
 ```
 git diff --stat main..feat/aira-windows: 82 files changed, 1127 insertions(+), 69 deletions(-)
 ```
+
+---
+
+## Часть 3 — Проверка и мелкие правки (2026-11-21)
+
+### Выполнено
+
+**1. Сетка хаба home/index.html**
+- Было: 5 карточек в ряд при ≥1150px (слишком узкие, ~200px)
+- Стало: 6-колоночная сетка → 3 карточки сверху + 2 по центру снизу; карточка ≥380px
+- Планшет (601–1149px): 2 колонки (было 3)
+- Мобильный (≤420px): 1 колонка (без изменений)
+- Коммит: a6bff7a
+
+**2. Email aira-de.html и aira-pt.html**
+- 5 вхождений `artechportugalia@gmail.com` → `info@aira-ai.net`
+- aira-de.html: 2 замены; aira-pt.html: 3 замены
+- board.html не тронут
+- Коммит: a6bff7a
+
+**3. Найденные и исправленные баги**
+- `windows.html`: `pvc-profile-400.webp/.jpg` и `-800.*` — файлы не существуют; исправлены на `pvc-profile.webp/.jpg` (эти файлы есть в репо)
+- `home/index.html`: JS-ошибка "Invalid or unexpected token" + "setLang is not defined" — 18 вхождений U+2019 (типографский апостроф) использовались как разделители строк; заменены на прямые кавычки / двойные кавычки; content-апострофы (строки L22, L98, L102, L108, L119, L121) не тронуты
+- Коммит: 3ed505d
+
+**4. Playwright-тесты (tests/windows.spec.js)**
+- 31 тест, все прошли ✓
+- Существующие pixel-lead.spec.js: 9/9 ✓
+- Покрытие:
+  - `/windows` и `/home/` на 375px и 1440px, все 4 языка PT/EN/DE/FR: нет консольных ошибок, нет горизонтального скролла, все картинки загружены
+  - Ссылки `/windows` в nav/footer airahome, construction, energia, garden, home — наличие href проверено ✓
+  - Форма через page.route: 200→1 Lead (fbq), 500→0 Leads, оба случая: подтверждение показано
+  - Скриншоты full-page (8 штук)
+
+**5. Скриншоты**
+Путь: `~/aira-live/_screens/windows/` (не в git — добавлено в .gitignore)
+- `windows-375-pt.png`, `windows-375-en.png`
+- `windows-1440-pt.png`, `windows-1440-en.png`
+- `home-375-pt.png`, `home-375-en.png`
+- `home-1440-pt.png`, `home-1440-en.png`
+
+**6. .gitignore**
+Добавлено: `_screens/`
+
+### Финальный git diff --stat main..feat/aira-windows
+87 files changed, 1389 insertions(+), 73 deletions(−)
+
+### Коммиты Части 3
+```
+3ed505d fix+test: broken images, home JS curly-quote syntax error, Playwright windows suite
+a6bff7a fix: hub grid 3+2 centered desktop, email Artech→info@aira-ai.net
+```
+
+### Замечание (не блокирует)
+`windows.html` строка 636: `LEADS_WEBHOOK = '.../aira-airahome-leads'` — возможно должен быть `aira-windows-leads` или `aira-site-leads`. Текущие тесты используют page.route, реальный URL не проверялся. Уточнить у Арсения.
+
+### Результат тестов
+- windows.spec.js: **31/31 ✓**
+- pixel-lead.spec.js: **9/9 ✓**
+- Финальный хэш: `3ed505d`
+
+**Готово к push feat/aira-windows**
