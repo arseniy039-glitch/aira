@@ -965,17 +965,17 @@ document.getElementById('constructionForm').addEventListener('submit', function(
 
   const ctrl = new AbortController();
   const timer = setTimeout(()=>ctrl.abort(), 4000);
-  const done = () => {
+  const done = (ok) => {
     clearTimeout(timer);
+    if (ok) window.airaPixelLead();
     st.className = 'form-status ok';
-    window.airaPixelLead();
     st.innerHTML = t.form_ok.replace('info@aira-ai.net','<a href="mailto:info@aira-ai.net?subject=Aira%20Construction">info@aira-ai.net</a>');
     f.reset(); btn.disabled = false;
   };
   fetch(LEADS_WEBHOOK, {
     method:'POST', headers:{'Content-Type':'application/json'},
     body: JSON.stringify(data), signal: ctrl.signal
-  }).then(done).catch(done);
+  }).then(r => done(r.ok)).catch(() => done(false));
 });
 
 // ══════════════════════════════════════════
