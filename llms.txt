@@ -1,13 +1,13 @@
 # Aira
 
-> Aira — AI concierge, Algarve. Aira builds AI voice and chat concierges for hotels, salons and small businesses in Portugal (Aira Concierge, Aira Assistant, Aira Admin), and runs Aira Home — four local services for property owners in the Algarve, answered 24/7 by Aira's AI concierge and delivered by local crews.
+> Aira — AI concierge, Algarve. Aira builds AI voice and chat concierges for hotels, salons and small businesses in Portugal (Aira Concierge, Aira Assistant, Aira Admin), and runs Aira Home — five local services for property owners in the Algarve, answered 24/7 by Aira's AI concierge and delivered by local crews.
 
 Aira is built and operated by Horizonte Solene Lda, based in Portimão, Algarve, Portugal.
 
-## Aira Home — four services for property owners in the Algarve
+## Aira Home — five services for property owners in the Algarve
 
 Hub: https://aira-ai.net/home/
-One phone for all four services: +351 308 800 687 (24/7). WhatsApp: +351 936 800 000. Email: info@aira-ai.net.
+One phone for all five services: +351 308 800 687 (24/7). WhatsApp: +351 936 800 000. Email: info@aira-ai.net.
 Languages: English, German, French, Portuguese.
 Coverage: the Algarve — Luz, Lagos, Portimão, Carvoeiro, Lagoa, Silves, Armação de Pêra, Albufeira, Vilamoura. Aira Construction also works in Lisbon.
 
@@ -15,6 +15,7 @@ Coverage: the Algarve — Luz, Lagos, Portimão, Carvoeiro, Lagoa, Silves, Arma�
 - [Aira Energia](https://aira-ai.net/energia): free electricity bill check, savings calculator, tariff switching, solar panels and a licensed electrician in the Algarve.
 - [Aira Garden](https://aira-ai.net/garden): wireless smart irrigation for the whole property — no trenching, works offline; consultation and quote.
 - [Aira Construction](https://aira-ai.net/construction): renovation and finishing works by our own crew — demolition, walls, floors, bathrooms, kitchens, electrics, final cleaning. Algarve and Lisbon. Quote after a visit.
+- [Aira Windows](https://aira-ai.net/windows): aluminium, PVC and solid timber windows and doors — sliding systems, entrance and interior doors, mosquito screens, roller shutters. Full turnkey: survey, manufacture, installation, sill finishing, waste removal. Free survey and quote. All Portugal; supply also to Germany and Spain.
 
 How to request: call +351 308 800 687, message on WhatsApp, use the chat on any Aira Home page, or the request form on each service page.
 
