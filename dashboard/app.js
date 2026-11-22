@@ -19,9 +19,9 @@ const API = {
   // Public webhook: Fixando only. Used when the proxy is unavailable (e.g. static preview).
   leadsPublic: 'https://n8n.aira-ai.net/webhook/lisbon-leads-data',
   leadStatus: '/dashboard/api/lead-status',
-  dashboard: 'https://n8n.aira-ai.net/webhook/dashboard-data',
-  board: 'https://n8n.aira-ai.net/webhook/board-data',
-  config: '/config.json',
+  dashboard: '/api/dashboard-data',
+  board: '/api/board-data',
+  config: '/dashboard/api/config',
 };
 
 async function getJSON(url, opt){
