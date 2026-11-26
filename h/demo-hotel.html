@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Aira Demo Hotel — Concierge ⚠️ DEMO</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0f1117;--card:#1a1e28;--gold:#c9a96e;--ink:#f0f0f0;--dim:#8a93a3;--ok:#3ecf8e;--warn:#ff6b6b;--border:#2a3040}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,system-ui,sans-serif;min-height:100vh}
+.demo-banner{background:#ff6b6b22;border-bottom:1px solid #ff6b6b44;padding:8px 16px;text-align:center;font-size:12px;color:#ff9999;letter-spacing:.05em}
+header{padding:24px 20px 16px;border-bottom:1px solid var(--border);text-align:center}
+header .hotel-name{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:.05em}
+header .hotel-addr{font-size:12px;color:var(--dim);margin-top:4px}
+nav.tabs{display:flex;border-bottom:1px solid var(--border);overflow-x:auto}
+nav.tabs button{flex:1;min-width:80px;padding:12px 8px;background:none;border:none;color:var(--dim);font-size:13px;cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+nav.tabs button.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-content{display:none;padding:16px}
+.tab-content.active{display:block}
+.section-title{font-size:13px;font-weight:600;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.info-row:last-child{border-bottom:none}
+.info-row .label{color:var(--dim)}
+.info-row .value{color:var(--ink);text-align:right;max-width:60%}
+.wifi-box{background:var(--card);border-radius:12px;padding:16px;margin:12px 0;text-align:center}
+.wifi-box .ssid{font-size:18px;font-weight:600;color:var(--gold);letter-spacing:.1em}
+.wifi-box .pass{font-size:22px;font-weight:700;margin-top:8px;letter-spacing:.15em}
+.service-card{background:var(--card);border-radius:10px;padding:14px;margin-bottom:10px}
+.service-card .s-name{font-weight:600;font-size:15px;color:var(--gold)}
+.service-card .s-desc{font-size:13px;color:var(--dim);margin-top:4px}
+.rule-item{padding:8px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--dim)}
+.rule-item:before{content:"•  ";color:var(--gold)}
+/* Request form */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;color:var(--dim);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
+.form-group input, .form-group select, .form-group textarea{
+  width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:12px;color:var(--ink);font-size:15px;outline:none;transition:.2s}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:80px}
+.btn-submit{width:100%;background:var(--gold);color:#0f1117;font-size:16px;font-weight:700;
+  border:none;border-radius:10px;padding:16px;cursor:pointer;transition:.2s;margin-top:4px}
+.btn-submit:hover{opacity:.9}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+#req-status{margin-top:12px;padding:14px;border-radius:8px;text-align:center;display:none;font-size:14px}
+#req-status.ok{background:#3ecf8e22;border:1px solid #3ecf8e44;color:var(--ok)}
+#req-status.err{background:#ff6b6b22;border:1px solid #ff6b6b44;color:var(--warn)}
+.quick-btn{display:inline-block;background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:8px 14px;font-size:13px;cursor:pointer;margin:4px;color:var(--dim);transition:.2s}
+.quick-btn:hover,.quick-btn.sel{border-color:var(--gold);color:var(--gold)}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">⚠️ DEMO — Aira Concierge Lite — Not a real hotel</div>
+
+<header>
+  <div class="hotel-name">Aira Demo Hotel</div>
+  <div class="hotel-addr">Rua das Flores 1, Portimão, Algarve, Portugal</div>
+</header>
+
+<nav class="tabs">
+  <button class="active" onclick="switchTab('request',this)">🛎 Request</button>
+  <button onclick="switchTab('info',this)">ℹ️ Info</button>
+  <button onclick="switchTab('wifi',this)">📶 Wi-Fi</button>
+  <button onclick="switchTab('services',this)">🌟 Services</button>
+</nav>
+
+<!-- REQUEST TAB -->
+<div id="tab-request" class="tab-content active">
+  <div class="section-title">Need something?</div>
+  <div style="margin-bottom:12px">
+    <div style="font-size:12px;color:var(--dim);margin-bottom:8px">Quick requests:</div>
+    <span class="quick-btn" onclick="quickPick(this,'Extra towels')">🛁 Towels</span>
+    <span class="quick-btn" onclick="quickPick(this,'Extra pillows')">🛏 Pillows</span>
+    <span class="quick-btn" onclick="quickPick(this,'Room cleaning')">🧹 Cleaning</span>
+    <span class="quick-btn" onclick="quickPick(this,'Something is broken in the room')">🔧 Maintenance</span>
+    <span class="quick-btn" onclick="quickPick(this,'Dinner reservation at the restaurant tonight')">🍽 Dinner</span>
+    <span class="quick-btn" onclick="quickPick(this,'Airport transfer — please arrange taxi')">🚗 Taxi</span>
+    <span class="quick-btn" onclick="quickPick(this,'Late checkout request')">🕐 Late checkout</span>
+  </div>
+  <form id="req-form" onsubmit="submitRequest(event)">
+    <div class="form-group">
+      <label>Room number</label>
+      <input type="text" id="f-room" placeholder="e.g. 204" required>
+    </div>
+    <div class="form-group">
+      <label>Your request</label>
+      <textarea id="f-text" placeholder="Describe what you need..." required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Language / Urgency</label>
+      <select id="f-lang">
+        <option value="en">🇬🇧 English</option>
+        <option value="pt">🇵🇹 Português</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="de">🇩🇪 Deutsch</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select id="f-urgency">
+        <option value="normal">📋 Normal</option>
+        <option value="urgent">🚨 Urgent</option>
+        <option value="low">💬 Low — whenever possible</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-submit" id="req-btn">Send to Reception</button>
+  </form>
+  <div id="req-status"></div>
+</div>
+
+<!-- INFO TAB -->
+<div id="tab-info" class="tab-content">
+  <div class="section-title">Hotel Information</div>
+  <div class="info-row"><span class="label">Check-in</span><span class="value">15:00</span></div>
+  <div class="info-row"><span class="label">Check-out</span><span class="value">11:00</span></div>
+  <div class="info-row"><span class="label">Reception</span><span class="value">24/7</span></div>
+  <div class="info-row"><span class="label">Phone</span><span class="value">+351 282 000 000</span></div>
+  <div class="info-row"><span class="label">Parking</span><span class="value">Free underground — Code: 4421</span></div>
+  <div class="section-title">Rules</div>
+  <div class="rule-item">No smoking indoors</div>
+  <div class="rule-item">Quiet hours 23:00–08:00</div>
+  <div class="rule-item">Pets not allowed</div>
+  <div class="rule-item">Late checkout: €30/hour (subject to availability)</div>
+</div>
+
+<!-- WIFI TAB -->
+<div id="tab-wifi" class="tab-content">
+  <div class="section-title">Wi-Fi</div>
+  <div class="wifi-box">
+    <div style="font-size:12px;color:var(--dim);margin-bottom:4px">Network</div>
+    <div class="ssid">AiraDemoHotel_Guest</div>
+    <div style="font-size:12px;color:var(--dim);margin-top:12px;margin-bottom:4px">Password</div>
+    <div class="pass">demo2026</div>
+    <div style="font-size:12px;color:var(--dim);margin-top:12px">Tap to copy</div>
+  </div>
+  <div style="font-size:13px;color:var(--dim);text-align:center;margin-top:8px">Need help? Contact reception 24/7</div>
+</div>
+
+<!-- SERVICES TAB -->
+<div id="tab-services" class="tab-content">
+  <div class="section-title">Available Services</div>
+  <div class="service-card">
+    <div class="s-name">🍽 Restaurant</div>
+    <div class="s-desc">Breakfast 07:00–10:00 (included). Dinner 19:00–22:00. Bar 12:00–23:00.</div>
+  </div>
+  <div class="service-card">
+    <div class="s-name">🏊 Pool</div>
+    <div class="s-desc">Open 09:00–20:00.</div>
+  </div>
+  <div class="service-card">
+    <div class="s-name">💆 Spa</div>
+    <div class="s-desc">Massages, facials. Book at reception or via request form.</div>
+  </div>
+  <div class="service-card">
+    <div class="s-name">🚗 Airport Transfer</div>
+    <div class="s-desc">Faro Airport ~45 min. €55 one-way. Book 24h in advance via request form.</div>
+  </div>
+</div>
+
+<script>
+const PANEL = "https://panel.aira-ai.net";
+const SLUG = "demo-hotel";
+
+function switchTab(name, btn) {
+  document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll("nav.tabs button").forEach(b => b.classList.remove("active"));
+  document.getElementById("tab-" + name).classList.add("active");
+  btn.classList.add("active");
+}
+
+function quickPick(el, text) {
+  document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("sel"));
+  el.classList.add("sel");
+  document.getElementById("f-text").value = text;
+}
+
+async function submitRequest(e) {
+  e.preventDefault();
+  const btn = document.getElementById("req-btn");
+  const status = document.getElementById("req-status");
+  const room = document.getElementById("f-room").value.trim();
+  const text = document.getElementById("f-text").value.trim();
+  if (!room || !text) return;
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+  status.style.display = "none";
+  try {
+    const r = await fetch(PANEL + "/hotel/request", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        slug: SLUG,
+        room,
+        text,
+        language: document.getElementById("f-lang").value,
+        urgency: document.getElementById("f-urgency").value
+      })
+    });
+    const d = await r.json();
+    if (d.ok) {
+      status.className = "ok";
+      status.textContent = "✅ Request sent! Reception will respond shortly.";
+      document.getElementById("f-text").value = "";
+      document.querySelectorAll(".quick-btn").forEach(b => b.classList.remove("sel"));
+    } else {
+      throw new Error(d.error || "Unknown error");
+    }
+  } catch (err) {
+    status.className = "err";
+    status.textContent = "❌ " + err.message + ". Please call reception.";
+  } finally {
+    status.style.display = "block";
+    btn.disabled = false;
+    btn.textContent = "Send to Reception";
+  }
+}
+
+// Copy wifi password on tap
+document.querySelector(".wifi-box .pass")?.addEventListener("click", function() {
+  navigator.clipboard?.writeText(this.textContent).then(() => {
+    this.textContent = "✓ Copied!";
+    setTimeout(() => this.textContent = "demo2026", 2000);
+  });
+});
+</script>
+<!-- ElevenLabs ConvAI floating widget — demo hotel agent -->
+<elevenlabs-convai agent-id="agent_6501m8bh7m4tekkvv2ee20b3tp7e"></elevenlabs-convai>
+<script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+</body>
+</html>
