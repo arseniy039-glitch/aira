@@ -4,166 +4,970 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Сводка · Aira</title>
-<link rel="stylesheet" href="/dashboard/app.css">
+<title>AIRA HUB</title>
+<style>
+:root{
+  --bg:#0E1A2B;--bg2:#132339;--bg3:#1a2f47;
+  --teal:#2DD4BF;--teal-d:rgba(45,212,191,.18);
+  --txt:#e2e8f0;--dim:#94a3b8;
+  --ok:#4ade80;--warn:#fbbf24;--bad:#f87171;
+  --brd:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;overflow-x:hidden}
+a{color:var(--teal);text-decoration:none}
+/* header */
+header{position:sticky;top:0;z-index:30;background:var(--bg2);border-bottom:1px solid var(--brd);padding:12px 16px 0}
+.h-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.h-top h1{font-size:1rem;font-weight:700;color:var(--teal);letter-spacing:.03em}
+.upd{font-size:.7rem;color:var(--dim);margin-left:auto}
+.klink{font-size:.75rem;color:var(--teal);border:1px solid var(--teal-d);padding:3px 9px;border-radius:20px;white-space:nowrap}
+.tabs{display:flex}
+.tb{flex:1;background:none;border:none;color:var(--dim);font:inherit;font-size:.85rem;font-weight:500;padding:8px 0 10px;border-bottom:2px solid transparent;cursor:pointer;transition:color .15s,border-color .15s}
+.tb.on{color:var(--teal);border-bottom-color:var(--teal)}
+/* panes */
+.pane{display:none;padding:16px;padding-bottom:32px}
+.pane.on{display:block}
+/* cards */
+.card{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px;margin-bottom:10px}
+.ctitle{font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+/* tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.tile{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:14px}
+.tlabel{font-size:.72rem;color:var(--dim);margin-bottom:4px}
+.tval{font-size:1.5rem;font-weight:700}
+.tsub{font-size:.7rem;color:var(--dim);margin-top:3px}
+.tile.ok .tval{color:var(--ok)}.tile.warn .tval{color:var(--warn)}.tile.bad .tval{color:var(--bad)}
+/* dot */
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;flex-shrink:0}
+.dot.ok{background:var(--ok)}.dot.warn{background:var(--warn)}.dot.bad{background:var(--bad)}.dot.dim{background:var(--dim)}
+/* rows */
+.row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--brd);font-size:.85rem}
+.row:last-child{border-bottom:none}
+.rtag{font-size:.7rem;color:var(--dim);margin-left:auto}
+/* tasks */
+.trow{display:flex;gap:8px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--brd)}
+.trow:last-child{border-bottom:none}
+.prio{font-size:.68rem;padding:2px 6px;border-radius:10px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.phi{background:rgba(248,113,113,.15);color:#f87171}
+.pme{background:rgba(251,191,36,.15);color:#fbbf24}
+.plo{background:rgba(96,165,250,.15);color:#60a5fa}
+.tname{font-size:.87rem;flex:1;min-width:0;line-height:1.35}
+.tdl{font-size:.7rem;color:var(--dim);white-space:nowrap;flex-shrink:0}
+.tdl.ov{color:var(--bad)}
+.asub{font-size:.68rem;color:var(--dim);margin-top:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.atag{font-size:.66rem;background:var(--bg3);border-radius:4px;padding:1px 5px;color:var(--dim)}
+/* filters */
+.frow{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.fbtn{font:inherit;font-size:.76rem;background:var(--bg2);border:1px solid var(--brd);color:var(--dim);border-radius:20px;padding:4px 11px;cursor:pointer}
+.fbtn.on{background:var(--teal-d);border-color:var(--teal);color:var(--teal)}
+/* search */
+.sinput{width:100%;background:var(--bg2);border:1px solid var(--brd);color:var(--txt);padding:8px 12px;border-radius:8px;font:inherit;font-size:.87rem;margin-bottom:10px}
+.sinput:focus{outline:none;border-color:var(--teal)}
+/* view toggle */
+.vtog{display:flex;border:1px solid var(--brd);border-radius:8px;overflow:hidden;align-self:flex-start;margin-left:auto}
+.vbtn{font:inherit;font-size:.76rem;background:none;border:none;color:var(--dim);padding:4px 10px;cursor:pointer}
+.vbtn.on{background:var(--teal-d);color:var(--teal)}
+/* board */
+.bcols{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.bcol{min-width:200px;flex-shrink:0;background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:10px}
+.bctitle{font-size:.76rem;font-weight:600;color:var(--dim);margin-bottom:8px}
+.bcard{background:var(--bg3);border-radius:8px;padding:9px;margin-bottom:7px;font-size:.8rem}
+/* misc */
+.load{color:var(--dim);font-size:.85rem;padding:16px 0;text-align:center}
+.errm{color:var(--bad);font-size:.8rem;padding:8px 0}
+.sech{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.sech h2{font-size:.9rem;font-weight:600}
+.cnt{font-size:.76rem;color:var(--dim)}
+@media(min-width:600px){.tiles{grid-template-columns:1fr 1fr 1fr}}
+/* lead cards */
+.lcard{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:12px;margin-bottom:8px}
+.lch{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.lcbody{font-size:.85rem;line-height:1.4;margin-bottom:8px}
+.lcsub{font-size:.72rem;color:var(--dim);margin-bottom:6px}
+.lcact{display:flex;gap:6px;flex-wrap:wrap}
+.sbtn{font:inherit;font-size:.72rem;background:var(--bg3);border:1px solid var(--brd);color:var(--dim);padding:3px 10px;border-radius:12px;cursor:pointer;transition:background .1s}
+.sbtn:hover{background:var(--teal-d);color:var(--teal)}
+.sbtn.ok{color:var(--ok)}.sbtn.bad{color:var(--bad)}.sbtn.warn{color:var(--warn)}
+.etrow{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--brd);font-size:.85rem}
+.etrow:last-child{border-bottom:none}
+.etval{font-weight:600;margin-left:auto}
+.etdim{color:var(--dim);font-size:.78rem}
+.dair{background:rgba(45,212,191,.12);color:var(--teal)}.dcon{background:rgba(251,191,36,.12);color:#fbbf24}.dgar{background:rgba(74,222,128,.12);color:#4ade80}.dene{background:rgba(96,165,250,.12);color:#60a5fa}.doth{background:var(--bg3);color:var(--dim)}
+.lstat-new{color:var(--dim)}.lstat-taken{color:var(--warn)}.lstat-won{color:var(--ok)}.lstat-lost{color:var(--bad)}.lstat-skip{color:var(--dim)}
+/* tabs scrollable for many tabs */
+.tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex:0 0 auto;padding:8px 10px}
+/* crm */
+.pstag{font-size:.68rem;padding:2px 7px;border-radius:10px;white-space:nowrap}
+.ps-new{background:var(--bg3);color:var(--dim)}
+.ps-wr{background:rgba(96,165,250,.15);color:#60a5fa}
+.ps-re{background:rgba(251,191,36,.15);color:#fbbf24}
+.ps-neg{background:rgba(45,212,191,.15);color:var(--teal)}
+.ps-cl{background:rgba(74,222,128,.15);color:var(--ok)}
+.ps-no{background:rgba(248,113,113,.15);color:var(--bad)}
+.ps-pause{background:var(--bg3);color:var(--dim)}
+.crmrow{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--brd);font-size:.84rem}
+.crmrow:last-child{border-bottom:none}
+.crm-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crm-meta{font-size:.7rem;color:var(--dim);margin-left:auto;white-space:nowrap}
+.funnel{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ftag{font-size:.72rem;padding:3px 9px;border-radius:12px;cursor:pointer;border:1px solid var(--brd)}
+.ftag.on{border-color:var(--teal);background:var(--teal-d);color:var(--teal)}
+/* life */
+.lifetask{display:flex;align-items:flex-start;gap:8px;padding:9px 0;border-bottom:1px solid var(--brd);font-size:.84rem}
+.lifetask:last-child{border-bottom:none}
+.ltbody{flex:1;min-width:0;line-height:1.35}
+.ltdl{font-size:.7rem;white-space:nowrap;flex-shrink:0}
+.ltdl.ov{color:var(--bad)}
+/* board tab (бизнесы/проекты) */
+.bdlegend{display:flex;gap:12px;flex-wrap:wrap;font-size:.7rem;color:var(--dim);margin-bottom:10px}
+.bdlegend span{display:inline-flex;align-items:center;gap:5px}
+.bd-ac{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.bd-ov{background:var(--bad)}.bd-td{background:var(--warn)}.bd-wk{background:var(--teal)}.bd-no{background:var(--dim)}
+#pn-board .bcol{width:200px;min-width:200px;max-width:200px}
+.bd-card .bd-nm,.bd-trow .bd-nm{overflow-wrap:anywhere}
+.bd-card{position:relative;background:var(--bg3);border-radius:8px;border-left:3px solid var(--dim);padding:8px 9px;margin-bottom:7px;font-size:.8rem;line-height:1.3;cursor:pointer}
+.bd-card.ov{border-left-color:var(--bad)}.bd-card.td{border-left-color:var(--warn)}.bd-card.wk{border-left-color:var(--teal)}.bd-card.no{border-left-color:var(--dim)}
+.bd-card .bd-nm{display:block;color:var(--txt)}
+.bd-card.done .bd-nm{text-decoration:line-through;opacity:.55}
+.bd-card .bd-dl{font-size:.68rem;color:var(--dim);margin-top:3px}
+.bd-card .bd-dl.ov{color:var(--bad)}
+#pn-board.m-board .bd-card{box-shadow:2px 3px 6px rgba(0,0,0,.25)}
+#pn-board.m-board .bd-card::before{content:"";position:absolute;left:9px;top:-5px;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff6b6b,#b3231f);box-shadow:0 1px 2px rgba(0,0,0,.4)}
+.bd-biz{background:var(--bg2);border:1px solid var(--brd);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.bd-biz>h3{font-size:.84rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;margin:0}
+.bd-biz .bd-chev{transition:transform .15s;color:var(--dim);font-size:.7rem}
+.bd-biz.col .bd-chev{transform:rotate(-90deg)}
+.bd-biz.col .bd-bizbody{display:none}
+.bd-bizcnt{margin-left:auto;font-size:.72rem;color:var(--dim);font-weight:500}
+.bd-bizcnt .ovn{color:var(--bad)}
+.bd-proj{margin:8px 0 4px}
+.bd-pjh{font-size:.74rem;color:var(--teal);font-weight:500;margin:6px 0 4px}
+.bd-trow{display:flex;gap:8px;align-items:baseline;padding:4px 0 4px 10px;border-left:2px solid var(--brd);font-size:.8rem}
+.bd-trow .bd-tdl{margin-left:auto;font-size:.68rem;color:var(--dim);white-space:nowrap}
+.bd-trow .bd-tdl.ov{color:var(--bad)}
+.bd-trow.done .bd-nm{text-decoration:line-through;opacity:.55}
+</style>
 </head>
 <body>
 <header>
-  <div class="top">
-    <h1>Сводка</h1>
+  <div class="h-top">
+    <h1>AIRA HUB</h1>
     <span class="upd" id="upd"></span>
-    <button class="chip" id="refresh" aria-label="Обновить">Обновить</button>
+    <a href="https://t.me/aira_klopik_bot" target="_blank" rel="noopener" class="klink">Клопик →</a>
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tb on" data-tab="today" id="bt-today">Сегодня</button>
+    <button class="tb" data-tab="tasks" id="bt-tasks">Задачи</button>
+    <button class="tb" data-tab="board" id="bt-board">Доска</button>
+    <button class="tb" data-tab="leads" id="bt-leads">Лиды</button>
+    <button class="tb" data-tab="clients" id="bt-clients">Клиенты</button>
+    <button class="tb" data-tab="products" id="bt-products">Продукты</button>
+    <button class="tb" data-tab="system" id="bt-system">Система</button>
+    <button class="tb" data-tab="crm" id="bt-crm">Контакты</button>
+    <button class="tb" data-tab="life" id="bt-life">Жизнь</button>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="sec" aria-labelledby="hBiz">
-    <div class="sec-head"><h2 id="hBiz">Бизнес</h2></div>
-    <div class="tiles">
-      <div class="tile" id="tMrr"><div class="label">MRR</div><div class="value">—</div><div class="sub"></div></div>
-      <div class="tile" id="tClients"><div class="label">Клиенты</div><div class="value">—</div><div class="sub"></div></div>
+<!-- TODAY -->
+<div class="pane on" id="pn-today">
+  <div class="tiles">
+    <div class="tile" id="t-mrr"><div class="tlabel">MRR</div><div class="tval">—</div><div class="tsub"></div></div>
+    <div class="tile" id="t-cl"><div class="tlabel">Клиенты</div><div class="tval">—</div><div class="tsub">живых агентов</div></div>
+    <div class="tile" id="t-ld"><div class="tlabel">Лиды сегодня</div><div class="tval">—</div><div class="tsub">все регионы</div></div>
+    <div class="tile" id="t-ov"><div class="tlabel">Просрочено</div><div class="tval">—</div><div class="tsub">задач Notion</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">🔥 Горит сегодня</div>
+    <div id="burning"><div class="load">Загрузка…</div></div>
+  </div>
+  <div class="card" id="today-followups" style="display:none">
+    <div class="ctitle">📬 Нужен ответ / фоллоу-ап</div>
+    <div id="followup-list"><div class="load">Загрузка…</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">📡 Свежесть данных</div>
+    <div id="fresh">
+      <div class="row"><span class="dot dim" id="d-board"></span><span>Задачи Notion</span><span class="rtag" id="f-board">—</span></div>
+      <div class="row"><span class="dot dim" id="d-dash"></span><span>Dashboard data</span><span class="rtag" id="f-dash">—</span></div>
+      <div class="row"><span class="dot bad"></span><span>Лиды Лиссабон</span><span class="rtag">23 дня назад · сборщик мёртв</span></div>
     </div>
-  </section>
+  </div>
+  <div class="card">
+    <div class="ctitle">⚡ Система</div>
+    <div id="sys-q"><div class="load">Загрузка…</div></div>
+  </div>
+</div>
 
-  <section class="sec" aria-labelledby="hLeads">
-    <div class="sec-head">
-      <h2 id="hLeads">Лиды Aira Home</h2>
-      <div class="seg" id="region" role="group" aria-label="Регион">
-        <button class="chip" data-r="all">Все</button><button class="chip" data-r="lisboa">Лиссабон</button><button class="chip" data-r="algarve">Алгарве</button>
-      </div>
+<!-- TASKS -->
+<div class="pane" id="pn-tasks">
+  <div class="sech">
+    <h2>Задачи</h2><span class="cnt" id="tcnt"></span>
+    <div class="vtog">
+      <button class="vbtn on" id="vl">≡ Список</button>
+      <button class="vbtn" id="vb">⬛ Доска</button>
     </div>
-    <div class="tiles">
-      <a class="tile" id="tLeads" href="/dashboard/leads">
-        <div class="label">Лиды · сегодня <span class="go">›</span></div>
-        <div class="value">—</div>
-        <div class="sub" id="leadsSub">загрузка…</div>
-        <div class="sub" id="leadsSrc"></div>
-        <svg class="spark" id="spark" viewBox="0 0 120 28" width="100%" height="28" preserveAspectRatio="none" aria-hidden="true"></svg>
-      </a>
-      <a class="tile" id="tComp" href="/dashboard/competitors">
-        <div class="label">Конкуренты <span class="go">›</span></div><div class="value">—</div><div class="sub">профилей мастеров</div>
-      </a>
-      <a class="tile" id="tB2b" href="/dashboard/b2b">
-        <div class="label">B2B-контакты <span class="go">›</span></div><div class="value">—</div><div class="sub">компании с телефонами</div>
-      </a>
+  </div>
+  <input class="sinput" id="tsearch" type="search" placeholder="Поиск…" autocomplete="off">
+  <div class="frow" id="sf">
+    <button class="fbtn on" data-s="all">Все</button>
+    <button class="fbtn" data-s="Active">Active</button>
+    <button class="fbtn" data-s="Waiting">Waiting</button>
+    <button class="fbtn" data-s="Done">Done</button>
+  </div>
+  <div class="frow" id="af"></div>
+  <div id="tlist"><div class="load">Загрузка…</div></div>
+  <div id="tboard" style="display:none"><div class="load">Загрузка…</div></div>
+  <div style="text-align:center;margin-top:14px"><a href="/board" style="font-size:.8rem;color:var(--dim)">Полная доска проектов →</a></div>
+</div>
+
+<!-- BOARD (бизнесы/проекты) -->
+<div class="pane" id="pn-board">
+  <div class="sech">
+    <h2>Доска</h2><span class="cnt" id="bdcnt"></span>
+    <div class="vtog">
+      <button class="vbtn on" id="bv-board">⬛ Доска</button>
+      <button class="vbtn" id="bv-tree">🌳 Дерево</button>
     </div>
-  </section>
+  </div>
+  <input class="sinput" id="bdsearch" type="search" placeholder="Поиск…" autocomplete="off">
+  <div class="frow"><button class="fbtn" id="bd-ovd" data-on="0">⏰ Только просроченные</button></div>
+  <div class="bdlegend">
+    <span><i class="bd-ac bd-ov"></i>просрочено</span>
+    <span><i class="bd-ac bd-td"></i>сегодня</span>
+    <span><i class="bd-ac bd-wk"></i>на неделе</span>
+    <span><i class="bd-ac bd-no"></i>без срока</span>
+  </div>
+  <div id="bdwrap"><div class="load">Загрузка…</div></div>
+</div>
 
-  <section class="sec" aria-labelledby="hOps">
-    <div class="sec-head"><h2 id="hOps">Работа и система</h2></div>
-    <div class="tiles">
-      <a class="tile" id="tTasks" href="/dashboard/tasks">
-        <div class="label">Задачи <span class="go">›</span></div><div class="value">—</div><div class="sub">загрузка…</div>
-      </a>
-      <a class="tile" id="tTech" href="/dashboard/tech">
-        <div class="label">Техстатус <span class="go">›</span></div><div class="value">—</div><div class="sub">загрузка…</div>
-      </a>
-      <a class="tile" id="tScout" href="https://stats.aira-ai.net/scout" target="_blank" rel="noopener">
-        <div class="label">Scout <span class="go">↗</span></div><div class="value">—</div><div class="sub">загрузка…</div>
-      </a>
-    </div>
-  </section>
-</main>
+<!-- LEADS -->
+<div class="pane" id="pn-leads">
+  <div class="tiles">
+    <div class="tile" id="tl-alg"><div class="tlabel">Алгарве</div><div class="tval">—</div><div class="tsub">новых / всего</div></div>
+    <div class="tile" id="tl-lis"><div class="tlabel">Лиссабон</div><div class="tval">—</div><div class="tsub">новых / всего</div></div>
+    <div class="tile" id="tl-l7"><div class="tlabel">За 7 дней</div><div class="tval">—</div><div class="tsub">все регионы</div></div>
+    <div class="tile" id="tl-lhot"><div class="tlabel">Срочных / крупных</div><div class="tval">—</div><div class="tsub">за 7 дней</div></div>
+  </div>
+  <div class="card" id="leads-src">
+    <div class="ctitle">&#128278; Источники лидов</div>
+    <div class="row"><span class="dot bad"></span><span style="flex:1">Fixando/Zaask</span><span class="rtag">сборщик мёртв &gt;24 дн</span></div>
+    <div class="row"><span class="dot dim" id="d-scout"></span><span style="flex:1">Scout (aira-ai.net/scout)</span><span class="rtag" id="f-scout">проверяется…</span></div>
+    <div class="row"><span class="dot dim"></span><span style="flex:1">Aira Home заявки</span><span class="rtag" style="color:var(--dim)">не подключены</span></div>
+    <div class="row"><span class="dot dim"></span><span style="flex:1">Demo-бот лиды</span><span class="rtag" style="color:var(--dim)">не подключены</span></div>
+  </div>
+  <div class="card" id="leads-cstatus"><div class="ctitle">&#128225; Сборщик</div><div class="load">Загрузка&#8230;</div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+    <div class="frow" id="lreg" style="flex:1;min-width:0"></div>
+    <div class="frow" id="lstf" style="flex:1;min-width:0"></div>
+  </div>
+  <input class="sinput" id="lsearch" type="search" placeholder="Поиск по тексту&#8230;" autocomplete="off">
+  <div id="llist"><div class="load">Загрузка&#8230;</div></div>
+</div>
 
-<footer class="foot">
-  <a href="/board">Старая доска задач</a>
-  <a href="/dashboard-legacy">Старая сводка</a>
-  <a href="https://stats.aira-ai.net/scout" target="_blank" rel="noopener">Scout-дашборд</a>
-</footer>
+<!-- CLIENTS -->
+<div class="pane" id="pn-clients">
+  <div class="tiles">
+    <div class="tile ok" id="tc-mrr"><div class="tlabel">MRR</div><div class="tval">&#8364;&#8212;</div><div class="tsub">ежемесячный доход</div></div>
+    <div class="tile" id="tc-cl"><div class="tlabel">Клиентов</div><div class="tval">&#8212;</div><div class="tsub">активных агентов</div></div>
+    <div class="tile" id="tc-calls"><div class="tlabel">Звонков</div><div class="tval">&#8212;</div><div class="tsub">custom + scheduled</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">&#128222; Звонки по статусу</div>
+    <div id="cl-calls"><div class="load">Загрузка&#8230;</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">&#128248; Расходы (ориентир)</div>
+    <div class="etrow"><span>ElevenLabs</span><span class="etdim">TTS голосовой агент</span><span class="etval" style="color:var(--warn)">~30 USD/мес</span></div>
+    <div class="etrow"><span>Hetzner VPS</span><span class="etdim">CX22, Falkenstein</span><span class="etval">5.52 EUR/мес</span></div>
+    <div class="etrow"><span>Cloudflare</span><span class="etdim">Pages + Tunnel</span><span class="etval" style="color:var(--ok)">0</span></div>
+    <div class="etrow"><span>Anthropic API</span><span class="etdim">Клопик + агенты</span><span class="etval" style="color:var(--dim)">нет данных</span></div>
+    <div class="etrow"><span>OpenAI API</span><span class="etdim">вспомогательные</span><span class="etval" style="color:var(--dim)">нет данных</span></div>
+    <div style="font-size:.7rem;color:var(--dim);margin-top:8px">Расходы API — ручная оценка; реальные цифры через /cost у Клопика</div>
+  </div>
+  <div class="card">
+    <div class="ctitle">&#128179; Telegram Stars (@aira_life_bot)</div>
+    <div style="color:var(--dim);font-size:.82rem;padding:6px 0">Stars не подключены — нужен n8n workflow для bot.getStarTransactions</div>
+  </div>
+</div>
 
-<script src="/dashboard/app.js"></script>
-<script src="/dashboard/nav.js"></script>
+<!-- PRODUCTS -->
+<div class="pane" id="pn-products">
+  <div class="card">
+    <div class="ctitle">&#129302; Звонки агентов (aira-panel)</div>
+    <div id="prod-calls"><div class="load">Загрузка&#8230;</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">&#128241; @aira_life_bot</div>
+    <div class="etrow"><span>Пользователи</span><span class="etval" style="color:var(--dim)">—</span></div>
+    <div class="etrow"><span>Trial / Pro</span><span class="etval" style="color:var(--dim)">—</span></div>
+    <div class="etrow"><span>Переводчик (минуты)</span><span class="etval" style="color:var(--dim)">—</span></div>
+    <div class="etrow"><span>AIMA-радар подписчики</span><span class="etval" style="color:var(--dim)">—</span></div>
+    <div style="font-size:.7rem;color:var(--dim);margin-top:8px">&#9888; Бот в разработке. Подключить: n8n webhook /dashboard/api/lifebot → /stats в боте</div>
+  </div>
+  <div class="card">
+    <div class="ctitle">&#127979; Demo бот / Тоби</div>
+    <div id="prod-demo"><div class="load">Загрузка&#8230;</div></div>
+  </div>
+</div>
+
+
+<!-- SYSTEM -->
+<div class="pane" id="pn-system">
+  <div class="card">
+    <div class="ctitle">🐳 Docker контейнеры</div>
+    <div id="docker"><div class="load">Загрузка…</div></div>
+  </div>
+  <div class="tiles">
+    <div class="tile" id="t-disk"><div class="tlabel">Диск</div><div class="tval">—</div><div class="tsub" id="disk-f"></div></div>
+    <div class="tile" id="t-load"><div class="tlabel">Load avg</div><div class="tval">—</div><div class="tsub" id="cpuc"></div></div>
+    <div class="tile" id="t-n8n"><div class="tlabel">n8n ошибок 24ч</div><div class="tval">—</div><div class="tsub"></div></div>
+    <div class="tile" id="t-kq"><div class="tlabel">Клопик очередь</div><div class="tval">—</div><div class="tsub">running/proposed</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">🤖 Клопик</div>
+    <div id="kinfo"><div class="load">Загрузка…</div></div>
+  </div>
+  <div style="text-align:center;margin-top:14px">
+    <a href="https://t.me/aira_klopik_bot" target="_blank" rel="noopener" style="font-size:.85rem">💬 Спросить Клопика</a>
+  </div>
+</div>
+
+<!-- CRM -->
+<div class="pane" id="pn-crm">
+  <div class="sech">
+    <h2>Контакты</h2><span class="cnt" id="crm-cnt"></span>
+  </div>
+  <input class="sinput" id="crm-search" type="search" placeholder="Поиск по названию, email…" autocomplete="off">
+  <div class="frow" id="crm-type">
+    <button class="fbtn on" data-ct="all">Все</button>
+    <button class="fbtn" data-ct="hotel">Отели</button>
+    <button class="fbtn" data-ct="supplier">Поставщики</button>
+    <button class="fbtn" data-ct="contractor">Подрядчики</button>
+    <button class="fbtn" data-ct="client">Клиенты</button>
+  </div>
+  <div class="frow" id="crm-country"></div>
+  <div class="funnel" id="crm-funnel"></div>
+  <div id="crm-list"><div class="load">Загрузка…</div></div>
+</div>
+
+<!-- LIFE -->
+<div class="pane" id="pn-life">
+  <div class="card">
+    <div class="ctitle">📅 Ближайшие задачи Notion</div>
+    <div id="life-tasks"><div class="load">Загрузка…</div></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">🎯 Цели 2026</div>
+    <div class="row"><span class="dot ok"></span><span>Aira: MRR €500 (3 клиента → 10)</span></div>
+    <div class="row"><span class="dot warn"></span><span>Artech: 5 польских поставщиков → переговоры</span></div>
+    <div class="row"><span class="dot warn"></span><span>Aira Home: 2 сделки в квартал</span></div>
+    <div class="row"><span class="dot dim"></span><span>@aira_life_bot: бета-запуск, 100 пользователей</span></div>
+  </div>
+  <div class="card">
+    <div class="ctitle">⏰ Просроченные задачи Notion</div>
+    <div id="life-overdue"><div class="load">Загрузка…</div></div>
+  </div>
+</div>
+
 <script>
-const RN = {lisboa:'Лиссабон', algarve:'Алгарве'};
-let region = store.get('lead_region', 'all');
-if (!['all','lisboa','algarve'].includes(region)) region = 'all';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function ago(iso){if(!iso)return'—';const m=(Date.now()-new Date(iso))/6e4;if(m<1)return'только что';if(m<60)return Math.round(m)+' мин назад';const h=m/60;if(h<24)return Math.round(h)+' ч назад';return Math.round(h/24)+' дн назад'}
+function dl(d){if(!d)return'';const[y,m,dd]=String(d).slice(0,10).split('-');return dd+'.'+m+'.'+y}
+function ov(d){return d&&d<new Date().toISOString().slice(0,10)}
+function dot(h){return h<2?'ok':h<24?'warn':'bad'}
+function pcls(p){return p?.includes('High')||p?.includes('🔴')?'phi':p?.includes('Medium')||p?.includes('🟡')?'pme':'plo'}
+function pshort(p){return p?.replace(/[🔴🟡🟢]/g,'').trim()||'—'}
 
-function tile(id, value, sub, bad){
-  const t = $(id);
-  t.querySelector('.value').innerHTML = value;
-  if (sub !== undefined) t.querySelector('.sub').innerHTML = sub;
-  t.classList.toggle('bad', !!bad);
+// Tab switch
+let AT='today';
+document.querySelectorAll('.tb').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tb').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); $('pn-'+b.dataset.tab).classList.add('on');
+  AT=b.dataset.tab;
+  if(AT==='tasks'&&BD)renderTasks();
+  if(AT==='board'&&BD)renderBoard();
+  if(AT==='leads'){if(!LD)loadLeads();else renderLeadsTab();}
+  if(AT==='clients')renderClientsTab();
+  if(AT==='products')renderProductsTab();
+  if(AT==='crm'){if(!CD)loadCRM();else renderCRMTab();}
+  if(AT==='life')renderLifeTab();
+}));
+
+let HD=null,BD=null,CD=null;
+let TF={s:'all',a:'all',q:'',v:'list'};
+let areaBuilt=false;
+
+// Fetchers
+async function fetchHub(){const r=await fetch('/dashboard/api/hub');if(!r.ok)throw new Error('hub '+r.status);return r.json()}
+
+// TODAY
+function renderToday(){
+  if(!HD)return;
+  const h=HD;
+  // tiles
+  if(h.mrr?.value){$('t-mrr').querySelector('.tval').textContent='€'+h.mrr.value}
+  if(h.business?.clients!=null){$('t-cl').querySelector('.tval').textContent=h.business.clients}
+  if(h.lisbon?.today!=null){$('t-ld').querySelector('.tval').textContent=h.lisbon.today}
+  // dash freshness
+  const da=(Date.now()-new Date(h.generated_at))/36e5;
+  $('d-dash').className='dot '+dot(da);
+  $('f-dash').textContent=ago(h.generated_at);
+  // header
+  $('upd').textContent='обновлено '+ago(h.generated_at);
+  // sys quick
+  const t=h.tech||{};
+  const ctrs=t.containers||[];
+  const up=ctrs.filter(c=>c.running).length;
+  $('sys-q').innerHTML=`
+    <div class="row"><span class="dot ${up===ctrs.length?'ok':'bad'}"></span><span>Docker</span><span class="rtag">${up}/${ctrs.length} running</span></div>
+    <div class="row"><span class="dot ${(t.n8n_errors_24h||0)>5?'bad':(t.n8n_errors_24h||0)>0?'warn':'ok'}"></span><span>n8n ошибок 24ч</span><span class="rtag">${t.n8n_errors_24h??'—'}</span></div>
+    <div class="row"><span class="dot ${parseInt(t.disk_pct)>90?'bad':parseInt(t.disk_pct)>75?'warn':'ok'}"></span><span>Диск</span><span class="rtag">${t.disk_pct??'—'} · ${t.disk_free??'—'} free</span></div>
+    <div class="row"><span class="dot ${parseFloat(t.load1)>1.5?'warn':'ok'}"></span><span>Load avg</span><span class="rtag">${t.load1??'—'}</span></div>
+  `;
 }
-const noData = why => `<span>нет данных${why ? ' · ' + esc(why) : ''}</span>`;
 
-async function loadBusiness(){
-  try {
-    const c = await getJSON(API.config);
-    tile('tMrr', c.mrr_eur != null ? `€${Number(c.mrr_eur).toLocaleString('ru-RU')} <small>/мес</small>` : '—',
-         `<span>обновлено ${fmtDate(c.updated_at)}</span>`);
-    tile('tClients', c.clients_live ?? '—', `<span>живых агентов · ${fmtDate(c.updated_at)}</span>`);
-  } catch (e) { tile('tMrr', '—', noData('config.json')); tile('tClients', '—', noData('config.json')); }
+function renderBurning(){
+  if(!BD)return;
+  const today=new Date().toISOString().slice(0,10);
+  const tasks=BD.tasks||[];
+  const ovd=tasks.filter(t=>t.status!=='Done'&&t.deadline&&t.deadline<today);
+  $('t-ov').querySelector('.tval').textContent=ovd.length;
+  if(ovd.length>10)$('t-ov').className='tile bad';
+  // board freshness
+  const ba=(Date.now()-new Date(BD.generated_at))/36e5;
+  $('d-board').className='dot '+dot(ba);
+  $('f-board').textContent=ago(BD.generated_at);
+  $('upd').textContent='обновлено '+ago(BD.generated_at);
+  // burning: active tasks overdue or due within 3 days
+  const soon=new Date();soon.setDate(soon.getDate()+3);
+  const ss=soon.toISOString().slice(0,10);
+  const burn=tasks
+    .filter(t=>t.status==='Active'&&t.deadline&&t.deadline<=ss)
+    .sort((a,b)=>(a.deadline||'9')>(b.deadline||'9')?1:-1)
+    .slice(0,6);
+  if(!burn.length){
+    $('burning').innerHTML='<div style="color:var(--ok);font-size:.85rem;padding:4px 0">Срочных задач нет</div>';
+    return;
+  }
+  $('burning').innerHTML=burn.map(t=>`
+    <div class="trow">
+      <div style="flex:1;min-width:0">
+        <div class="tname">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.name)}</a>`:esc(t.name)}</div>
+        ${t.area?`<div class="asub"><span class="atag">${esc(t.area)}</span></div>`:''}
+      </div>
+      <div class="tdl${ov(t.deadline)?' ov':''}">${dl(t.deadline)}</div>
+    </div>`).join('');
+}
+
+// TASKS
+function renderTasks(){
+  if(!BD)return;
+  const tasks=BD.tasks||[];
+  // area filters
+  if(!areaBuilt){
+    const areas=[...new Set(tasks.map(t=>t.area).filter(Boolean))].sort();
+    $('af').innerHTML='<button class="fbtn on" data-a="all">Все районы</button>'+areas.map(a=>`<button class="fbtn" data-a="${esc(a)}">${esc(a)}</button>`).join('');
+    $('af').querySelectorAll('[data-a]').forEach(b=>b.addEventListener('click',()=>{
+      $('af').querySelectorAll('[data-a]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');TF.a=b.dataset.a;apply(tasks);
+    }));
+    areaBuilt=true;
+  }
+  apply(tasks);
+}
+
+function apply(tasks){
+  let f=tasks;
+  if(TF.s!=='all')f=f.filter(t=>t.status===TF.s);
+  if(TF.a!=='all')f=f.filter(t=>t.area===TF.a);
+  if(TF.q){const q=TF.q.toLowerCase();f=f.filter(t=>t.name?.toLowerCase().includes(q)||t.next_action?.toLowerCase().includes(q))}
+  const today=new Date().toISOString().slice(0,10);
+  const po=p=>p?.includes('High')||p?.includes('🔴')?0:p?.includes('Medium')||p?.includes('🟡')?1:2;
+  f.sort((a,b)=>{
+    const ao=a.deadline&&a.deadline<today?-1:0,bo=b.deadline&&b.deadline<today?-1:0;
+    if(ao!==bo)return ao-bo;
+    const pd=po(a.priority)-po(b.priority);
+    if(pd)return pd;
+    return(a.deadline||'9')>(b.deadline||'9')?1:-1;
+  });
+  $('tcnt').textContent=`${f.length} из ${tasks.length}`;
+  if(TF.v==='list'){$('tlist').style.display='';$('tboard').style.display='none';list(f);}
+  else{$('tlist').style.display='none';$('tboard').style.display='';board(f);}
+}
+
+function list(tasks){
+  if(!tasks.length){$('tlist').innerHTML='<div class="load">Задач не найдено</div>';return}
+  const rows=tasks.slice(0,120).map(t=>`
+    <div class="trow">
+      ${t.priority?`<span class="prio ${pcls(t.priority)}">${pshort(t.priority)}</span>`:''}
+      <div style="flex:1;min-width:0">
+        <div class="tname">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.name)}</a>`:esc(t.name)}</div>
+        <div class="asub">${t.area?`<span class="atag">${esc(t.area)}</span> `:''}${t.blocked_by?`⛔ <span style="color:var(--warn)">${esc(t.blocked_by.slice(0,50))}</span>`:''}</div>
+        ${t.next_action?`<div class="asub" style="margin-top:2px">${esc(t.next_action.slice(0,100))}</div>`:''}
+      </div>
+      <div class="tdl${ov(t.deadline)?' ov':''}">${dl(t.deadline)}</div>
+    </div>`).join('');
+  $('tlist').innerHTML=`<div class="card">${rows}${tasks.length>120?`<div style="color:var(--dim);font-size:.78rem;text-align:center;padding:8px">ещё ${tasks.length-120} задач — уточните фильтры</div>`:''}</div>`;
+}
+
+function board(tasks){
+  const cols=['Active','Waiting','Done'];
+  $('tboard').innerHTML=`<div class="bcols">${cols.map(col=>{
+    const ct=tasks.filter(t=>t.status===col).slice(0,30);
+    return`<div class="bcol"><div class="bctitle">${col} · ${ct.length}</div>${ct.map(t=>`
+      <div class="bcard">
+        <div style="font-size:.82rem;font-weight:500;margin-bottom:4px;line-height:1.3">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener" style="color:var(--txt)">${esc(t.name.slice(0,55))}</a>`:esc(t.name.slice(0,55))}</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">
+          ${t.priority?`<span class="prio ${pcls(t.priority)}" style="font-size:.64rem">${pshort(t.priority)}</span>`:''}
+          ${t.area?`<span class="atag">${esc(t.area)}</span>`:''}
+          ${t.deadline?`<span class="tdl${ov(t.deadline)?' ov':''}" style="font-size:.64rem">${dl(t.deadline)}</span>`:''}
+        </div>
+        ${t.blocked_by?`<div style="font-size:.7rem;color:var(--warn);margin-top:4px">⛔ ${esc(t.blocked_by.slice(0,50))}</div>`:''}
+      </div>`).join('')}</div>`;
+  }).join('')}</div>`;
+}
+
+// SYSTEM
+function renderSystem(){
+  if(!HD)return;
+  const t=HD.tech||{};
+  const ctrs=t.containers||[];
+  $('docker').innerHTML=ctrs.map(c=>`
+    <div class="row">
+      <span class="dot ${c.running?(c.restarts>2?'warn':'ok'):'bad'}"></span>
+      <span style="flex:1">${esc(c.name)}</span>
+      <span class="rtag">${c.running?'running':'stopped'}${c.restarts?` · ${c.restarts}↺`:''}</span>
+    </div>`).join('')||'<div class="load">Нет данных</div>';
+  const dp=parseInt(t.disk_pct)||0;
+  $('t-disk').querySelector('.tval').textContent=t.disk_pct||'—';
+  $('t-disk').className='tile '+(dp>90?'bad':dp>75?'warn':'ok');
+  $('disk-f').textContent=t.disk_free?'free '+t.disk_free:'';
+  $('t-load').querySelector('.tval').textContent=t.load1||'—';
+  $('cpuc').textContent=t.cpu_cores?t.cpu_cores+' cores':'';
+  const ne=t.n8n_errors_24h||0;
+  $('t-n8n').querySelector('.tval').textContent=ne;
+  $('t-n8n').className='tile '+(ne>10?'bad':ne>0?'warn':'ok');
+  const _kq=(HD.business||{}).klopik||{};
+  const _kqt=_kq.tasks||{};
+  const _kqActive=(_kqt.running||0)+(_kqt.proposed||0);
+  $('t-kq').querySelector('.tval').textContent=_kqt.done!=null?String(_kqActive):'…';
+  $('t-kq').className='tile '+(_kqActive>0?'warn':'ok');
+  $('kinfo').innerHTML=`
+    <div class="row"><span class="dot ok"></span><span style="flex:1">klopik.service</span><span class="rtag">running</span></div>
+    <div class="row"><span class="dot ${(_kqt.running||0)>0?'warn':'ok'}"></span><span style="flex:1">Running задач</span><span class="rtag">${_kqt.running||0} running · ${_kqt.proposed||0} proposed</span></div>
+    <div class="row"><span class="dot ok"></span><span style="flex:1">API расход 7 дн</span><span class="rtag">${_kq.api_cost_7d!=null?'$'+_kq.api_cost_7d.toFixed(3):'спросить /cost'}</span></div>
+    <div style="margin-top:8px;font-size:.76rem;color:var(--dim)">Детали: <a href="https://t.me/aira_klopik_bot" target="_blank" rel="noopener">спросить /cost</a></div>`;
+}
+
+// Filters wiring
+$('sf').querySelectorAll('[data-s]').forEach(b=>b.addEventListener('click',()=>{
+  $('sf').querySelectorAll('[data-s]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');TF.s=b.dataset.s;if(BD)apply(BD.tasks||[]);
+}));
+$('tsearch').addEventListener('input',e=>{TF.q=e.target.value;if(BD)apply(BD.tasks||[])});
+$('vl').addEventListener('click',()=>{$('vl').classList.add('on');$('vb').classList.remove('on');TF.v='list';if(BD)apply(BD.tasks||[])});
+$('vb').addEventListener('click',()=>{$('vb').classList.add('on');$('vl').classList.remove('on');TF.v='board';if(BD)apply(BD.tasks||[])});
+
+// ===== BOARD (бизнесы/проекты) =====
+const BIZ_ORDER=['Aira','Aira Home','Aira Windows/Artech','Клопик','Личное','Без проекта'];
+function bizOf(area){
+  const a=(area||'').toLowerCase();
+  if(!area||area==='—')return'Без проекта';
+  if(a.includes('artech')||a.includes('windows'))return'Aira Windows/Artech';
+  if(a.includes('aira home')||a.includes('airahome'))return'Aira Home';
+  if(a.includes('клопик')||a.includes('code')||a.includes('productivity'))return'Клопик';
+  if(a.includes('личное')||a.includes('семья')||a.includes('резиденц')||a.includes('aima')||a.includes('юридик')||a.includes('карьер')||a.includes('bobo'))return'Личное';
+  if(a.includes('aira'))return'Aira';
+  return'Без проекта';
+}
+function dlClass(t){
+  if(!t.deadline)return'no';
+  const today=new Date().toISOString().slice(0,10);
+  if(t.status!=='Done'&&t.deadline<today)return'ov';
+  if(t.deadline===today)return'td';
+  const wk=new Date();wk.setDate(wk.getDate()+7);
+  if(t.deadline<=wk.toISOString().slice(0,10))return'wk';
+  return'no';
+}
+let BV={mode:'board',q:'',ovd:false};
+try{const m=localStorage.getItem('hubBoardMode');if(m==='board'||m==='tree')BV.mode=m;}catch(e){}
+function bvSet(mode){BV.mode=mode;try{localStorage.setItem('hubBoardMode',mode);}catch(e){}
+  $('bv-board').classList.toggle('on',mode==='board');$('bv-tree').classList.toggle('on',mode==='tree');renderBoard();}
+function bdFilter(tasks){
+  let f=tasks;
+  if(BV.ovd)f=f.filter(t=>t.status!=='Done'&&dlClass(t)==='ov');
+  if(BV.q){const q=BV.q.toLowerCase();f=f.filter(t=>(t.name||'').toLowerCase().includes(q)||(t.area||'').toLowerCase().includes(q));}
+  return f;
+}
+function bdGroup(tasks){
+  const g={};BIZ_ORDER.forEach(b=>g[b]={tasks:[],projects:{}});
+  tasks.forEach(t=>{const b=bizOf(t.area);if(!g[b])g[b]={tasks:[],projects:{}};g[b].tasks.push(t);
+    const p=t.area||'—';(g[b].projects[p]=g[b].projects[p]||[]).push(t);});
+  return g;
+}
+function bdSort(a,b){const o={ov:0,td:1,wk:2,no:3},ca=dlClass(a),cb=dlClass(b);
+  if(o[ca]!==o[cb])return o[ca]-o[cb];return(a.deadline||'9')>(b.deadline||'9')?1:-1;}
+function renderBoard(){
+  if(!BD){$('bdwrap').innerHTML='<div class="load">Задачи не загружены</div>';return;}
+  const all=BD.tasks||[];const tasks=bdFilter(all);
+  $('bdcnt').textContent=`${tasks.length} из ${all.length}`;
+  const g=bdGroup(tasks);
+  const pn=$('pn-board');pn.classList.toggle('m-board',BV.mode==='board');pn.classList.toggle('m-tree',BV.mode==='tree');
+  if(BV.mode==='board')bdRenderBoard(g);else bdRenderTree(g);
+}
+function bdCard(t){
+  const c=dlClass(t);
+  return`<div class="bd-card ${c}${t.status==='Done'?' done':''}"${t.url?` onclick="window.open('${esc(t.url)}','_blank','noopener')"`:''}>
+    <span class="bd-nm">${esc(t.name||'—')}</span>
+    <div class="bd-dl ${c==='ov'?'ov':''}">${t.deadline?dl(t.deadline):'без срока'}</div>
+  </div>`;
+}
+function bdRenderBoard(g){
+  $('bdwrap').innerHTML=`<div class="bcols">${BIZ_ORDER.map(b=>{
+    const ts=g[b].tasks.slice().sort(bdSort);
+    return`<div class="bcol"><div class="bctitle">${esc(b)} · ${ts.length}</div>${ts.map(bdCard).join('')||'<div style="color:var(--dim);font-size:.72rem">—</div>'}</div>`;
+  }).join('')}</div>`;
+}
+function bdRenderTree(g){
+  $('bdwrap').innerHTML=BIZ_ORDER.map(b=>{
+    const node=g[b];
+    const open=node.tasks.filter(t=>t.status!=='Done').length;
+    const ovd=node.tasks.filter(t=>t.status!=='Done'&&dlClass(t)==='ov').length;
+    const projs=Object.keys(node.projects).sort();
+    const body=projs.map(p=>{
+      const ts=node.projects[p].slice().sort(bdSort);
+      return`<div class="bd-proj"><div class="bd-pjh">${esc(p)} · ${ts.length}</div>${ts.map(t=>{
+        const c=dlClass(t);
+        return`<div class="bd-trow ${t.status==='Done'?'done':''}">
+          <span class="bd-nm">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.name||'—')}</a>`:esc(t.name||'—')}</span>
+          <span class="bd-tdl ${c==='ov'?'ov':''}">${t.deadline?dl(t.deadline):'—'}</span>
+        </div>`;}).join('')}</div>`;
+    }).join('')||'<div style="color:var(--dim);font-size:.75rem;padding:4px 0">нет задач</div>';
+    return`<div class="bd-biz">
+      <h3 onclick="this.parentNode.classList.toggle('col')"><span class="bd-chev">▼</span>${esc(b)}
+        <span class="bd-bizcnt">${open} откр.${ovd?` · <span class="ovn">${ovd} просроч.</span>`:''}</span></h3>
+      <div class="bd-bizbody">${body}</div></div>`;
+  }).join('');
+}
+$('bv-board').addEventListener('click',()=>bvSet('board'));
+$('bv-tree').addEventListener('click',()=>bvSet('tree'));
+$('bdsearch').addEventListener('input',e=>{BV.q=e.target.value;renderBoard();});
+$('bd-ovd').addEventListener('click',()=>{BV.ovd=!BV.ovd;$('bd-ovd').classList.toggle('on',BV.ovd);renderBoard();});
+$('bv-board').classList.toggle('on',BV.mode==='board');$('bv-tree').classList.toggle('on',BV.mode==='tree');
+
+// Load
+async function load(){
+  // tasks now come inside dashboard-data (HD.tasks); board-data webhook is retired
+  try{
+    const d=await fetchHub();
+    HD=d; BD={generated_at:d.generated_at,tasks:d.tasks||[]};
+    renderToday();renderSystem();renderBurning();
+    if(AT==='tasks')renderTasks();
+    if(AT==='board')renderBoard();
+    if(AT==='life')renderLifeTab();
+  }catch(e){
+    $('sys-q').innerHTML=`<div class="errm">Ошибка: ${esc(String(e))}</div>`;
+    $('kinfo').innerHTML=`<div class="errm">Ошибка: ${esc(String(e))}</div>`;
+    $('burning').innerHTML=`<div class="errm">Ошибка задач: ${esc(String(e))}</div>`;
+  }
+}
+load();
+setInterval(load,5*60*1000);
+// ===== LEADS =====
+let LD=null,LF={r:'all',s:'all',q:''};
+
+function dircls(d){return d==='airahome'?'dair':d==='construction'?'dcon':d==='garden'?'dgar':d==='energia'?'dene':'doth'}
+function dirname(d){return d==='airahome'?'AiraHome':d==='construction'?'Строй':d==='garden'?'Сад':d==='energia'?'Энергия':'Прочее'}
+function statcls(s){return'lstat-'+s}
+function statlabel(s){return{new:'новый',taken:'взято',skip:'пропуск',won:'выиграл',lost:'проиграл',commented:'коммент'}[s]||s}
+
+async function fetchLeads(){const r=await fetch('/dashboard/api/leads?days=30');if(!r.ok)throw new Error('leads '+r.status);return r.json()}
+
+function renderLeadsTab(){
+  if(!LD)return;
+  const kpi=LD.kpi||{};
+  const tiles=kpi.tiles||{};
+  const br=kpi.by_region||{};
+  const aTotal=(tiles.algarve||{}).total||(br.algarve||{}).last7||0;
+  const aNew=(tiles.algarve||{}).new!=null?(tiles.algarve||{}).new:aTotal;
+  $('tl-alg').querySelector('.tval').textContent=aNew+' / '+aTotal;
+  $('tl-alg').className='tile '+(aNew>0?'ok':'');
+  const lTotal=(tiles.lisboa||{}).total||(br.lisboa||{}).last7||0;
+  const lNew=(tiles.lisboa||{}).new!=null?(tiles.lisboa||{}).new:lTotal;
+  $('tl-lis').querySelector('.tval').textContent=lNew+' / '+lTotal;
+  $('tl-lis').className='tile '+(lNew>0?'ok':'');
+  $('tl-l7').querySelector('.tval').textContent=kpi.last7||0;
+  $('tl-lhot').querySelector('.tval').textContent=(kpi.urgent7||0)+' / '+(kpi.large7||0);
+  const lr=LD.last_run||{};
+  const lrDays=lr.finished_at?Math.round((Date.now()-new Date(lr.finished_at))/864e5):null;
+  const scoutActive=(LD.scout_last_runs||[]).length>0;
+  if($('d-scout')){$('d-scout').className='dot '+(scoutActive?'ok':'dim')}
+  if($('f-scout')){$('f-scout').textContent=scoutActive?'активен ('+LD.scout_last_runs.length+')':'нет данных'}
+  $('leads-cstatus').innerHTML='<div class="ctitle">&#128225; Сборщик (Fixando/Zaask)</div>'
+    +'<div class="row"><span class="dot '+(lrDays===null?'dim':lrDays<3?'ok':lrDays<10?'warn':'bad')+'"></span>'
+    +'<span>Последний запуск</span>'
+    +'<span class="rtag">'+(lr.finished_at?lrDays+' дн назад ('+esc(lr.region||'')+')'  :'—')+'</span></div>'
+    +(lrDays>7?'<div class="errm">&#9888; Сборщик мёртв '+lrDays+' дн — починить cron /root/lisbon-leads/collect.py</div>':'');
+  if(!$('lreg').querySelector('button')){
+    const regions=['all','algarve','lisboa','norte','ilhas'];
+    const rnames={all:'Все',algarve:'Алгарве',lisboa:'Лиссабон',norte:'Север',ilhas:'Острова'};
+    $('lreg').innerHTML=regions.map(r=>'<button class="fbtn'+(r==='all'?' on':'')+'" data-r="'+esc(r)+'">'+rnames[r]+'</button>').join('');
+    $('lreg').querySelectorAll('[data-r]').forEach(b=>b.addEventListener('click',()=>{
+      $('lreg').querySelectorAll('[data-r]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');LF.r=b.dataset.r;applyLeads();
+    }));
+    const statuses=['all','new','taken','skip','won','lost'];
+    $('lstf').innerHTML=statuses.map(s=>'<button class="fbtn'+(s==='all'?' on':'')+'" data-ls="'+esc(s)+'">'+(s==='all'?'Все':statlabel(s))+'</button>').join('');
+    $('lstf').querySelectorAll('[data-ls]').forEach(b=>b.addEventListener('click',()=>{
+      $('lstf').querySelectorAll('[data-ls]').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');LF.s=b.dataset.ls;applyLeads();
+    }));
+  }
+  applyLeads();
+}
+
+function applyLeads(){
+  if(!LD)return;
+  let leads=LD.leads||[];
+  if(LF.r!=='all')leads=leads.filter(l=>l.region===LF.r);
+  if(LF.s!=='all')leads=leads.filter(l=>l.status===LF.s);
+  if(LF.q){const q=LF.q.toLowerCase();leads=leads.filter(l=>(l.title_ru||l.gist_ru||l.text_clean||'').toLowerCase().includes(q)||(l.concelho||'').toLowerCase().includes(q))}
+  leads=leads.slice(0,50);
+  if(!leads.length){$('llist').innerHTML='<div class="load">Лидов нет по фильтрам</div>';return}
+  $('llist').innerHTML=leads.map(l=>{
+    const title=esc(l.title_ru||l.gist_ru||l.text_clean||l.id);
+    const gist=(l.gist_ru&&l.title_ru)?esc(l.gist_ru):'';
+    const statuses=l.status==='new'?['taken','skip','won','lost']:['new','won','lost'];
+    const actBtns=statuses.map(s=>'<button class="sbtn'+(s==='won'?' ok':s==='lost'?' bad':'')+'" onclick="setLeadStatus(\''+esc(l.id)+'\',\''+s+'\',this)">'+statlabel(s)+'</button>').join('');
+    return'<div class="lcard" data-lid="'+esc(l.id)+'">'
+      +'<div class="lch">'
+      +'<span class="atag '+dircls(l.direction)+'">'+dirname(l.direction)+'</span>'
+      +(l.region?'<span class="atag">'+esc(l.region)+'</span>':'')
+      +(l.concelho?'<span class="atag">'+esc(l.concelho)+'</span>':'')
+      +(l.urgency==='urgent'?'<span class="atag" style="color:var(--bad)">срочно</span>':'')
+      +(l.size==='large'?'<span class="atag" style="color:var(--warn)">крупный</span>':'')
+      +'<span class="rtag '+statcls(l.status)+'">'+statlabel(l.status)+'</span>'
+      +(l.published_date?'<span class="rtag">'+esc(l.published_date)+'</span>':'')
+      +'</div>'
+      +'<div class="lcbody">'+title+'</div>'
+      +(gist?'<div class="lcsub">'+gist+'</div>':'')
+      +(l.url_page?'<div class="lcsub"><a href="'+esc(l.url_page)+'" target="_blank" rel="noopener">открыть &#8594;</a></div>':'')
+      +'<div class="lcact">'+actBtns+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+async function setLeadStatus(id,status,btn){
+  if(btn){btn.textContent='…';btn.disabled=true}
+  try{
+    const r=await fetch('/dashboard/api/lead-status',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
+    const d=await r.json();
+    if(d.ok){
+      const card=document.querySelector('[data-lid="'+CSS.escape(id)+'"]');
+      if(card){
+        const badge=card.querySelector('[class*="lstat-"]');
+        if(badge){badge.className='rtag '+statcls(status);badge.textContent=statlabel(status)}
+        const lead=(LD.leads||[]).find(l=>l.id===id);
+        if(lead)lead.status=status;
+        if(btn)btn.textContent=statlabel(status);
+      }
+    }else{if(btn){btn.textContent=statlabel(status);btn.disabled=false}}
+  }catch(e){if(btn){btn.textContent=statlabel(status);btn.disabled=false}}
+}
+
+$('lsearch').addEventListener('input',e=>{LF.q=e.target.value;applyLeads()});
+
+function cleanStatus(s){
+  if(!s)return'unknown';
+  s=String(s);
+  if(s.startsWith('error:error:'))s=s.slice(12);
+  else if(s.startsWith('error:'))s=s.slice(6);
+  if(s.includes('timed out'))return'таймаут';
+  if(s.includes('rate_limit'))return'rate_limited';
+  if(s.includes('invalid_provider_config'))return'SIP: переконфигурировать';
+  return s.slice(0,45);
+}
+
+// ===== CLIENTS =====
+function renderClientsTab(){
+  if(!HD)return;
+  const b=HD.business||{};
+  const mrr=HD.mrr||{};
+  $('tc-mrr').querySelector('.tval').textContent='€'+(mrr.value||'—');
+  $('tc-cl').querySelector('.tval').textContent=b.clients||'—';
+  const totalCalls=Object.values(b.custom_calls_by_status||{}).reduce((s,v)=>s+v,0)
+    +Object.values(b.scheduled_calls_by_status||{}).reduce((s,v)=>s+v,0);
+  $('tc-calls').querySelector('.tval').textContent=totalCalls||'—';
+  // Per-client list (available after n8n workflow reload)
+  const cl=b.client_list||[];
+  let clientHtml='';
+  if(cl.length){
+    const ptName=p=>p==='hotel'?'Отель':p==='assistant'?'Ассистент':p||'—';
+    clientHtml='<div class="card"><div class="ctitle">👤 Клиенты</div>'
+      +cl.map(c=>'<div class="row"><span style="flex:1">'+esc(c.name)+'</span><span class="atag">'+esc(ptName(c.product_type))+'</span><span class="rtag">'+(c.outbound?'исходящий':'—')+'</span></div>').join('')
+      +'<div style="font-size:.7rem;color:var(--dim);margin-top:6px">MRR €'+(mrr.value||'?')+' (ручной ввод)</div></div>';
+  } else {
+    clientHtml='<div class="card"><div class="ctitle">👤 Клиенты ('+b.clients+')</div><div style="font-size:.8rem;color:var(--dim);padding:6px">arseniy (ассистент) · Jonas Sostak (ассистент) · demo-hotel (отель)</div><div style="font-size:.7rem;color:var(--dim)">MRR €'+(mrr.value||'?')+' — ручной ввод</div></div>';
+  }
+  // Insert client card before cl-calls
+  const clcalls=$('cl-calls').closest('.card');
+  if(clcalls&&!$('cl-clientlist')){
+    const div=document.createElement('div');div.id='cl-clientlist';div.innerHTML=clientHtml;
+    clcalls.parentNode.insertBefore(div,clcalls);
+  }
+  const rows=[['custom_calls_by_status','Разовые (custom)'],['scheduled_calls_by_status','Плановые (scheduled)']].map(([key,label])=>{
+    const st=b[key]||{};const entries=Object.entries(st);
+    if(!entries.length)return'<div class="row"><span>'+label+'</span><span class="rtag">—</span></div>';
+    return entries.map(([s,cnt],i)=>'<div class="row"><span style="flex:1;font-size:.8rem">'+(i===0?'<b>'+label+'</b> ':'')+esc(cleanStatus(s))+'</span><span class="rtag">'+cnt+'</span></div>').join('');
+  }).join('');
+  $('cl-calls').innerHTML=rows||'<div class="load">Нет данных</div>';
+}
+
+// ===== PRODUCTS =====
+function renderProductsTab(){
+  if(!HD)return;
+  const b=HD.business||{};
+  const cc=b.custom_calls_by_status||{};
+  const sc=b.scheduled_calls_by_status||{};
+  const ccTotal=Object.values(cc).reduce((s,v)=>s+v,0);
+  const scTotal=Object.values(sc).reduce((s,v)=>s+v,0);
+  const ccRows=Object.entries(cc).map(([s,n])=>'<div class="row" style="font-size:.82rem"><span style="flex:1">custom: '+esc(cleanStatus(s))+'</span><span class="rtag">'+n+'</span></div>').join('');
+  const scRows=Object.entries(sc).map(([s,n])=>'<div class="row" style="font-size:.82rem"><span style="flex:1">scheduled: '+esc(cleanStatus(s))+'</span><span class="rtag">'+n+'</span></div>').join('');
+  $('prod-calls').innerHTML=
+    '<div class="row"><span style="font-weight:600">Катерина (custom)</span><span class="rtag">'+ccTotal+' звонков</span></div>'
+    +(ccRows||'')
+    +'<div class="row"><span style="font-weight:600">Плановые</span><span class="rtag">'+scTotal+' звонков</span></div>'
+    +(scRows||'')
+    +(ccTotal+scTotal===0?'<div class="load" style="font-size:.8rem">Звонков нет в aira-panel</div>':'')
+    +'<div style="font-size:.7rem;color:var(--dim);margin-top:8px">Детали: <a href="https://t.me/aira_klopik_bot">спросить Клопика</a></div>';
+  $('prod-demo').innerHTML='<div class="row"><span style="flex:1">Demo-бот / Тоби</span><span class="rtag" style="color:var(--dim)">нет эндпоинта</span></div>'
+    +'<div style="font-size:.72rem;color:var(--dim);margin-top:4px">Добавить: n8n webhook /dashboard/api/demobot → tg-demo-record webhook → счётчик сессий</div>';
 }
 
 async function loadLeads(){
-  document.querySelectorAll('#region [data-r]').forEach(b => b.setAttribute('aria-pressed', b.dataset.r === region));
-  $('tLeads').href = '/dashboard/leads' + (region === 'all' ? '' : '?region=' + region);
-  try {
-    const d = await getLeads(new URLSearchParams({days: 7, region}));
-    const k = d.kpi || {};
-    tile('tLeads', k.today ?? '—',
-      `<span>7 дней <b>${k.last7 ?? '—'}</b></span><span>крупные <b>${k.large7 ?? '—'}</b></span><span>срочные <b>${k.urgent7 ?? '—'}</b></span>`);
-    const bs = k.by_source || {};
-    $('leadsSrc').innerHTML = d.authorized
-      ? `<span>Scout <b>${bs.scout?.last7 ?? 0}</b> · Fixando <b>${bs.fixando?.last7 ?? 0}</b> за 7 дн</span>`
-      : `<span>Fixando <b>${bs.fixando?.last7 ?? 0}</b> за 7 дн · Scout недоступен</span>`;
-    const p = (k.per_day || []).map(x => x.count), mx = Math.max(1, ...p);
-    $('spark').innerHTML = p.length > 1 ? `<polyline fill="none" stroke="currentColor" stroke-width="2" points="${p.map((v,i)=>`${(i*120/(p.length-1)).toFixed(1)},${(26-v/mx*24).toFixed(1)}`).join(' ')}"/>` : '';
-    const cs = d.competitors_summary || {};
-    const top = Object.entries(cs.by_category || {})[0];
-    tile('tComp', cs.total ?? '—', `<span>${top ? 'больше всего: ' + esc(top[0]) + ' (' + top[1] + ')' : 'профилей мастеров'}</span>`);
-    const sr = d.scout_last_runs || {}, md = sr.any || d.scout_last_macrodroid_run;
-    const bad = sr.desktop ? (hoursSince(sr.desktop) > 30 || hoursSince(sr.http) > 2) : hoursSince(md) > 48;
-    tile('tScout', md ? fmtDate(md) : '—',
-      md ? `<span class="${bad ? 'bad-t' : ''}">последний прогон · ${ago(md)}${bad ? ' — есть источник, который молчит' : ''}</span>`
-           + (sr.desktop ? `<span>Desktop ${ago(sr.desktop)} · HTTP ${ago(sr.http)}</span>` : '') : noData('нет поля в API'),
-      bad);
-  } catch (e) {
-    tile('tLeads', '—', noData(e.message)); $('leadsSrc').innerHTML = '';
-    tile('tScout', '—', noData(e.message));
+  try{LD=await fetchLeads();renderLeadsTab();}
+  catch(e){
+    $('llist').innerHTML='<div class="errm">Ошибка лидов: '+esc(String(e))+'</div>';
+    $('leads-cstatus').innerHTML='<div class="ctitle">&#128225; Сборщик</div><div class="errm">'+esc(String(e))+'</div>';
   }
-  try {
-    const b = await getJSON(API.leadsPublic + '?competitors=1&category=__b2b__');
-    const names = {al_manager:'AL', condo_admin:'кондоминиумы', relocation:'релокация'};
-    tile('tB2b', b.count ?? '—', Object.entries(b.by_segment || {}).map(([k,v]) => `<span>${names[k]||esc(k)} <b>${v}</b></span>`).join('') || '<span>компании с телефонами</span>');
-  } catch (e) { tile('tB2b', '—', noData()); }
 }
 
-async function loadTasks(){
-  try {
-    const d = await getJSON(API.board);
-    const T = d.tasks || [], today = todayIso();
-    const st = s => (s || '').toLowerCase();
-    const n = pre => T.filter(t => st(t.status).startsWith(pre)).length;
-    const overdue = T.filter(t => t.deadline && t.deadline.slice(0,10) < today && !st(t.status).startsWith('done')).length;
-    tile('tTasks', n('active'), `<span>активные</span><span>ждут <b>${n('wait')}</b></span><span>готово <b>${n('done')}</b></span>`
-      + (overdue ? `<span class="bad-t">просрочено ${overdue}</span>` : '<span>просроченных нет</span>'), overdue > 0);
-  } catch (e) { tile('tTasks', '—', noData(e.message)); }
+// ===== CRM =====
+let CF={type:'all',status:'all',q:'',country:'all'};
+// server caps at 200 rows; fetch per-type so a type view isn't crowded out by others
+function crmQS(){const p=new URLSearchParams();if(CF.type!=='all')p.set('type',CF.type);if(CF.status!=='all')p.set('status',CF.status);p.set('limit','200');return '?'+p.toString();}
+const statusLabels={'новый':'новый','написали':'написали','ответили':'ответили','переговоры':'перег.','клиент':'клиент','отказ':'отказ','пауза':'пауза'};
+const statusClass={'новый':'ps-new','написали':'ps-wr','ответили':'ps-re','переговоры':'ps-neg','клиент':'ps-cl','отказ':'ps-no','пауза':'ps-pause'};
+const typeLabel={'supplier':'Поставщик','contractor':'Подрядчик','client':'Клиент','hotel':'Отель','agency':'Агентство','partner':'Партнёр'};
+
+async function fetchCRM(params=''){const r=await fetch('/dashboard/api/crm'+params);if(!r.ok)throw new Error('crm '+r.status);return r.json()}
+async function fetchFollowups(){const r=await fetch('/dashboard/api/crm/followups');if(!r.ok)throw new Error('fu '+r.status);return r.json()}
+
+async function loadCRM(){
+  try{CD=await fetchCRM(crmQS());renderCRMTab();loadFollowups();}
+  catch(e){$('crm-list').innerHTML='<div class="errm">Ошибка CRM: '+esc(String(e))+'</div>';}
 }
 
-async function loadTech(){
-  try {
-    const d = await getJSON(API.dashboard);
-    const t = d.tech || {}, C = t.containers || [];
-    const down = C.filter(c => !c.running || c.oomkilled);
-    const errs = +t.n8n_errors_24h || 0;
-    const bad = down.length > 0;
-    tile('tTech', bad ? `<span class="bad-t">${down.length} упало</span>` : `<span style="color:var(--ok)">всё работает</span>`,
-      `<span><i class="dot ${bad?'err':'ok'}"></i> контейнеры ${C.length - down.length}/${C.length}</span>`
-      + `<span><i class="dot ok"></i> VPS · диск ${esc(t.disk_pct || '—')}</span>`
-      + `<span><i class="dot ${errs ? 'wait' : 'ok'}"></i> n8n ошибок за 24 ч: ${errs}</span>`
-      + `<span><i class="dot"></i> ElevenLabs: нет данных</span>`, bad);
-    $('upd').textContent = 'обновлено ' + ago(d.generated_at);
-  } catch (e) { tile('tTech', '<span class="bad-t">VPS/n8n не отвечает</span>', noData(e.message), true); }
+async function loadFollowups(){
+  try{
+    const d=await fetchFollowups();
+    const fu=d.followups||[];
+    if(!fu.length){$('today-followups').style.display='none';return;}
+    $('today-followups').style.display='';
+    $('followup-list').innerHTML=fu.slice(0,5).map(f=>`
+      <div class="crmrow">
+        <span class="pstag ${statusClass[f.pipeline_status]||'ps-new'}">${esc(f.pipeline_status)}</span>
+        <span class="crm-name">${esc(f.name)}</span>
+        <span class="crm-meta">${f.last_contact?'был '+ago(f.last_contact):'нет контакта'}</span>
+      </div>`).join('');
+  }catch(e){}
 }
 
-function loadAll(){ loadBusiness(); loadLeads(); loadTasks(); loadTech(); }
-$('region').onclick = e => {
-  const b = e.target.closest('[data-r]'); if (!b) return;
-  region = b.dataset.r; store.set('lead_region', region); loadLeads();
-};
-$('refresh').onclick = loadAll;
-loadAll();
+function renderCRMTab(){
+  if(!CD)return;
+  const companies=CD.companies||[];
+  const funnel=CD.funnel||{};
+  // funnel bar
+  const fkeys=Object.keys(funnel).sort();
+  $('crm-funnel').innerHTML=fkeys.map(k=>`<button class="ftag ${CF.status===k?'on':''}" onclick="setCRMStatus('${esc(k)}')">${esc(statusLabels[k]||k)} <b>${funnel[k]}</b></button>`).join('');
+  $('crm-cnt').textContent=CD.total+' компаний';
+  // country filter (client-side, built from the current fetch)
+  const countries=[...new Set(companies.map(c=>c.country).filter(Boolean))].sort();
+  $('crm-country').innerHTML=countries.length>1
+    ?('<button class="fbtn '+(CF.country==='all'?'on':'')+'" data-country="all">Все страны</button>'
+      +countries.map(c=>'<button class="fbtn '+(CF.country===c?'on':'')+'" data-country="'+esc(c)+'">'+esc(c)+'</button>').join(''))
+    :'';
+  $('crm-country').querySelectorAll('[data-country]').forEach(b=>b.addEventListener('click',()=>{CF.country=b.dataset.country;renderCRMTab();}));
+  applyCRM(companies);
+}
+
+function setCRMStatus(s){CF.status=s===CF.status?'all':s;loadCRM();}
+
+function applyCRM(companies){
+  let f=companies;
+  if(CF.type!=='all')f=f.filter(c=>c.type===CF.type);
+  if(CF.country!=='all')f=f.filter(c=>c.country===CF.country);
+  if(CF.q){const q=CF.q.toLowerCase();f=f.filter(c=>(c.name||'').toLowerCase().includes(q)||(c.email||'').toLowerCase().includes(q));}
+  if(!f.length){$('crm-list').innerHTML='<div class="load">Компаний не найдено</div>';return;}
+  $('crm-list').innerHTML='<div class="card">'+f.slice(0,80).map(c=>{
+    const typeTxt=typeLabel[c.type]||c.type||'';
+    const loc=[c.country,c.city].filter(Boolean).join(', ');
+    return`<div class="crmrow">
+      <span class="pstag ${statusClass[c.pipeline_status]||'ps-new'}">${esc(c.pipeline_status)}</span>
+      <div style="flex:1;min-width:0">
+        <div class="crm-name" style="font-weight:500">${esc(c.name)}</div>
+        <div style="font-size:.7rem;color:var(--dim)">${typeTxt}${loc?' · '+esc(loc):''}${c.email?' · '+esc(c.email.split(';')[0].trim()):''}</div>
+        ${c.next_step?`<div style="font-size:.72rem;color:var(--teal);margin-top:2px">→ ${esc(c.next_step.slice(0,60))}</div>`:''}
+      </div>
+    </div>`;
+  }).join('')+(f.length>80?`<div style="color:var(--dim);font-size:.78rem;padding:8px;text-align:center">ещё ${f.length-80} — уточните фильтры</div>`:'')+`</div>`;
+}
+
+// CRM filters wiring
+$('crm-type').querySelectorAll('[data-ct]').forEach(b=>b.addEventListener('click',()=>{
+  $('crm-type').querySelectorAll('[data-ct]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');CF.type=b.dataset.ct;CF.country='all';loadCRM();
+}));
+$('crm-search').addEventListener('input',e=>{CF.q=e.target.value;if(CD)applyCRM(CD.companies||[]);});
+
+// Status filter from query param
+async function loadCRMWithStatus(status){
+  try{
+    const params=status&&status!=='all'?'?status='+encodeURIComponent(status):'';
+    CD=await fetchCRM(params);CF.status=status||'all';renderCRMTab();
+  }catch(e){$('crm-list').innerHTML='<div class="errm">Ошибка: '+esc(String(e))+'</div>';}
+}
+
+// ===== LIFE =====
+function renderLifeTab(){
+  if(!BD){$('life-tasks').innerHTML='<div class="load">Задачи не загружены — проверьте вкладку Задачи</div>';$('life-overdue').innerHTML='';return;}
+  const tasks=BD.tasks||[];
+  const today=new Date().toISOString().slice(0,10);
+  const soon=new Date();soon.setDate(soon.getDate()+7);
+  const ss=soon.toISOString().slice(0,10);
+  const upcoming=tasks.filter(t=>t.status!=='Done'&&t.deadline&&t.deadline>=today&&t.deadline<=ss).sort((a,b)=>(a.deadline||'9')>(b.deadline||'9')?1:-1).slice(0,10);
+  const overdue=tasks.filter(t=>t.status!=='Done'&&t.deadline&&t.deadline<today).sort((a,b)=>(a.deadline||'9')>(b.deadline||'9')?1:-1).slice(0,15);
+  $('life-tasks').innerHTML=upcoming.length?upcoming.map(t=>`
+    <div class="lifetask">
+      <span class="prio ${pcls(t.priority)}">${pshort(t.priority)}</span>
+      <div class="ltbody">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.name)}</a>`:esc(t.name)}
+        ${t.area?`<div style="font-size:.68rem;color:var(--dim);margin-top:2px">${esc(t.area)}</div>`:''}
+      </div>
+      <div class="ltdl${ov(t.deadline)?' ov':''}">${dl(t.deadline)}</div>
+    </div>`).join(''):'<div style="color:var(--ok);font-size:.85rem;padding:4px 0">Нет задач на ближайшие 7 дней</div>';
+  $('life-overdue').innerHTML=overdue.length?overdue.map(t=>`
+    <div class="lifetask">
+      <span class="prio ${pcls(t.priority)}">${pshort(t.priority)}</span>
+      <div class="ltbody">${t.url?`<a href="${esc(t.url)}" target="_blank" rel="noopener" style="color:var(--bad)">${esc(t.name)}</a>`:esc(t.name)}</div>
+      <div class="ltdl ov">${dl(t.deadline)}</div>
+    </div>`).join(''):'<div style="color:var(--ok);font-size:.85rem;padding:4px 0">Просроченных нет</div>';
+}
+
 </script>
 </body>
 </html>
